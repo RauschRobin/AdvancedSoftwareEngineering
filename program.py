@@ -1,10 +1,10 @@
 import threading
-from logic.communication.voice_input import VoiceInput
-from logic.communication.voice_output import VoiceOutput
-from logic.features.wakeup.wakeup import WakeUpAssistant
-from logic.features.ernaehrungsplaner.ernaehrungsplaner import Ernaehrungsplaner
-from logic.features.news.news import News
-from logic.features.terminplaner.terminplaner import Terminplaner
+from core.communication.voice_input import VoiceInput
+from core.communication.voice_output import VoiceOutput
+from core.features.wakeup.wakeup import WakeUpAssistant
+from core.features.ernaehrungsplaner.ernaehrungsplaner import Ernaehrungsplaner
+from core.features.news.news import News
+from core.features.terminplaner.terminplaner import Terminplaner
 
 # Start the voice of carschten
 voice_output = VoiceOutput()

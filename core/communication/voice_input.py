@@ -1,6 +1,6 @@
 import threading
 import speech_recognition as sr
-from intend_recognition import IntendRecognizer
+from ..communication.intend_recognition import IntendRecognizer
 from ..features.wakeup.wakeup import WakeUpAssistant
 from ..features.ernaehrungsplaner.ernaehrungsplaner import Ernaehrungsplaner
 from ..features.news.news import News
@@ -29,7 +29,7 @@ class VoiceInput:
         with sr.Microphone() as source:
             print("Bitte sprechen Sie.")
             self.recognizer.adjust_for_ambient_noise(source)
-            while True:
+            while self.is_running:
                 audio = self.recognizer.listen(source)
                 try:
                     recognized_text = self.recognizer.recognize_google(audio, language=self.language)

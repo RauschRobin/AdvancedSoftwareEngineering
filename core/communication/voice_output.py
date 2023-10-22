@@ -3,6 +3,7 @@ import playsound
 import os
 import threading
 import re
+import time
 
 output_file = os.path.join(os.path.dirname(__file__), "output.mp3")
 
@@ -46,10 +47,20 @@ class VoiceOutput(metaclass=SingletonMeta):
 
     def remove_unpronounceable_characters(self, input_string):
         # List of characters that gTTS may not pronounce correctly
-        unpronounceable_characters = '|&^%$#@!'
+        unpronounceable_characters = '|&^%$#@!,'
 
-        # Use regular expressions to replace unwanted characters with spaces
+        # Define a dictionary of special characters and their replacements
+        special_characters = {
+            ':': 'Uhr'  # Replace ':' with 'Uhr'
+        }
+
+        # Use regular expressions to replace unwanted characters
         cleaned_string = re.sub(r'[{}]'.format(re.escape(unpronounceable_characters)), ' ', input_string)
+
+        # Replace special characters defined in the dictionary
+        for char, replacement in special_characters.items():
+            cleaned_string = cleaned_string.replace(char, replacement)
+            
         return cleaned_string
 
     def text_to_speech(self, text, filename=output_file):
@@ -57,7 +68,9 @@ class VoiceOutput(metaclass=SingletonMeta):
             raise ValueError("Cannot say ''!")
 
         text = self.remove_unpronounceable_characters(text)
-        print(text)
+
+        # Normalize the output file path
+        filename = os.path.normpath(filename)
 
         # Create a text to speech element
         tts = gTTS(text=text, lang=self.language, slow=False)
@@ -70,3 +83,5 @@ class VoiceOutput(metaclass=SingletonMeta):
 
         # Delete temporary file
         os.remove(output_file)
+
+        time.sleep(2)

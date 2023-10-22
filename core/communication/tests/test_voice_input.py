@@ -10,6 +10,7 @@ def test_start():
     
     voice_input.start()
     assert voice_input.is_running is True
+    voice_input.stop()
 
 def test_stop():
     wakeup = Mock()

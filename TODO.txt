@@ -1,2 +1,0 @@
-pytest doesn't work?! --> pytest -m logic
-find better name for "logic"

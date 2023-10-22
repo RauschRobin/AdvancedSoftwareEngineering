@@ -7,4 +7,4 @@ class DeutscheBahn:
         self.voice_output = voice_output
 
     def getConnection(self):
-        self.voice_output.add_message("Bietigheim-Bissingen|Stuttgart Hbf, S5, 12:37 Uhr")
+        self.voice_output.add_message("Bietigheim-Bissingen|Stuttgart Hbf, S5, 12:37")
