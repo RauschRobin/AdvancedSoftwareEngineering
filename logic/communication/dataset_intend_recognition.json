@@ -1,0 +1,78 @@
+[
+    {
+        "recorded_voice_command": "Wann kommt mein Bus?",
+        "intent": "GetDeutscheBahnTrainOrBus"
+    },
+    {
+        "recorded_voice_command": "Wann beginnt heute meine Vorlesung?",
+        "intent": "GetNextDhbwLecture"
+    },
+    {
+        "recorded_voice_command": "Wann kommt der Zug?",
+        "intent": "GetDeutscheBahnTrainOrBus"
+    },
+    {
+        "recorded_voice_command": "Welchen Zug muss ich nehmen?",
+        "intent": "GetDeutscheBahnTrainOrBus"
+    },
+    {
+        "recorded_voice_command": "Welchen Bus muss ich nehmen?",
+        "intent": "GetDeutscheBahnTrainOrBus"
+    },
+    {
+        "recorded_voice_command": "Welche Bahn muss ich nehmen?",
+        "intent": "GetDeutscheBahnTrainOrBus"
+    },
+    {
+        "recorded_voice_command": "Wann kommt meine Ubahn?",
+        "intent": "GetDeutscheBahnTrainOrBus"
+    },
+    {
+        "recorded_voice_command": "Wann kommt mein Zug?",
+        "intent": "GetDeutscheBahnTrainOrBus"
+    },
+    {
+        "recorded_voice_command": "Wann kommt der Bus?",
+        "intent": "GetDeutscheBahnTrainOrBus"
+    },
+    {
+        "recorded_voice_command": "Welche Vorlesung habe ich gleich?",
+        "intent": "GetNextDhbwLecture"
+    },
+    {
+        "recorded_voice_command": "Um wie viel Uhr habe ich heute Vorlesung?",
+        "intent": "GetNextDhbwLecture"
+    },
+    {
+        "recorded_voice_command": "Um wie viel Uhr habe ich Vorlesung?",
+        "intent": "GetNextDhbwLecture"
+    },
+    {
+        "recorded_voice_command": "Wann habe ich Vorlesung?",
+        "intent": "GetNextDhbwLecture"
+    },
+    {
+        "recorded_voice_command": "Wann habe ich heute Vorlesung?",
+        "intent": "GetNextDhbwLecture"
+    },
+    {
+        "recorded_voice_command": "Was ist heute passiert?",
+        "intent": "GetNewsOfToday"
+    },
+    {
+        "recorded_voice_command": "Was war meine letzte erhaltene E-Mail?",
+        "intent": "GetLastReceivedEmail"
+    },
+    {
+        "recorded_voice_command": "Lese mir meine E-Mails vor",
+        "intent": "GetLastReceivedEmail"
+    },
+    {
+        "recorded_voice_command": "Habe ich neue E-Mails?",
+        "intent": "GetLastReceivedEmail"
+    },
+    {
+        "recorded_voice_command": "Gibt es Neuigkeiten in Roundcube?",
+        "intent": "GetLastReceivedEmail"
+    }
+]
