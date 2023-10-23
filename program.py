@@ -17,7 +17,7 @@ news = News(voice_output)
 terminplaner = Terminplaner(voice_output)
 
 # Initialize and start the feature modules
-features = [wakeup, ernaehrungsplaner, news, terminplaner]  # Add other feature modules here
+features = [wakeup, ernaehrungsplaner, news, terminplaner]  # Add all features here
 threads = []
 
 for feature in features:
