@@ -36,6 +36,13 @@ jobs:
         python -m pip install --upgrade pip
         pip install --upgrade wheel
         pip install -r requirements.txt
+
+    - name: Install additional test dependencies
+      run: |
+        pip install pandas
+        pip install speech_recognition
+        pip install gtts
+        
     - name: Lint with flake8
       run: |
         # stop the build if there are Python syntax errors or undefined names
