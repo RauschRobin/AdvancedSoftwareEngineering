@@ -40,7 +40,7 @@ jobs:
     - name: Install additional test dependencies
       run: |
         pip install pandas
-        pip install speech_recognition
+        pip install speechrecognition
         pip install gtts
         
     - name: Lint with flake8
