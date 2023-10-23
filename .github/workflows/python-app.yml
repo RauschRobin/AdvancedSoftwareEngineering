@@ -42,6 +42,7 @@ jobs:
         pip install pandas
         pip install speechrecognition
         pip install gtts
+        pip install scikit-learn
         
     - name: Lint with flake8
       run: |
