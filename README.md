@@ -15,4 +15,4 @@ tg: Ich habe ein Virtual Environment mit pyenv angelegt:
 Added dependencies:
 
 - `pip install beautifulsoup4`
-- `pip install lxml`
+- `pip install lxml` <-- Dont know if neccessary
