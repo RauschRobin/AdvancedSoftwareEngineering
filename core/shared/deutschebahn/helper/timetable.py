@@ -1,6 +1,9 @@
 
 
+import json
 import requests
+
+from bs4 import BeautifulSoup
 from .apiAuthentication import ApiAuthentication
 
 
@@ -12,12 +15,33 @@ class TimetableRequest():
     def execute(self):
         response = requests.get(self.url, headers=self.api.get_headers())
         if response.status_code == 200:
-            return response.text # response.text (xml)
+            soup = BeautifulSoup(response.text, "xml")
+
+            station_element = soup.find('timetable')
+            station_name = station_element.get('station')
+
+            timetable = []
+
+            for entry in soup.find_all('s'):
+                tl = entry.tl.attrs
+                ar = entry.ar.attrs
+                dp = entry.dp.attrs
+
+                timetable.append({
+                    'tl': tl,
+                    'ar': ar,
+                    'dp': dp
+                })
+
+            json_data = {
+                'station': station_name,
+                'timetable': timetable
+            }
+
+            return json_data
         else:
             return None
 
-# Decorator Pattern
-# Use default Timetable and decorate the timetable (filtering) by specific usecases
 # Component interface
 class Timetable:
     def __init__(self):
@@ -28,7 +52,7 @@ class Timetable:
 
 # Concrete Component
 class SimpleTimetable(Timetable):
-    # Timetable as XML
+    # Timetable as JSON
     def __init__(self, timetable):
         self.timetable = timetable
 
@@ -52,9 +76,20 @@ class FilterByLine(TimetableDecorator):
 
     def data(self):
         # add filter logic by Line
-        useData = self.timetable.data()
-        fileredData = useData
-        return fileredData + f" filtered by Line: {self.line}"
+        use_data = self.timetable.data()
+        filtered_data = [
+            item for item in use_data['timetable']
+            if 'ar' in item and 'l' in item['ar'] and item['ar']['l'] == self.line
+        ]
+                
+        filtered_data_json = {
+            'station': use_data['station'],
+            'timetable': filtered_data
+        }
+
+        filtered_data_json = json.dumps(filtered_data_json)
+
+        return filtered_data_json
     
 class FilterByDestination(TimetableDecorator):
     def __init__(self, timetable, destination: str):
@@ -63,6 +98,16 @@ class FilterByDestination(TimetableDecorator):
 
     def data(self):
         # add filter logic by Destination
-        useData = self.timetable.data()
-        fileredData = useData
-        return fileredData + f" filtered by Destination: {self.destination}"
+        use_data = self.timetable.data()
+        filered_data = [
+            item for item in use_data['timetable']
+            if self.destination in item['dp']['ppth']
+        ]
+
+        filteredJsonData = {
+            'station': use_data['station'],
+            'timetable': filered_data
+        }
+
+        filtered_data_json = json.dumps(filteredJsonData)
+        return filtered_data_json
