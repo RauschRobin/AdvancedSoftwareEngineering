@@ -42,7 +42,7 @@ jobs:
           pip install speechrecognition
           pip install gtts
           pip install scikit-learn
-          pip install yaml
+          pip install pyyaml
           pip install beautifulsoup4
 
       - name: Lint with flake8
