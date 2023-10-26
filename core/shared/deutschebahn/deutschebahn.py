@@ -1,6 +1,8 @@
 
-from .helper.station import StationRequest
-from .helper.timetable import FilterByDestination, FilterByLine, SimpleTimetable, TimetableRequest
+from .helper.apiAuthenticationSingleton import ApiAuthenticationSingleton
+from .helper.stationRequest import StationRequest
+from .helper.timetable import FilterByDestination, FilterByLine, SimpleTimetable
+from .helper.timetableRequest import TimetableRequest
 from ...communication.voice_output import VoiceOutput
 # Inspiration from: https://pypi.org/project/deutsche-bahn-api/
 
@@ -48,11 +50,6 @@ class DeutscheBahn:
 
         return filter_by_destination.data()
     
-
-
-
-
-
 
 
 

@@ -1,11 +1,11 @@
 from bs4 import BeautifulSoup
 import requests
 
-from .apiAuthentication import ApiAuthentication
+from .apiAuthenticationSingleton import ApiAuthenticationSingleton
 
 class StationRequest(): 
     def __init__(self, station_name):
-        self.api = ApiAuthentication("", "")
+        self.api = ApiAuthenticationSingleton()
         self.url = f"https://apis.deutschebahn.com/db-api-marketplace/apis/timetables/v1/station/{station_name}"
 
     def execute(self):
@@ -15,12 +15,12 @@ class StationRequest():
 
             station_tag = soup.find('station')
 
-            meta = station_tag['meta']
+            #meta = station_tag['meta']
             name = station_tag['name']
             eva = station_tag['eva']
-            ds100 = station_tag['ds100']
+            #ds100 = station_tag['ds100']
             db = station_tag['db']
-            creationts = station_tag['creationts']
+            #creationts = station_tag['creationts']
 
             json_data = {
                 'name': name,
