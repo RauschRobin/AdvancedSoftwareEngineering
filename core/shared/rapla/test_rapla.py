@@ -1,7 +1,7 @@
 import unittest
 import datetime
 import dateutil.relativedelta as rd
-from ..rapla import Rapla # TODO: relativen Pfad from 'rapla' finden und Klasse Rapla importieren
+from rapla import Rapla # TODO: relativen Pfad from 'rapla' finden und Klasse Rapla importieren
 
 class TestRapla(unittest.TestCase):
     def setUp(self):
@@ -33,3 +33,6 @@ class TestRapla(unittest.TestCase):
             first_monday_of_year = first_day_of_year - rd.relativedelta(days=(first_day_of_year.weekday() - 1))
         expected = (first_monday_of_year + rd.relativedelta(days=((43 - 1) * 7 + 3))).date()
         self.assertEqual(result, expected, "Fehler in get_date_from_week Methode")
+
+if __name__ == '__main__':
+    unittest.main()
