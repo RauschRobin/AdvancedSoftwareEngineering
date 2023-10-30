@@ -1,17 +1,11 @@
 import threading
 import speech_recognition as sr
 from ..communication.intend_recognition import IntendRecognizer
-from ..features.wakeup.wakeup import WakeUpAssistant
-from ..features.ernaehrungsplaner.ernaehrungsplaner import Ernaehrungsplaner
-from ..features.news.news import News
-from ..features.terminplaner.terminplaner import Terminplaner
+from FeatureComposite import FeatureComposite
 
 class VoiceInput:
-    def __init__(self, wakeup:WakeUpAssistant, ernaehrungsplaner:Ernaehrungsplaner, news:News, terminplaner:Terminplaner, language="de-DE"):
-        self.wakeup = wakeup
-        self.ernaehrungsplaner = ernaehrungsplaner
-        self.news = news
-        self.terminplaner = terminplaner
+    def __init__(self, featureComposite:FeatureComposite, language="de-DE"):
+        self.featureComposite = featureComposite
         self.recognizer = sr.Recognizer()
         self.intent_recognizer = IntendRecognizer()
         self.language = language
@@ -69,7 +63,7 @@ class VoiceInput:
                 return
             case "GetDeutscheBahnTrainOrBus":
                 # call function
-                self.wakeup.deutsche_bahn.getConnection()
+                self.featureComposite.call_feature_method("getNextPlannedDbConnection")
                 print("COMMAND: GetDeutscheBahnTrainOrBus")
                 return
             # ...

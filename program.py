@@ -5,6 +5,7 @@ from core.features.wakeup.wakeup import WakeUpAssistant
 from core.features.ernaehrungsplaner.ernaehrungsplaner import Ernaehrungsplaner
 from core.features.news.news import News
 from core.features.terminplaner.terminplaner import Terminplaner
+from FeatureComposite import FeatureComposite
 
 # Start the voice of carschten
 voice_output = VoiceOutput()
@@ -25,8 +26,11 @@ for feature in features:
     threads.append(thread)
     thread.start()
 
-# Start the user input handler and pass them the features so that they can be accessed via voice commands
-voice_input = VoiceInput(wakeup, ernaehrungsplaner, news, terminplaner)
+# Create a composite of all features
+feature_composite = FeatureComposite(features)
+
+# Pass the composite to the VoiceInput instance
+voice_input = VoiceInput(feature_composite)
 voice_input.start()
 
 # Main class to coordinate features and user input
