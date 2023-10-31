@@ -2,12 +2,9 @@ import requests
 from bs4 import BeautifulSoup
 from .week_and_days_handling import WeekAndDaysHandling as wdh
 import json
-from ..PreferencesFetcher.PreferencesFetcher import PreferencesFetcher as pf
-
-rapla_url = pf.fetch("rapla-url")
 
 class Rapla:
-    def __init__(self, rapla_url=rapla_url):
+    def __init__(self, rapla_url):
         self.rapla_url = rapla_url
 
     def get_week_data(self, calendar_week, year):

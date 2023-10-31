@@ -7,7 +7,8 @@ from ...shared.PreferencesFetcher.PreferencesFetcher import PreferencesFetcher
 
 class WakeUpAssistant:
     def __init__(self, voice_output:VoiceOutput):
-        self.rapla = Rapla()
+        rapla_url = PreferencesFetcher.fetch("rapla-url")
+        self.rapla = Rapla(rapla_url)
         self.voice_output = voice_output
         self.deutsche_bahn = DeutscheBahn(voice_output)
         self.wakeUpTimeNeeded = PreferencesFetcher.fetch("wake-up-time-in-minutes")
