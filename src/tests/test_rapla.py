@@ -1,7 +1,7 @@
 import unittest
 import datetime
 import dateutil.relativedelta as rd
-from ..core.shared.rapla.rapla import Rapla # TODO: relativen Pfad from 'rapla' finden und Klasse Rapla importieren
+from ..core.shared.rapla.rapla import Rapla
 
 
 class TestRapla(unittest.TestCase):
