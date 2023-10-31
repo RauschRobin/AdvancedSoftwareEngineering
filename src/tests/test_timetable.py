@@ -1,5 +1,5 @@
 import json
-from ..helper.timetable import FilterByDestination, FilterByLine, SimpleTimetable
+from ..core.shared.deutschebahn.helper.timetable import FilterByDestination, FilterByLine, SimpleTimetable
 
 def test_simple_timetable():
     timetable_data = {"station": "Stuttgart Hbf (tief)", "timetable": [{"entry1": "data1"}, {"entry2": "data2"}]}

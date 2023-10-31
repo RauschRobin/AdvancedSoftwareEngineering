@@ -1,5 +1,5 @@
 import pytest
-from ..intend_recognition import IntendRecognizer
+from ..core.communication.intend_recognition import IntendRecognizer
 
 # Create an instance of the IntendRecognizer for testing
 intend_recognizer = IntendRecognizer()

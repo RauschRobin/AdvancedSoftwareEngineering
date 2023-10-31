@@ -30,3 +30,6 @@ class WakeUpAssistant:
                 print(message)
                 self.voice_output.add_message(message)
             time.sleep(60)  # Sleep for 1 minute before checking again
+
+    def getNextPlannedDbConnection(self):
+        self.voice_output.add_message("Dein nächster Zug kommt in 20 Minuten auf Gleis 7 und fährt nach Bietigheim-Bissingen")
