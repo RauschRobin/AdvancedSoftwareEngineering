@@ -1,7 +1,7 @@
-from core.features.wakeup.wakeup import WakeUpAssistant
-from core.features.ernaehrungsplaner.ernaehrungsplaner import Ernaehrungsplaner
-from core.features.news.news import News
-from core.features.terminplaner.terminplaner import Terminplaner
+from ..features.wakeup.wakeup import WakeUpAssistant
+from ..features.ernaehrungsplaner.ernaehrungsplaner import Ernaehrungsplaner
+from ..features.news.news import News
+from ..features.terminplaner.terminplaner import Terminplaner
 
 class FeatureComposite:
     '''

@@ -5,7 +5,7 @@ from core.features.wakeup.wakeup import WakeUpAssistant
 from core.features.ernaehrungsplaner.ernaehrungsplaner import Ernaehrungsplaner
 from core.features.news.news import News
 from core.features.terminplaner.terminplaner import Terminplaner
-from FeatureComposite import FeatureComposite
+from core.communication.FeatureComposite import FeatureComposite
 
 # Start the voice of carschten
 voice_output = VoiceOutput()

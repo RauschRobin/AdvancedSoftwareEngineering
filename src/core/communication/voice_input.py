@@ -1,7 +1,7 @@
 import threading
 import speech_recognition as sr
 from ..communication.intend_recognition import IntendRecognizer
-from FeatureComposite import FeatureComposite
+from ..communication.FeatureComposite import FeatureComposite
 
 class VoiceInput:
     def __init__(self, featureComposite:FeatureComposite, language="de-DE"):

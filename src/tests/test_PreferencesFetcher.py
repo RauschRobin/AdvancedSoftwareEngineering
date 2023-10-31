@@ -1,6 +1,6 @@
 from unittest.mock import mock_open, patch
 import yaml
-from ..PreferencesFetcher import PreferencesFetcher
+from ..core.shared.PreferencesFetcher.PreferencesFetcher import PreferencesFetcher
 import pytest
 
 class TestPreferencesFetcher:
