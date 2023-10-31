@@ -23,7 +23,7 @@ class WakeUpAssistant:
         self.voice_output.add_message("Aufwach-Assistent wurde gestartet.")
         while True:
             print("checking rapla")
-            self.voice_output.add_message(self.rapla.getRaplaTimeTableOfGivenWeek(1))
+            # self.voice_output.add_message(self.rapla.getRaplaTimeTableOfGivenWeek(1))
             now = datetime.datetime.now()
             if now.hour == 8 and now.minute == 0:
                 message = "Good morning! It's 8:00 AM."

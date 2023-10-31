@@ -1,13 +1,10 @@
 import unittest
 import datetime
 import dateutil.relativedelta as rd
-# from ..core.shared.rapla.rapla import Rapla
 from ..core.shared.rapla.week_and_days_handling import WeekAndDaysHandling as wdh
 
 
 class TestRapla(unittest.TestCase):
-    # def setUp(self):
-        # self.rapla = Rapla()
 
     def test_get_current_calendar_week(self):
         result = wdh.get_current_calendar_week()

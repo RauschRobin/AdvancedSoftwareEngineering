@@ -1,10 +1,13 @@
 import requests
 from bs4 import BeautifulSoup
-from week_and_days_handling import WeekAndDaysHandling as wdh
+from .week_and_days_handling import WeekAndDaysHandling as wdh
 import json
+from ..PreferencesFetcher.PreferencesFetcher import PreferencesFetcher as pf
+
+rapla_url = pf.fetch("rapla-url")
 
 class Rapla:
-    def __init__(self, rapla_url="https://rapla.dhbw.de/rapla/internal_calendar?key=YFQc7NlGleuSdybxizoa8NHjLLNjd9D6tjBdAvDwwzXobLEfUIsCXHwYu-Ma7QfggMDkLLj1CsQ-kB7hFJSGjcrCTGDFdUXDv_NNHoHvSJP_dG36z7u1r9aZLrggiD92Gryjvwt1kpad5g93Dkdn0A&salt=1046252309&day=3&month=10&year=2023&goto=Datum+anzeigen&pages=12#6"):
+    def __init__(self, rapla_url=rapla_url):
         self.rapla_url = rapla_url
 
     def get_week_data(self, calendar_week, year):
