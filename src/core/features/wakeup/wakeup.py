@@ -7,7 +7,8 @@ from ...shared.PreferencesFetcher.PreferencesFetcher import PreferencesFetcher
 
 class WakeUpAssistant:
     def __init__(self, voice_output:VoiceOutput):
-        self.rapla = Rapla()
+        rapla_url = PreferencesFetcher.fetch("rapla-url")
+        self.rapla = Rapla(rapla_url)
         self.voice_output = voice_output
         self.deutsche_bahn = DeutscheBahn(voice_output)
         self.wakeUpTimeNeeded = PreferencesFetcher.fetch("wake-up-time-in-minutes")
@@ -23,7 +24,7 @@ class WakeUpAssistant:
         self.voice_output.add_message("Aufwach-Assistent wurde gestartet.")
         while True:
             print("checking rapla")
-            self.voice_output.add_message(self.rapla.getRaplaTimeTableOfGivenWeek(1))
+            # self.voice_output.add_message(self.rapla.getRaplaTimeTableOfGivenWeek(1))
             now = datetime.datetime.now()
             if now.hour == 8 and now.minute == 0:
                 message = "Good morning! It's 8:00 AM."
