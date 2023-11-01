@@ -1,3 +1,4 @@
 user_preferences:
-  wake-up-time-in-minutes: 60
+  wake-up-time-in-minutes: 50
+  time-to-walk-to-university: 20
   rapla-url: "https://rapla.dhbw.de/rapla/internal_calendar?key=YFQc7NlGleuSdybxizoa8NHjLLNjd9D6tjBdAvDwwzXobLEfUIsCXHwYu-Ma7QfggMDkLLj1CsQ-kB7hFJSGjcrCTGDFdUXDv_NNHoHvSJP_dG36z7u1r9aZLrggiD92Gryjvwt1kpad5g93Dkdn0A&salt=1046252309&day=3&month=10&year=2023&goto=Datum+anzeigen&pages=12#6"

@@ -1,7 +1,7 @@
 import datetime
 import dateutil.relativedelta as rd
 
-class WeekAndDaysHandling:
+class DateParser:
     @staticmethod
     def get_current_calendar_week():
         calendar_week = datetime.datetime.now().isocalendar()[1]
@@ -34,16 +34,15 @@ class WeekAndDaysHandling:
     
     @staticmethod
     def get_date_from_week(year, calendar_week, day_counter):
-        # Berechnen Sie das Datum des ersten Tages des Jahres
-        first_day_of_year = datetime.datetime(year, 1, 1)
+        if day_counter < 0 or day_counter > 6:
+            raise OverflowError("Day counter must be between 0 and 6")
+        # Create a date for the first day of the specified year
+        first_day_of_year = datetime.date(year, 1, 1)
 
-        # Berechnen Sie das Datum des ersten Montags des Jahres
-        if first_day_of_year.weekday() > 3:
-            first_monday_of_year = first_day_of_year + rd.relativedelta(days=(7 - first_day_of_year.weekday() + 1))
-        else:
-            first_monday_of_year = first_day_of_year - rd.relativedelta(days=(first_day_of_year.weekday() - 1))
+        # Calculate the date for the first day (Monday) of the specified calendar_week
+        first_day_of_week = first_day_of_year + datetime.timedelta(days=(calendar_week) * 7 - first_day_of_year.weekday())
 
-        # Berechnen Sie das Datum basierend auf der Kalenderwoche und dem Wochentag
-        date = first_monday_of_year + rd.relativedelta(days=((calendar_week - 1) * 7 + day_counter))
-
-        return date.date()
+        # Calculate the date of the specified day within the week
+        target_date = first_day_of_week + datetime.timedelta(days=day_counter)
+        return target_date
+    

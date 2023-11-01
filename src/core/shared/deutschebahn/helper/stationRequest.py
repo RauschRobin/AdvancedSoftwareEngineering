@@ -1,6 +1,5 @@
 from bs4 import BeautifulSoup
 import requests
-
 from .apiAuthenticationSingleton import ApiAuthenticationSingleton
 
 class StationRequest(): 
@@ -11,6 +10,7 @@ class StationRequest():
     def execute(self):
         response = requests.get(self.url, headers=self.api.get_headers())
         if response.status_code == 200:
+            print(response.text)
             soup = BeautifulSoup(response.text, 'xml')
 
             station_tag = soup.find('station')
