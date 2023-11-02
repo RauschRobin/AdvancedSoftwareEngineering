@@ -14,7 +14,7 @@ class WakeUpAssistant:
         self.rapla = Rapla(rapla_url)
         self.deutsche_bahn = DeutscheBahn()
         self.wakeUpTimeNeeded = PreferencesFetcher.fetch("wake-up-time-in-minutes")
-        self.timeToWalkToUniversity = PreferencesFetcher.fetch("time-to-walk-to-university")
+        self.timeToWalkToUniversity = PreferencesFetcher.fetch("time-to-walk-to-university-from-station")
         self.currentWeekTimeTable = json.loads(self.rapla.fetchLecturesOfWeek(dp.get_current_calendar_week(), datetime.datetime.now().isocalendar()[0]))
         self.currentCalendarWeek = dp.get_current_calendar_week()
         self.localTrainStationDetails = self.deutsche_bahn.getStationDetailByStationname("Ludwigsburg")
@@ -24,6 +24,13 @@ class WakeUpAssistant:
         self.startWakeUpAssistant()
 
     def startWakeUpAssistant(self):
+        '''
+        This method starts the wakeup assistant loop and checks every minute if it is time to wake up.
+        It also handles the logic for deutschebahn and rapla.
+
+        Parameters: None
+        Returns: None
+        '''
         if self.voice_output == None:
             print("No voice output!")
             raise SystemError("WakeUp has no instance of VoiceOutput")
@@ -68,10 +75,15 @@ class WakeUpAssistant:
     def getWakeUpTimeForNextLecture(self):
         nextLecture = self.getNextLecture()
         nextTrainToTake = self.getTrainConnectionForLecture(nextLecture)
+        #wakeuptime = nextTrainToTake.time_start - datetime.timedelta(minutes=self.wakeUpTimeNeeded)
+        #return wakeuptime
     
     def getTrainConnectionForLecture(self, lecture):
         lectureStartTime = datetime.datetime.strptime(lecture["lecture"]["time_start"], "%H:%M")
         trainArrivalTime = lectureStartTime - datetime.timedelta(minutes=self.timeToWalkToUniversity)
-        print(self.deutsche_bahn.getTimetableByDestinationStationidDateHour("Stuttgart Hbf", self.localTrainStationDetails, "011123", "16"))
+        train_info = json.loads(self.deutsche_bahn.getTimetableByDestinationStationidDateHour("Stuttgart", self.localTrainStationDetails['eva'], "231102", (trainArrivalTime - datetime.timedelta(hours=1)).strftime("%H")))
+        print(train_info)
+        return train_info
 
-# TODO: Implement function to figure our if lecture is first lecture of the day
+# TODO: 
+# Implement function to figure our if lecture is first lecture of the day

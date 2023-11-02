@@ -37,3 +37,4 @@ class TimetableRequest():
             return json_data
         else:
             return None
+        

@@ -15,7 +15,6 @@ class DeutscheBahn:
         """
         station_request = StationRequest(station_name)
         station = station_request.execute()
-
         return station
 
     def getTimetableByLineStationidDateHour(self, line: str, station_id: str, date: str, hour: str):

@@ -8,10 +8,9 @@ class StationRequest():
         self.url = f"https://apis.deutschebahn.com/db-api-marketplace/apis/timetables/v1/station/{station_name}"
 
     def execute(self):
-        response = requests.get(self.url, headers=self.api.get_headers())
+        response = requests.get(self.url, headers=self.api.get_headers(), timeout=10)
         if response.status_code == 200:
-            print(response.text)
-            soup = BeautifulSoup(response.text, 'xml')
+            soup = BeautifulSoup(response.text, 'lxml')
 
             station_tag = soup.find('station')
 
@@ -28,8 +27,7 @@ class StationRequest():
                 'db': db
             }
 
-            print(json_data)
-
             return json_data
         else:
             return None
+        
