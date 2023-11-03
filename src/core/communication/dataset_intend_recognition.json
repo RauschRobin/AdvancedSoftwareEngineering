@@ -4,7 +4,7 @@
         "intent": "GetDeutscheBahnTrainOrBus"
     },
     {
-        "recorded_voice_command": "Wann beginnt heute meine Vorlesung?",
+        "recorded_voice_command": "Wann beginnt meine nächste Vorlesung?",
         "intent": "GetNextDhbwLecture"
     },
     {
@@ -70,6 +70,22 @@
     {
         "recorded_voice_command": "Habe ich neue E-Mails?",
         "intent": "GetLastReceivedEmail"
+    },
+    {
+        "recorded_voice_command": "Wann habe ich Hochschule?",
+        "intent": "GetNextDhbwLecture"
+    },
+    {
+        "recorded_voice_command": "Welche Vorlesung habe ich nachher?",
+        "intent": "GetNextDhbwLecture"
+    },
+    {
+        "recorded_voice_command": "Welchen Dozent habe ich nachher?",
+        "intent": "GetNextDhbwLecture"
+    },
+    {
+        "recorded_voice_command": "Welches Fach habe ich als nächstes?",
+        "intent": "GetNextDhbwLecture"
     },
     {
         "recorded_voice_command": "Gibt es Neuigkeiten in Roundcube?",

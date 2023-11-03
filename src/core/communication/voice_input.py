@@ -75,7 +75,7 @@ class VoiceInput:
         command = self.intent_recognizer.recognize_intend(recognized_text)
         match command:
             case "GetNextDhbwLecture":
-                # call function
+                self.featureComposite.call_feature_method("readNextDhbwLecture")
                 print("COMMAND: GetNextDhbwLecture")
                 return
             case "GetNewsOfToday":

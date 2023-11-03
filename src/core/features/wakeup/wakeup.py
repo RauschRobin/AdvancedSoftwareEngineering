@@ -1,6 +1,7 @@
 import time
 import datetime
 import json
+import random
 from ...shared.rapla.rapla import Rapla
 from ...communication.voice_output import VoiceOutput
 from ...shared.deutschebahn.deutschebahn import DeutscheBahn
@@ -133,15 +134,31 @@ class WakeUpAssistant:
         for other_lecture in lectures_for_day:
             if other_lecture != lecture:
                 other_lecture_start_time = datetime.datetime.strptime(other_lecture["lecture"]["time_start"], '%H:%M')
-                print(other_lecture)
-                print(other_lecture_start_time)
-                print(lecture_start_time)
                 if lecture_start_time > other_lecture_start_time:
                     return False
-
-        print(lecture)
         return True
-    
+
+    def readNextDhbwLecture(self):
+        nextLecture = self.getNextLecture()
+        date = nextLecture['lecture']['date']
+        time_start = nextLecture['lecture']['time_start']
+        time_end = nextLecture['lecture']['time_end']
+        subject = nextLecture['lecture']['subject']
+        prof = nextLecture['lecture']['prof']
+        room = nextLecture['lecture']['room']
+
+        statements = [
+            f"Am {date} von {time_start} bis {time_end} findet die Vorlesung über '{subject}' statt, geleitet von Professor {prof}, im Raum {room}.",
+            f"Die Vorlesung mit dem Thema '{subject}' wird am {date} von {time_start} bis {time_end} von Professor {prof} im Raum {room} abgehalten.",
+            f"Merkt euch den {date}, denn da wird eine Vorlesung mit dem Titel '{subject}' von Professor {prof} in Raum {room} stattfinden, beginnend um {time_start}.",
+            f"Am {date} könnt ihr eine Vorlesung über '{subject}' besuchen, die von Professor {prof} von {time_start} bis {time_end} im Raum {room} abgehalten wird.",
+            f"Professor {prof} wird am {date} von {time_start} bis {time_end} eine Vorlesung über '{subject}' im Raum {room} geben.",
+        ]
+
+        message = random.choice(statements)
+        print(message)
+        self.voice_output.add_message(message)
+
 '''
 EXAMPLE RAPLA WEEK TIMETABLE RESPONSE
     {
