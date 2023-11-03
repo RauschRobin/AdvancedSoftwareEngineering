@@ -56,6 +56,10 @@ class FilterByDestination(TimetableDecorator):
     def data(self):
         # add filter logic by Destination
         use_data = self.timetable.data()
+
+        if use_data is None:
+            return "[]"
+
         filered_data = [
             item for item in use_data['timetable']
             if self.destination in item['dp']['ppth']
