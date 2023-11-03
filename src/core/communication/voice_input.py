@@ -88,7 +88,7 @@ class VoiceInput:
                 return
             case "GetDeutscheBahnTrainOrBus":
                 # call function
-                self.featureComposite.call_feature_method("getNextPlannedDbConnection")
+                # self.featureComposite.call_feature_method("getNextPlannedDbConnection") # function does not exist anymore
                 print("COMMAND: GetDeutscheBahnTrainOrBus")
                 return
             # ...
