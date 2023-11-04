@@ -67,3 +67,30 @@ class Rapla:
         # Convert the Python object to a JSON string
         json_string = json.dumps(lecture_data)
         return json_string
+
+    def compareTimetablesAndRespondWithLecturesThatChanged(self, timetable1, timetable2):
+        changed_lectures = []
+
+        # Iterate through the days of the week
+        days_of_week = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
+        for day in days_of_week:
+            lectures1 = timetable1.get(day, [])
+            lectures2 = timetable2.get(day, [])
+
+            # Check if there are any lectures for this day
+            if lectures1 and lectures2:
+                # Compare the lectures for this day
+                for lecture1 in lectures1:
+                    for lecture2 in lectures2:
+                        # Check if the lectures are for the same date and time
+                        if lecture1['lecture']['date'] == lecture2['lecture']['date'] and \
+                        lecture1['lecture']['time_start'] == lecture2['lecture']['time_start'] and \
+                        lecture1['lecture']['time_end'] == lecture2['lecture']['time_end']:
+                            # Check if the other details have changed
+                            if lecture1['lecture'] != lecture2['lecture']:
+                                changed_lectures.append({
+                                    'old_lecture': lecture1['lecture'],
+                                    'new_lecture': lecture2['lecture']
+                                })
+
+        return changed_lectures

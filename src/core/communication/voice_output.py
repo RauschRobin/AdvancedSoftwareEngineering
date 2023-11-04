@@ -37,6 +37,7 @@ class VoiceOutput(metaclass=SingletonMeta):
         while self.is_running:
             if self.message_queue:
                 text = self.message_queue.pop(0)
+                print("VoiceOutput: " + text)
                 self.text_to_speech(text)
 
     def add_message(self, message):

@@ -1,12 +1,16 @@
 import time
 import datetime
 import json
+import os
 import random
+from playsound import playsound
 from ...shared.rapla.rapla import Rapla
 from ...communication.voice_output import VoiceOutput
 from ...shared.deutschebahn.deutschebahn import DeutscheBahn
 from ...shared.PreferencesFetcher.PreferencesFetcher import PreferencesFetcher
 from ...shared.rapla.DateParser import DateParser as dp
+
+alarm_sound_file = os.path.join(os.path.dirname(__file__), "alarm_sound.mp3")
 
 class WakeUpAssistant:
     def __init__(self, voice_output:VoiceOutput):
@@ -20,8 +24,6 @@ class WakeUpAssistant:
 
         self.deutsche_bahn = DeutscheBahn()
         self.localTrainStationDetails = self.deutsche_bahn.getStationDetailByStationname(self.localTrainStationName)
-
-        self.getWakeUpTimeForNextMorning()
 
     def loadPreferences(self):
         self.rapla_url = PreferencesFetcher.fetch("rapla-url")
@@ -41,25 +43,38 @@ class WakeUpAssistant:
         Returns: None
         '''
         if self.voice_output == None:
-            print("No voice output!")
             raise SystemError("WakeUp has no instance of VoiceOutput")
         
+        wakeUpTime = None
         while True:
             now = datetime.datetime.now()
-
-            wakeUpTime = self.getWakeUpTimeForNextMorning()
-            # Wake the user up if it's wakeuptime
-            if now.date() == wakeUpTime.date() and now.hour == wakeUpTime.hour and now.minute == wakeUpTime.minute:
-                # TODO: play alarm sound here
-                message = "Guten morgen. Es ist 08:00 Uhr."
-                self.voice_output.add_message(message)
 
             # When a new week begins, the new timetable gets fetched and stored
             if self.currentCalendarWeek != dp.get_current_calendar_week():
                 self.currentCalendarWeek = dp.get_current_calendar_week()
                 self.currentWeekTimeTable = json.loads(self.rapla.fetchLecturesOfWeek(dp.get_current_calendar_week(), datetime.datetime.now().isocalendar()[0]))
+            
+            nextLecture = self.getNextLecture()
+            if nextLecture["lecture"]["date"] == now.date() or nextLecture["lecture"]["date"] == now.date() + datetime.timedelta(days=1) and nextLecture["lecture"]["time_start"] <= now.time():
+                wakeUpTime = self.getWakeUpTimeForNextMorning(nextLecture)
 
-            # TODO: set wakeuptime here
+            # Wake the user up if it's wakeuptime
+            if wakeUpTime:
+                if now.date() == wakeUpTime.date() and now.hour == wakeUpTime.hour and now.minute == wakeUpTime.minute:
+                    playsound(alarm_sound_file)
+                    message = "Guten morgen. Es ist 08:00 Uhr."
+                    self.voice_output.add_message(message)
+                
+            # check if the rapla timetable changed and tell user about it
+            if now.minute == 30:
+                updatedWeekTimeTable = json.loads(self.rapla.fetchLecturesOfWeek(dp.get_current_calendar_week(), datetime.datetime.now().isocalendar()[0]))
+                lectureChanges = self.rapla.compareTimetablesAndRespondWithLecturesThatChanged(self.currentWeekTimeTable, updatedWeekTimeTable)
+                if lectureChanges != []:
+                    for lecture in lectureChanges:
+                        # TODO: improve the voice output message on what lectures have changed
+                        self.voice_output.add_message("Diese Vorlesungen haben sich soeben geändert:")
+                        self.voice_output.add_message(lecture)
+                    self.currentWeekTimeTable = updatedWeekTimeTable
 
             time.sleep(60)  # Sleep for 1 minute before checking again
 
@@ -85,9 +100,7 @@ class WakeUpAssistant:
             current_timetable = json.loads(self.rapla.fetchLecturesOfWeek(current_week, current_datetime.isocalendar()[0]))
         return None
     
-    def getWakeUpTimeForNextMorning(self):
-        nextLecture = self.getNextLecture()
-
+    def getWakeUpTimeForNextMorning(self, nextLecture):
         if nextLecture is None:
             print("No upcoming lectures.")
             return None
@@ -97,9 +110,8 @@ class WakeUpAssistant:
 
         if self.isLectureFirstOfTheDay(nextLecture):
             wakeupTime = self.trainDepartureTime - datetime.timedelta(minutes=self.wakeUpTimeNeeded)
+            # TODO: implement date switch and test functionality!
             # wakeupTime = wakeupTime.replace(year=, month=, day=)
-            print(bestConnection)
-            print(wakeupTime)
             return wakeupTime
         else:
             # The lecture is not the first of the day
@@ -111,12 +123,6 @@ class WakeUpAssistant:
         nextLectureDate = lecture["lecture"]["date"].replace("-", "")
         parsed_date = datetime.datetime.strptime(nextLectureDate, "%Y%m%d")
         formatted_date = parsed_date.strftime("%y%m%d")
-        print(self.localTrainStationDetails['eva'])
-        print(formatted_date)
-        print(self.trainDepartureTime.strftime("%H"))
-        print(type(self.localTrainStationDetails['eva']))
-        print(type(formatted_date))
-        print(type(self.trainDepartureTime.strftime("%H")))
         api_response = json.loads(self.deutsche_bahn.getTimetableByDestinationStationidDateHour("Stuttgart", self.localTrainStationDetails['eva'], formatted_date, self.trainDepartureTime.strftime("%H")))
 
         if api_response == []:
@@ -189,7 +195,6 @@ class WakeUpAssistant:
         ]
 
         message = random.choice(statements)
-        print(message)
         self.voice_output.add_message(message)
 
 '''
