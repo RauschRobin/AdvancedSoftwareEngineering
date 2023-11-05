@@ -88,6 +88,8 @@ class WakeUpAssistant:
                 if now.date() == wakeUpTime.date() and now.hour == wakeUpTime.hour and now.minute == wakeUpTime.minute:
                     playsound(alarm_sound_file)
                     self.voice_output.add_message("Guten morgen. Es ist Zeit aufzustehen.")
+                    self.getNextLecture()
+                    self.getTrainConnectionForNextLecture()
                 
             # check if the rapla timetable changed and tell user about it
             if now.minute == 30:
