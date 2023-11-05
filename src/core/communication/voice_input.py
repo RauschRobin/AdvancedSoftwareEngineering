@@ -75,8 +75,8 @@ class VoiceInput:
         command = self.intent_recognizer.recognize_intend(recognized_text)
         match command:
             case "GetNextDhbwLecture":
-                self.featureComposite.call_feature_method("readNextDhbwLecture")
                 print("COMMAND: GetNextDhbwLecture")
+                self.featureComposite.call_feature_method("readNextDhbwLecture")
                 return
             case "GetNewsOfToday":
                 # call function
@@ -87,9 +87,13 @@ class VoiceInput:
                 print("COMMAND: GetLastReceivedEmail")
                 return
             case "GetDeutscheBahnTrainOrBus":
-                # call function
-                # self.featureComposite.call_feature_method("getNextPlannedDbConnection") # function does not exist anymore
                 print("COMMAND: GetDeutscheBahnTrainOrBus")
+                self.featureComposite.call_feature_method("getTrainConnectionForNextLecture")
+                return
+            case "GetWakeUpTime":
+                # call function
+                print("COMMAND: GetWakeUpTime")
+                self.featureComposite.call_feature_method("getWakeUpTimeForNextMorning")
                 return
             # ...
             case _:

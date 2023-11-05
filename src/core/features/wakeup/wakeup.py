@@ -13,7 +13,17 @@ from ...shared.rapla.DateParser import DateParser as dp
 alarm_sound_file = os.path.join(os.path.dirname(__file__), "alarm_sound.mp3")
 
 class WakeUpAssistant:
+    '''
+    This class is a feature class that is responsible for waking the user up in the morning. It also manages the train and rapla logic.
+    '''
+    
     def __init__(self, voice_output:VoiceOutput):
+        '''
+        This is the constructor that sets the voice_output and initializes this class.
+
+        Parameters: voice_output (VoiceOutput)
+        Returns: None
+        '''
         self.voice_output = voice_output
         self.loadPreferences()
 
@@ -24,14 +34,27 @@ class WakeUpAssistant:
 
         self.deutsche_bahn = DeutscheBahn()
         self.localTrainStationDetails = self.deutsche_bahn.getStationDetailByStationname(self.localTrainStationName)
+        self.nextLecture = self.getNextLecture()
 
     def loadPreferences(self):
+        '''
+        This methods loads all the preferences used in this class and stores them in variables.
+
+        Parameters: None
+        Returns: None
+        '''
         self.rapla_url = PreferencesFetcher.fetch("rapla-url")
         self.wakeUpTimeNeeded = PreferencesFetcher.fetch("wake-up-time-in-minutes")
         self.timeItTakesFromHomeStationToUniversity = PreferencesFetcher.fetch("travel-time-from-home-station-to-university-via-train")
         self.localTrainStationName = PreferencesFetcher.fetch("home-train-station-name")
 
     def run(self):
+        '''
+        This starts the loop for the wakeup assistant.
+
+        Parameters: None
+        Returns: None
+        '''
         self.startAndRunWakeUpAssistant()
 
     def startAndRunWakeUpAssistant(self):
@@ -54,16 +77,17 @@ class WakeUpAssistant:
                 self.currentCalendarWeek = dp.get_current_calendar_week()
                 self.currentWeekTimeTable = json.loads(self.rapla.fetchLecturesOfWeek(dp.get_current_calendar_week(), datetime.datetime.now().isocalendar()[0]))
             
-            nextLecture = self.getNextLecture()
-            if nextLecture["lecture"]["date"] == now.date() or nextLecture["lecture"]["date"] == now.date() + datetime.timedelta(days=1) and nextLecture["lecture"]["time_start"] <= now.time():
-                wakeUpTime = self.getWakeUpTimeForNextMorning(nextLecture)
+            # When the next lecture is today or tomorrow and the time is right, calculate the wakeuptime
+            if self.nextLecture["lecture"]["date"] == now.date() or self.nextLecture["lecture"]["date"] == now.date() + datetime.timedelta(days=1) and self.nextLecture["lecture"]["time_start"] <= now.time():
+                wakeUpTime = self.getWakeUpTimeForNextMorning()
+                if wakeUpTime:
+                    self.voice_output.add_message("Morgen musst du um " + wakeUpTime.strftime("%H:%M") + " aufstehen.")
 
             # Wake the user up if it's wakeuptime
             if wakeUpTime:
                 if now.date() == wakeUpTime.date() and now.hour == wakeUpTime.hour and now.minute == wakeUpTime.minute:
                     playsound(alarm_sound_file)
-                    message = "Guten morgen. Es ist 08:00 Uhr."
-                    self.voice_output.add_message(message)
+                    self.voice_output.add_message("Guten morgen. Es ist Zeit aufzustehen.")
                 
             # check if the rapla timetable changed and tell user about it
             if now.minute == 30:
@@ -75,6 +99,10 @@ class WakeUpAssistant:
                         self.voice_output.add_message("Diese Vorlesungen haben sich soeben geändert:")
                         self.voice_output.add_message(lecture)
                     self.currentWeekTimeTable = updatedWeekTimeTable
+
+            # update nextLecture every 5 minutes
+            if now.minute % 5 == 0:
+                self.nextLecture = self.getNextLecture()
 
             time.sleep(60)  # Sleep for 1 minute before checking again
 
@@ -100,24 +128,46 @@ class WakeUpAssistant:
             current_timetable = json.loads(self.rapla.fetchLecturesOfWeek(current_week, current_datetime.isocalendar()[0]))
         return None
     
-    def getWakeUpTimeForNextMorning(self, nextLecture):
-        if nextLecture is None:
+    def getWakeUpTimeForNextMorning(self):
+        '''
+        This method calculates the wakeup time for the next lecture. If the next lecture is not tomorrow, it will return None.
+
+        Parameters: None
+        Returns: wakeuptime (datetime)
+        '''
+        if self.nextLecture is None:
             print("No upcoming lectures.")
             return None
         
-        bestConnection = self.getTrainConnectionForLecture(nextLecture)
-        print(bestConnection)
+        if self.isLectureFirstOfTheDay(self.nextLecture):
+            bestConnection = self.getTrainConnectionForNextLecture()
+            if bestConnection is None:
+                self.voice_output.add_message("Schlaf einfach mal aus.")
+                return None
 
-        if self.isLectureFirstOfTheDay(nextLecture):
             wakeupTime = self.trainDepartureTime - datetime.timedelta(minutes=self.wakeUpTimeNeeded)
-            # TODO: implement date switch and test functionality!
-            # wakeupTime = wakeupTime.replace(year=, month=, day=)
+            date_string = bestConnection['ar']['pt'][:6]
+            year = 2000 + int(date_string[:2])
+            month = int(date_string[2:4])
+            day = int(date_string[4:])
+            
+            wakeupTime = wakeupTime.replace(year=year, month=month, day=day)
+
+            self.voice_output.add_message(wakeupTime)
+
             return wakeupTime
         else:
             # The lecture is not the first of the day
+            self.voice_output.add_message("Frage mich einfach nach deiner nächsten Vorlesung nochmal.")
             return None
     
     def getTrainConnectionForLecture(self, lecture):
+        '''
+        This method asks for the train connection for a given lecture.
+
+        Parameters: lecture (dictionary)
+        Returns: bestConnection (dictionary)
+        '''
         lectureStartTime = datetime.datetime.strptime(lecture["lecture"]["time_start"], "%H:%M")
         self.trainDepartureTime = lectureStartTime - datetime.timedelta(minutes=self.timeItTakesFromHomeStationToUniversity)
         nextLectureDate = lecture["lecture"]["date"].replace("-", "")
@@ -127,11 +177,42 @@ class WakeUpAssistant:
 
         if api_response == []:
             print("The deutsche bahn api returned an empty list.")
+            self.voice_output.add_message("Frag mich später nochmal. Der gesuchte Zug liegt noch zu weit in der Zukunft und die doofe Deutsche Bahn API gibt mir keine Informationen.")
             return None
         bestConnection = self.getBestConnectionFromDbTimetable(api_response, formatted_date)
         return bestConnection
+    
+    def getTrainConnectionForNextLecture(self):
+        '''
+        This method asks for the train connection for the next lecture.
+
+        Parameters: None
+        Returns: bestConnection (dictionary)
+        '''
+        lectureStartTime = datetime.datetime.strptime(self.nextLecture["lecture"]["time_start"], "%H:%M")
+        self.trainDepartureTime = lectureStartTime - datetime.timedelta(minutes=self.timeItTakesFromHomeStationToUniversity)
+        nextLectureDate = self.nextLecture["lecture"]["date"].replace("-", "")
+        parsed_date = datetime.datetime.strptime(nextLectureDate, "%Y%m%d")
+        formatted_date = parsed_date.strftime("%y%m%d")
+        api_response = json.loads(self.deutsche_bahn.getTimetableByDestinationStationidDateHour("Stuttgart", self.localTrainStationDetails['eva'], formatted_date, self.trainDepartureTime.strftime("%H")))
+
+        if api_response == []:
+            print("The deutsche bahn api returned an empty list.")
+            self.voice_output.add_message("Frag mich später nochmal. Der nächste Zug liegt noch zu weit in der Zukunft und die doofe Deutsche Bahn API gibt mir keine Informationen.")
+            return None
+        bestConnection = self.getBestConnectionFromDbTimetable(api_response, formatted_date)
+
+        self.voice_output.add_message(bestConnection)
+
+        return bestConnection
         
     def getBestConnectionFromDbTimetable(self, api_response, formatted_date):
+        '''
+        This method figures out the best connection to take from a given timetable.
+
+        Parameters: api_response (dictionary), formatted_date (string)
+        Returns: best_connection (dictionary)
+        '''
         # Initialize variables to store the best connection and its departure time
         best_connection = None
         best_departure_time = None
@@ -156,6 +237,12 @@ class WakeUpAssistant:
         return best_connection
 
     def isLectureFirstOfTheDay(self, lecture):
+        '''
+        This method checks if a given lecture is the first one of the day.
+
+        Parameters: lecture (dictionary)
+        Returns: boolean
+        '''
         # Split the date string into year, month, and day
         year, month, day = map(int, lecture["lecture"]["date"].split('-'))
         week = dp.get_calendar_week(year, month, day)
@@ -177,8 +264,14 @@ class WakeUpAssistant:
                     return False
         return True
 
-    def readNextDhbwLecture(self):  # OVERKILL: generate text with chatpgt?
-        nextLecture = self.getNextLecture()
+    def readNextDhbwLecture(self):  # OVERKILL: generate text with chatpgt class in the future?
+        '''
+        This method reads out the next Lecture in formal text.
+
+        Parameters: None
+        Returns: None
+        '''
+        nextLecture = self.nextLecture
         date = nextLecture['lecture']['date']
         time_start = nextLecture['lecture']['time_start']
         time_end = nextLecture['lecture']['time_end']

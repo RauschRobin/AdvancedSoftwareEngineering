@@ -90,5 +90,33 @@
     {
         "recorded_voice_command": "Gibt es Neuigkeiten in Roundcube?",
         "intent": "GetLastReceivedEmail"
+    },
+    {
+        "recorded_voice_command": "Wann muss ich morgen aufstehen?",
+        "intent": "GetWakeUpTime"
+    },
+    {
+        "recorded_voice_command": "Um wie viel Uhr muss ich aufstehen?",
+        "intent": "GetWakeUpTime"
+    },
+    {
+        "recorded_voice_command": "Wann sollte ich morgen aufstehen?",
+        "intent": "GetWakeUpTime"
+    },
+    {
+        "recorded_voice_command": "Auf wie viel Uhr hast du meinen Wecker gestellt?",
+        "intent": "GetWakeUpTime"
+    },
+    {
+        "recorded_voice_command": "Wann wird mein Wecker klingeln?",
+        "intent": "GetWakeUpTime"
+    },
+    {
+        "recorded_voice_command": "Wann muss ich aufstehen?",
+        "intent": "GetWakeUpTime"
+    },
+    {
+        "recorded_voice_command": "Wann klingelt mein Wecker?",
+        "intent": "GetWakeUpTime"
     }
 ]
