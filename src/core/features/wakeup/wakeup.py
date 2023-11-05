@@ -155,7 +155,7 @@ class WakeUpAssistant:
             
             wakeupTime = wakeupTime.replace(year=year, month=month, day=day)
 
-            self.voice_output.add_message(wakeupTime)
+            self.voice_output.add_message("Du musst um " + wakeupTime.strftime("%H:%M") + " aufstehen.")
 
             return wakeupTime
         else:
@@ -204,9 +204,10 @@ class WakeUpAssistant:
             return None
         bestConnection = self.getBestConnectionFromDbTimetable(api_response, formatted_date)
 
-        self.voice_output.add_message(bestConnection)
-
         return bestConnection
+    
+    def readTrainConnectionForNextLecture(self):
+        self.voice_output.add_message(json.dumps(self.getTrainConnectionForNextLecture()))
         
     def getBestConnectionFromDbTimetable(self, api_response, formatted_date):
         '''

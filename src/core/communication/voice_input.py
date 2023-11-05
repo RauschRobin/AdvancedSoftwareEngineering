@@ -88,14 +88,14 @@ class VoiceInput:
                 return
             case "GetDeutscheBahnTrainOrBus":
                 print("COMMAND: GetDeutscheBahnTrainOrBus")
-                self.featureComposite.call_feature_method("getTrainConnectionForNextLecture")
+                self.featureComposite.call_feature_method("readTrainConnectionForNextLecture")
                 return
             case "GetWakeUpTime":
                 print("COMMAND: GetWakeUpTime")
                 self.featureComposite.call_feature_method("getWakeUpTimeForNextMorning")
                 return
             case "GetLecturesOfWeek":
-                print("COMMAND: GetWakeUpTime")
+                print("COMMAND: GetLecturesOfWeek")
                 self.featureComposite.call_feature_method("getLecturesOfEntireWeek")
                 return
             # ...
