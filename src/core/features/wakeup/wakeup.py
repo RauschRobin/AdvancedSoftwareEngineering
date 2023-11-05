@@ -265,6 +265,10 @@ class WakeUpAssistant:
                 if lecture_start_time > other_lecture_start_time:
                     return False
         return True
+    
+    def getLecturesOfEntireWeek(self):
+        # TODO: convert json string to grammatically correct text
+        self.voice_output.add_message(json.dumps(self.currentWeekTimeTable))
 
     def readNextDhbwLecture(self):  # OVERKILL: generate text with chatpgt class in the future?
         '''

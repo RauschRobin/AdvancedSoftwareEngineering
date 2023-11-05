@@ -118,5 +118,17 @@
     {
         "recorded_voice_command": "Wann klingelt mein Wecker?",
         "intent": "GetWakeUpTime"
+    },
+    {
+        "recorded_voice_command": "Welche Vorlesungen habe ich diese Woche?",
+        "intent": "GetLecturesOfWeek"
+    },
+    {
+        "recorded_voice_command": "Wie sieht mein Stundenplan diese Woche aus?",
+        "intent": "GetLecturesOfWeek"
+    },
+    {
+        "recorded_voice_command": "Welche Fächer habe ich diese Woche?",
+        "intent": "GetLecturesOfWeek"
     }
 ]
