@@ -31,7 +31,7 @@ class FeatureComposite:
     def call_feature_method(self, method_name):
         '''
         This function makes it possible to call every function from all of the features. You choose the 
-        function by passing the method name as parameter. If is cannot find the function by it's name, it 
+        function by passing the method name as parameter. If it cannot find the function by it's name, it 
         will throw an exception.
 
         Parameters: method_name - String
