@@ -6,7 +6,6 @@ def test_simple_timetable():
     simple_timetable = SimpleTimetable(timetable_data)
     assert simple_timetable.data() == timetable_data
 
-
 def test_filter_by_line():
     timetable_data = {"station": "Stuttgart Hbf (tief)", "timetable": [{"ar": {"l": "1"}}, {"ar": {"l": "2"}}]}
     timetable = SimpleTimetable(timetable_data)
@@ -22,5 +21,3 @@ def test_filter_by_destination():
     
     expected_result = {"station": "Stuttgart Hbf (tief)", "timetable": [{"dp": {"ppth": "Stuttgart-Bad Cannstatt|Stuttgart Nürnberger Str.|Stuttgart-Sommerrain"}}]}
     assert filtered_timetable.data() == json.dumps(expected_result)
-
-

@@ -26,7 +26,6 @@ class TimetableDecorator(Timetable):
     def data(self):
         return self.timetable.data()
     
-
 # Concrete Decorators
 class FilterByLine(TimetableDecorator):
     def __init__(self, timetable, line: str):
@@ -47,7 +46,6 @@ class FilterByLine(TimetableDecorator):
         }
 
         filtered_data_json = json.dumps(filtered_data_json)
-
         return filtered_data_json
     
 class FilterByDestination(TimetableDecorator):
@@ -58,6 +56,10 @@ class FilterByDestination(TimetableDecorator):
     def data(self):
         # add filter logic by Destination
         use_data = self.timetable.data()
+
+        if use_data is None:
+            return "[]"
+
         filered_data = [
             item for item in use_data['timetable']
             if self.destination in item['dp']['ppth']
@@ -70,3 +72,4 @@ class FilterByDestination(TimetableDecorator):
 
         filtered_data_json = json.dumps(filteredJsonData)
         return filtered_data_json
+    
