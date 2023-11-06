@@ -5,6 +5,7 @@ class TagesschauAPI:
     def __init__(self):
         self.api_url = "https://www.tagesschau.de/api2/"
         self.last_eilmeldung = None
+        self.last_eilmeldung = self.checkForLastEilmeldung()
 
     def _make_request(self, endpoint, params=None):
         url = f"{self.api_url}{endpoint}"
