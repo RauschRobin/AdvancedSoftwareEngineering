@@ -5,10 +5,25 @@ import json
 import datetime
 
 class Rapla:
+    '''
+    This class is responsible for fetching rapla timetables and handling those.
+    '''
     def __init__(self, rapla_url):
+        '''
+        This is the constructor for Rapla.
+
+        Parameters: rapla_url (string)
+        Returns: None
+        '''
         self.rapla_url = rapla_url
 
     def fetchLecturesOfWeek(self, calendar_week, year):
+        '''
+        This method fetches the timetable of a given calendar_week and year from rapla. 
+
+        Parameters: calendar_week, year (int)
+        Returns: timetable (string)
+        '''
         # Make a request to the website
         r = requests.get(self.rapla_url)
 
@@ -69,6 +84,12 @@ class Rapla:
         return json_string
 
     def compareTimetablesAndRespondWithLecturesThatChanged(self, timetable1, timetable2):
+        '''
+        Checks if 2 given timetables differ from each other and returns the lectures that are different.
+
+        Parameters: timetable1, timetable2 (JSON)
+        Returns: changed_lectures (JSON)
+        '''
         changed_lectures = []
 
         # Iterate through the days of the week

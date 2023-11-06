@@ -44,7 +44,7 @@ class WakeUpAssistant:
         Returns: None
         '''
         self.rapla_url = PreferencesFetcher.fetch("rapla-url")
-        self.wakeUpTimeNeeded = PreferencesFetcher.fetch("wake-up-time-in-minutes")
+        self.wakeUpTimeNeeded = PreferencesFetcher.fetch("time-user-needs-between-waking-up-and-arriving-at-local-train-station")
         self.timeItTakesFromHomeStationToUniversity = PreferencesFetcher.fetch("travel-time-from-home-station-to-university-via-train")
         self.localTrainStationName = PreferencesFetcher.fetch("home-train-station-name")
 
