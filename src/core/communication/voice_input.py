@@ -85,6 +85,7 @@ class VoiceInput:
             case "GetLastReceivedEmail":
                 # call function
                 print("COMMAND: GetLastReceivedEmail")
+                self.featureComposite.call_feature_method("getLastReceivedEmail")
                 return
             case "GetDeutscheBahnTrainOrBus":
                 print("COMMAND: GetDeutscheBahnTrainOrBus")
