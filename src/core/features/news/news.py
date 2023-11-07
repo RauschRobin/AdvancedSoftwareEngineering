@@ -26,9 +26,15 @@ class News:
             currentTime = datetime.datetime.now()
             if currentTime.hour > 9 and currentTime.hour < 22 and currentTime.minute == 0:
                 for interest in self.interests:
-                    top_headlines = json.loads(self.newsapi.get_top_headlines(q=interest, language='de'))
+                    top_headlines = self.newsapi.get_top_headlines(q=interest, language='de')
                     print(top_headlines)
-                    self.voice_output.add_message(random.choice(top_headlines['articles']))
+                    self.voice_output.add_message(json.dumps(random.choice(top_headlines['articles'])))
 
             time.sleep(60)
+
+    def getNewsOfInterest(self):
+        for interest in self.interests:
+            newsOfInterest = self.newsapi.get_everything(q=interest, language='de')
+            print(newsOfInterest)
+            self.voice_output.add_message(json.dumps(random.choice(newsOfInterest['articles'])))
     

@@ -98,6 +98,10 @@ class VoiceInput:
                 print("COMMAND: GetLecturesOfWeek")
                 self.featureComposite.call_feature_method("getLecturesOfEntireWeek")
                 return
+            case "GetNewsOfInterest":
+                print("COMMAND: GetNewsOfInterest")
+                self.featureComposite.call_feature_method("getNewsOfInterest")
+                return
             # ...
             case _:
                 print("COMMAND: I don't know what to do?")
