@@ -136,6 +136,38 @@
         "intent": "GetLecturesOfWeek"
     },
     {
+        "recorded_voice_command": "Gib mir Nachrichten die mich interessieren.",
+        "intent": "GetNewsOfInterest"
+    },
+    {
+        "recorded_voice_command": "Gab es heute Nachrichten zu Themen die mich interessieren?",
+        "intent": "GetNewsOfInterest"
+    },
+    {
+        "recorded_voice_command": "Was ist heute interessantes passiert?",
+        "intent": "GetNewsOfInterest"
+    },
+    {
+        "recorded_voice_command": "Sind heute interessante Dinge passiert?",
+        "intent": "GetNewsOfInterest"
+    },
+    {
+        "recorded_voice_command": "Gib mir Themen die mich interessieren könnten.",
+        "intent": "GetNewsOfInterest"
+    },
+    {
+        "recorded_voice_command": "Sag mir etwas interessantes.",
+        "intent": "GetNewsOfInterest"
+    },
+    {
+        "recorded_voice_command": "Gibt es Updates zu den Themen, die mich interessieren?",
+        "intent": "GetNewsOfInterest"
+    },
+    {
+        "recorded_voice_command": "Was sind die Top-Nachrichten aus meiner Interessenspalette heute?",
+        "intent": "GetNewsOfInterest"
+    },
+    {
         "recorded_voice_command": "Gibt es Neuigkeiten in Roundcube?",
         "intent": "GetLastReceivedEmail"
     },
