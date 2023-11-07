@@ -1,1 +1,0 @@
-# https://newsapi.org/ --> Gratis nur für Nachrichten älter als 24h
