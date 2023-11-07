@@ -184,6 +184,18 @@
         "intent": "GetLastReceivedEmail"
     },
     {
+        "recorded_voice_command": "Was war meine zuletzt erhaltene Email?",
+        "intent": "GetLastReceivedEmail"
+    },
+    {
+        "recorded_voice_command": "Welche Email habe ich als letztes erhalten?",
+        "intent": "GetLastReceivedEmail"
+    },
+    {
+        "recorded_voice_command": "Kannst du mir die letzte Email nochmal vorlesen?",
+        "intent": "GetLastReceivedEmail"
+    },
+    {
         "recorded_voice_command": "Was ist heute passiert?",
         "intent": "GetNewsOfToday"
     }
