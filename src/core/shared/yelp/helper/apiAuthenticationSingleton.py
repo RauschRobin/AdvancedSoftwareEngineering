@@ -4,9 +4,11 @@ import requests
 
 # Singleton Pattern
 # Thread save singleton
+
+
 class ApiAuthenticationSingletonMeta(type):
     _instances = {}
-   
+
     _lock: Lock = Lock()
 
     def __call__(cls, *args, **kwargs):
@@ -15,15 +17,16 @@ class ApiAuthenticationSingletonMeta(type):
                 instance = super().__call__(*args, **kwargs)
                 cls._instances[cls] = instance
         return cls._instances[cls]
-    
+
+
 class ApiAuthenticationSingleton(metaclass=ApiAuthenticationSingletonMeta):
     def __init__(self) -> None:
-        self.token = "_E2oMLppyZRwlvlmgZDEm15_6HHRt7j47U8eaIfTBpmsx-XWMEYs1zj25plOz-dw8DKWip_l30YZ5Cxmf8BusgWjjRlwfqTizTiQXSuVv4VLc04f91KoRPsyux5BZXYx"
+        self.token = "bYSsCZNRkZrpu2FDmwIQbKZO8a9dSIUbQLNNB3ZKNE6GLl2-xguUmfhBunTJmpmJkvV8zbl_Wg-G7MI76OXOBeOSgueurc-ZsbX5SoaQFny3B3URu9wHBcpNzDdBZXYx"
 
     def try_credentials(self) -> bool:
         response = requests.get(
             "https://api.yelp.com/v3/businesses/search?location=NYC&sort_by=best_match&limit=1",
-            headers = {
+            headers={
                 'Authorization': f'Bearer {self.token}',
             }
         )
