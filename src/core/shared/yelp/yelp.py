@@ -140,10 +140,3 @@ class Yelp:
 
         else:
             print("Error while connecting to yelp api.")
-
-
-yelp = Yelp()
-json_data = yelp.get_restaurants_by_location_limit_radius_categories_price(
-    "NYC", 1, 1000, "bars,french", 1)
-
-print(json_data)
