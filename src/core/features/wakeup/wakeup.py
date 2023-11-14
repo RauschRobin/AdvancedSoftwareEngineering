@@ -207,6 +207,12 @@ class WakeUpAssistant:
         return bestConnection
     
     def readTrainConnectionForNextLecture(self):
+        '''
+        Add the train connection for the next lecture to the message_queue of voice_output.
+
+        Parameters: None
+        Returns: None
+        '''
         self.voice_output.add_message(json.dumps(self.getTrainConnectionForNextLecture()))
         
     def getBestConnectionFromDbTimetable(self, api_response, formatted_date):
@@ -268,6 +274,12 @@ class WakeUpAssistant:
         return True
     
     def getLecturesOfEntireWeek(self):
+        '''
+        Adds the lectures of the entire week to message_queue of voice_output.
+
+        Parameters: None
+        Returns: None
+        '''
         # TODO: convert json string to grammatically correct text
         self.voice_output.add_message(json.dumps(self.currentWeekTimeTable))
 
