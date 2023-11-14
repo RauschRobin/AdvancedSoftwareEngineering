@@ -60,6 +60,8 @@ class VoiceInput(metaclass=SingletonMeta):
         Parameters: None
         Returns: None
         '''
+        time.sleep(2)
+        just_said_something = False
         with sr.Microphone() as source:
             self.recognizer.adjust_for_ambient_noise(source)
             lastRecordedText = ""
@@ -69,6 +71,12 @@ class VoiceInput(metaclass=SingletonMeta):
                     audio = self.recognizer.listen(source)
                     try:
                         recognized_text = self.recognizer.recognize_google(audio, language=self.language)
+                        print(recognized_text)
+
+                        if "stop" in recognized_text.lower() or "stopp" in recognized_text.lower() or "danke" in recognized_text.lower():
+                            just_said_something = False
+                            recognized_text = ""
+
                         if "hey karsten" in recognized_text.lower() or "hey carsten" in recognized_text.lower():
                             print("Keyword recognized")
                             playsound.playsound(os.path.normpath(keyword_recognized_sound_filepath))
@@ -76,8 +84,8 @@ class VoiceInput(metaclass=SingletonMeta):
                                 recognized_text = recognized_text[11:]
                                 self.execute_voice_command(recognized_text)
                         
-                        if "hey karsten" in lastRecordedText or "hey carsten" in lastRecordedText:
-                            print(recognized_text)
+                        if "hey karsten" in lastRecordedText or "hey carsten" in lastRecordedText or just_said_something:
+                            just_said_something = False
                             self.execute_voice_command(recognized_text)
 
                         lastRecordedText = recognized_text.lower()
@@ -87,6 +95,7 @@ class VoiceInput(metaclass=SingletonMeta):
                         print("Spracherkennung konnte nichts verstehen.")
                     except sr.RequestError as e:
                         print(f"Fehler bei der Verbindung zur Google Web Speech API: {str(e)}")
+                just_said_something = True
 
     def execute_voice_command(self, recognized_text):
         '''
