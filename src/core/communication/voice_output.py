@@ -1,4 +1,5 @@
 from gtts import gTTS
+from ..shared.PreferencesFetcher.PreferencesFetcher import PreferencesFetcher
 import playsound
 import os
 import threading
@@ -22,11 +23,13 @@ class VoiceOutput(metaclass=SingletonMeta):
         self.speech_thread = None
         self.lock = threading.Lock()
         self.message_queue = []
+        self.user_name = PreferencesFetcher.fetch('user-name')
 
     def start(self):
         self.is_running = True
         self.speech_thread = threading.Thread(target=self.speak)
         self.speech_thread.start()
+        self.add_message("Hallo " + self.user_name)
 
     def stop(self):
         self.is_running = False

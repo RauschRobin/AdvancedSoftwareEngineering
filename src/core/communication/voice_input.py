@@ -2,6 +2,10 @@ import threading
 import speech_recognition as sr
 from ..communication.intend_recognition import IntendRecognizer
 from ..communication.FeatureComposite import FeatureComposite
+import playsound
+import os
+
+keyword_recognized_sound_filepath = os.path.join(os.path.dirname(__file__), 'keyword.mp3')
 
 class VoiceInput:
     def __init__(self, featureComposite:FeatureComposite, language="de-DE"):
@@ -40,24 +44,25 @@ class VoiceInput:
         Returns: None
         '''
         with sr.Microphone() as source:
-            print("Bitte sprechen Sie.")
             self.recognizer.adjust_for_ambient_noise(source)
+            lastRecordedText = ""
             while self.is_running:
+                print("Listening...")
                 audio = self.recognizer.listen(source)
                 try:
                     recognized_text = self.recognizer.recognize_google(audio, language=self.language)
-                    
-                    print(recognized_text)
-                    
                     if "hey karsten" in recognized_text.lower() or "hey carsten" in recognized_text.lower():
-                        print("Keyword recognized!")
+                        print("Keyword recognized")
+                        playsound.playsound(os.path.normpath(keyword_recognized_sound_filepath))
+                        if (recognized_text.lower().startswith("hey karsten") or recognized_text.lower().startswith("hey carsten")) and len(recognized_text[11:]) > 12:
+                            recognized_text = recognized_text[11:]
+                            self.execute_voice_command(recognized_text)
                     
-                    # Ends the voice recognition --> does not restart
-                    if "stop" in recognized_text.lower():
-                        print("Stop recognition")
-                        break
+                    if "hey karsten" in lastRecordedText or "hey carsten" in lastRecordedText:
+                        print(recognized_text)
+                        self.execute_voice_command(recognized_text)
 
-                    self.execute_voice_command(recognized_text)
+                    lastRecordedText = recognized_text.lower()
                 except sr.UnknownValueError:
                     print("Spracherkennung konnte nichts verstehen.")
                 except sr.RequestError as e:
