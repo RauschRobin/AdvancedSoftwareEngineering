@@ -3,7 +3,7 @@ import time
 from ..core.shared.currentLocation.CurrentLocation import CurrentLocation as cl
 
 
-class TestDateParser(unittest.TestCase):
+class TestCurrentLocation(unittest.TestCase):
 
     def test_init(self):
         result = cl()
