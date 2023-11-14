@@ -30,11 +30,12 @@ class News:
                 for interest in self.interests:
                     top_headlines = self.newsapi.get_top_headlines(q=interest, language='de')
                     print(top_headlines)
-                    self.voice_output.add_message(json.dumps(random.choice(top_headlines['articles'])))
+                    #self.voice_output.add_message(json.dumps(random.choice(top_headlines['articles'])))
+                    # TODO: This throws an error!!
 
             newEmail = self.roundcube.checkForNewEmail()
             if newEmail is not None:
-                self.voice_output.add_message(newEmail)
+                self.voice_output.add_message("Du hast eine neue Email erhalten. " + newEmail)
 
             time.sleep(60)
     

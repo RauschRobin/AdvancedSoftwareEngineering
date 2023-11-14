@@ -4,11 +4,28 @@ from ..communication.intend_recognition import IntendRecognizer
 from ..communication.FeatureComposite import FeatureComposite
 import playsound
 import os
+import time
 
 keyword_recognized_sound_filepath = os.path.join(os.path.dirname(__file__), 'keyword.mp3')
 
-class VoiceInput:
-    def __init__(self, featureComposite:FeatureComposite, language="de-DE"):
+class SingletonMeta(type):
+    _instances = {}
+
+    def __call__(cls, *args, **kwargs):
+        if cls not in cls._instances:
+            cls._instances[cls] = super(SingletonMeta, cls).__call__(*args, **kwargs)
+        return cls._instances[cls]
+    
+class VoiceInput(metaclass=SingletonMeta):
+    def __init__(self, featureComposite:FeatureComposite, stop_listening_event:threading.Event, language="de-DE"):
+        '''
+        Initializes the VoiceInput class.
+
+        Parameters: featureComposite - FeatureComposite
+                    language - String (optional)
+        Returns: None
+        '''
+        self.stop_listening_event = stop_listening_event
         self.featureComposite = featureComposite
         self.recognizer = sr.Recognizer()
         self.intent_recognizer = IntendRecognizer()
@@ -47,26 +64,29 @@ class VoiceInput:
             self.recognizer.adjust_for_ambient_noise(source)
             lastRecordedText = ""
             while self.is_running:
-                print("Listening...")
-                audio = self.recognizer.listen(source)
-                try:
-                    recognized_text = self.recognizer.recognize_google(audio, language=self.language)
-                    if "hey karsten" in recognized_text.lower() or "hey carsten" in recognized_text.lower():
-                        print("Keyword recognized")
-                        playsound.playsound(os.path.normpath(keyword_recognized_sound_filepath))
-                        if (recognized_text.lower().startswith("hey karsten") or recognized_text.lower().startswith("hey carsten")) and len(recognized_text[11:]) > 12:
-                            recognized_text = recognized_text[11:]
+                while not self.stop_listening_event.is_set():
+                    print("Listening...")
+                    audio = self.recognizer.listen(source)
+                    try:
+                        recognized_text = self.recognizer.recognize_google(audio, language=self.language)
+                        if "hey karsten" in recognized_text.lower() or "hey carsten" in recognized_text.lower():
+                            print("Keyword recognized")
+                            playsound.playsound(os.path.normpath(keyword_recognized_sound_filepath))
+                            if (recognized_text.lower().startswith("hey karsten") or recognized_text.lower().startswith("hey carsten")) and len(recognized_text[11:]) > 12:
+                                recognized_text = recognized_text[11:]
+                                self.execute_voice_command(recognized_text)
+                        
+                        if "hey karsten" in lastRecordedText or "hey carsten" in lastRecordedText:
+                            print(recognized_text)
                             self.execute_voice_command(recognized_text)
-                    
-                    if "hey karsten" in lastRecordedText or "hey carsten" in lastRecordedText:
-                        print(recognized_text)
-                        self.execute_voice_command(recognized_text)
 
-                    lastRecordedText = recognized_text.lower()
-                except sr.UnknownValueError:
-                    print("Spracherkennung konnte nichts verstehen.")
-                except sr.RequestError as e:
-                    print(f"Fehler bei der Verbindung zur Google Web Speech API: {str(e)}")
+                        lastRecordedText = recognized_text.lower()
+                        time.sleep(0.2)
+                    except sr.UnknownValueError:
+                        lastRecordedText = ""
+                        print("Spracherkennung konnte nichts verstehen.")
+                    except sr.RequestError as e:
+                        print(f"Fehler bei der Verbindung zur Google Web Speech API: {str(e)}")
 
     def execute_voice_command(self, recognized_text):
         '''
@@ -84,7 +104,7 @@ class VoiceInput:
                 self.featureComposite.call_feature_method("readNextDhbwLecture")
                 return
             case "GetNewsOfToday":
-                # call function
+                # call function         --> Tim?
                 print("COMMAND: GetNewsOfToday")
                 return
             case "GetLastReceivedEmail":

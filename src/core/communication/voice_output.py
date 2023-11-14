@@ -17,7 +17,14 @@ class SingletonMeta(type):
         return cls._instances[cls]
 
 class VoiceOutput(metaclass=SingletonMeta):
-    def __init__(self, language='de'):
+    def __init__(self, stop_listening_event:threading.Event, language='de'):
+        '''
+        Initializes the VoiceOutput class.
+
+        Parameters: language - String (optional)
+        Returns: None
+        '''
+        self.stop_listening_event = stop_listening_event
         self.language = language
         self.is_running = False
         self.speech_thread = None
@@ -26,30 +33,62 @@ class VoiceOutput(metaclass=SingletonMeta):
         self.user_name = PreferencesFetcher.fetch('user-name')
 
     def start(self):
+        '''
+        Starts the VoiceOutput class.
+
+        Parameters: None
+        Returns: None
+        '''
         self.is_running = True
         self.speech_thread = threading.Thread(target=self.speak)
         self.speech_thread.start()
         self.add_message("Hallo " + self.user_name)
 
     def stop(self):
+        '''
+        Starts the VoiceOutput class.
+
+        Parameters: None
+        Returns: None
+        '''
         self.is_running = False
         if self.speech_thread and self.speech_thread.is_alive():
             self.speech_thread.join()
 
     def speak(self):
+        '''
+        Starts the loop to read out the message_queue.
+
+        Parameters: None
+        Returns: None
+        '''
         while self.is_running:
             if self.message_queue:
+                self.stop_listening_event.set()
                 text = self.message_queue.pop(0)
                 print("VoiceOutput: " + text)
                 self.text_to_speech(text)
+                self.stop_listening_event.clear()
 
     def add_message(self, message):
+        '''
+        Adds a message to the message_queue.
+
+        Parameters: message - String
+        Returns: None
+        '''
         message = message.strip()
         if message:
             with self.lock:
                 self.message_queue.append(message)
 
     def remove_unpronounceable_characters(self, input_string):
+        '''
+        Removes unpronounceable characters from strings (like &/($% etc.) and replaces special characters like ':' with 'Uhr'.
+
+        Parameters: input_string - String
+        Returns: cleaned_string - String
+        '''
         # List of characters that gTTS may not pronounce correctly
         unpronounceable_characters = '|&^%$#@!,'
 
@@ -68,6 +107,13 @@ class VoiceOutput(metaclass=SingletonMeta):
         return cleaned_string
 
     def text_to_speech(self, text, filename=output_file):
+        '''
+        Turns a text into a mp3 file that will be played. 
+
+        Parameters: text - String
+                    filename - String (optional)
+        Returns: None
+        '''
         if text == "":
             raise ValueError("Cannot say ''!")
 
