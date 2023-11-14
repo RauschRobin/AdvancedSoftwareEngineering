@@ -9,9 +9,17 @@ class InventoryManager(FlaskView):
     """Class to manage access to inventory
     """
     def index(self):
+        """Returns index-route
+        """
         return self.get_json()
-    
+
     def get_json(self):
+        """Calls ItemsAccessor() to access item.csv
+        and converts it into json-object
+
+        Parameter: self
+        Returns: str
+        """
         accessor = ia.ItemsAccessor()
         json_data = accessor.convert_dictionary_to_json()
 

@@ -1,12 +1,17 @@
 import os
 from threading import Thread
-import pandas
+import requests
 
 
 class Inventory:
     """Returns the inventory
     """
-    def init_inventory(self):
+    def init_flask(self):
+        """Initialize the Web-API
+
+        Parameter: self
+        Returns: None
+        """
         try:
             if (os.name == 'nt'):
                 os.system("cd helper && python InventoryManager.py")
@@ -16,18 +21,23 @@ class Inventory:
             print(e)
 
     def start_thread(self):
-        thread = Thread(target=self.init_inventory)
+        """Run the Web-API as own thread
+
+        Parameter: self
+        Returns: thread
+        """
+        thread = Thread(target=self.init_flask)
         thread.daemon = True
         thread.start()
         return thread
 
     def call_url(self):
+        """Call the URL of the Web-API to get Inventory
+        and response object
+
+        Parameter: self
+        Returns: response object
+        """
         self.start_thread()
-        json_data = pandas.read_json("http://127.0.0.1:5000/")
-        return json_data
-    
-
-
-
-
-print(Inventory().call_url())
+        response_obj = requests.get("http://127.0.0.1:5000/")
+        return response_obj
