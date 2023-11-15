@@ -2,6 +2,7 @@ from ..features.wakeup.wakeup import WakeUpAssistant
 from ..features.ernaehrungsplaner.ernaehrungsplaner import Ernaehrungsplaner
 from ..features.news.news import News
 from ..features.terminplaner.terminplaner import Terminplaner
+import inspect
 
 class FeatureComposite:
     '''
@@ -28,7 +29,7 @@ class FeatureComposite:
             elif isinstance(feature, Terminplaner):
                 self.features['terminplaner'] = feature
 
-    def call_feature_method(self, method_name):
+    def call_feature_method(self, method_name, keyword=""):
         '''
         This function makes it possible to call every function from all of the features. You choose the 
         function by passing the method name as parameter. If it cannot find the function by it's name, it 
@@ -40,8 +41,11 @@ class FeatureComposite:
         for feature_name, feature_instance in self.features.items():
             if hasattr(feature_instance, method_name) and callable(getattr(feature_instance, method_name)):
                 method = getattr(feature_instance, method_name)
-                method()
+                if inspect.signature(method).parameters:
+                    method(keyword)
+                else:
+                    method()
                 return None
-                
-        raise AttributeError("FeatureComposite: Could not find a fitting method with that name in your features.")
+            
+        raise AttributeError("FeatureComposite: Could not find a fitting method with that name (& parameters) in your features.")
     

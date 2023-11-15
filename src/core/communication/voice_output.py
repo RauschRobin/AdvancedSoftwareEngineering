@@ -41,8 +41,8 @@ class VoiceOutput(metaclass=SingletonMeta):
         self.is_running = True
         self.speech_thread = threading.Thread(target=self.speak)
         self.speech_thread.start()
-        self.user_name = PreferencesFetcher.fetch('user-name')
-        self.add_message("Hallo " + self.user_name)
+        user_name = PreferencesFetcher.fetch('user-name')
+        self.add_message("Hallo " + user_name)
 
     def stop(self):
         '''

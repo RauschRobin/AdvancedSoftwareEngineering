@@ -7,6 +7,7 @@ import os
 import time
 
 keyword_recognized_sound_filepath = os.path.join(os.path.dirname(__file__), 'keyword.mp3')
+LIST_OF_KEYWORDS = ["politik", "umwelt", "klima", "wetter", "deutschland", "krieg", "ukraine", "außenpolitik", "fussball", "sport", "innenpolitik", "ki", "künstliche intelligenz", "innenpolitisches", "außenpolitisches", "künstlicher intelligenz"]
 
 class SingletonMeta(type):
     _instances = {}
@@ -109,6 +110,10 @@ class VoiceInput(metaclass=SingletonMeta):
         Parameter: recognized_text - String
         Returns: None
         '''
+        detected_keyword = ""
+        for keyword in LIST_OF_KEYWORDS:
+            if keyword in recognized_text.lower():
+                detected_keyword = keyword
         command = self.intent_recognizer.recognize_intend(recognized_text)
         match command:
             case "GetNextDhbwLecture":
@@ -139,6 +144,10 @@ class VoiceInput(metaclass=SingletonMeta):
             case "GetNewsOfInterest":
                 print("COMMAND: GetNewsOfInterest")
                 self.featureComposite.call_feature_method("getNewsOfInterest")
+                return
+            case "GetNewsWithKeyword":
+                print("COMMAND: GetNewsWithKeyword")
+                self.featureComposite.call_feature_method("getNewsWithKeyword", keyword=detected_keyword)
                 return
             # ...
             case _:

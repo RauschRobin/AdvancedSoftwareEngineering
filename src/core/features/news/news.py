@@ -77,3 +77,13 @@ class News:
             newsOfInterest = self.newsapi.get_everything(q=interest, language='de')
             #print(newsOfInterest)
             self.voice_output.add_message(json.dumps(random.choice(newsOfInterest['articles'])))
+
+    def getNewsWithKeyword(self, keyword):
+        '''
+        Gets the news with a specific keyword and adds the message to the voice output message_queue.
+
+        Parameters: keyword (string)
+        Returns: None
+        '''
+        newsOfInterest = self.newsapi.get_everything(q=keyword, language='de')
+        self.voice_output.add_message(json.dumps(random.choice(newsOfInterest['articles'])))
