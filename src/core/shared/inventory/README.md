@@ -29,10 +29,24 @@ Inventory.start_thread()
 
 The following methods are available:
 
+- def get_rel_path_to_flask()
+- def get_path_to_flask()
 - init_flask()
 - start_thread()
 - call_url()
 
+
+### def get_rel_path_to_flask
+Formats the relative path to directory of Web-API depending on operating-system
+
+Parameter: self
+Returns: str
+
+### def get_path_to_flask
+Returns absolute file path to flask-API
+
+Parameter: self
+Returns: str
 
 ### init_flask
 

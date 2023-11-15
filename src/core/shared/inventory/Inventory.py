@@ -6,6 +6,30 @@ import requests
 class Inventory:
     """Returns the inventory
     """
+    def get_rel_path_to_flask(self):
+        """Formats the relative path to directory
+        of Web-API depending on operating-system
+
+        Parameter: self
+        Returns: str
+        """
+        ret_str = ""
+        if (os.name == 'nt'):
+            ret_str = "\\src\\core\\shared\\inventory\\helper\\"
+        elif (os.name == 'posix'):
+            ret_str = "/src/core/shared/inventory/helper/"
+        return ret_str
+
+    def get_path_to_flask(self):
+        """Returns absolute file path to flask-API
+
+        Parameter: self
+        Returns: str
+        """
+        file_path = os.getcwd()
+        file_path = file_path + self.get_rel_path_to_flask()
+        return file_path
+
     def init_flask(self):
         """Initialize the Web-API
 
@@ -14,9 +38,11 @@ class Inventory:
         """
         try:
             if (os.name == 'nt'):
-                os.system("cd helper && python InventoryManager.py")
+                os.system("cd " + self.get_path_to_flask()
+                          + " && python InventoryManager.py")
             elif (os.name == 'posix'):
-                os.system("cd helper; python InventoryManager.py")
+                os.system("cd " + self.get_path_to_flask()
+                          + "; python InventoryManager.py")
         except Exception as e:
             print(e)
 

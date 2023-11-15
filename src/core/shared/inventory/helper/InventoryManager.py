@@ -1,6 +1,37 @@
+import json
 from flask import Flask
 from flask_classful import FlaskView
-from .ItemsAccessor import ItemsAccessor as ia
+
+
+class ItemsAccessor:
+    """Class to access and convert the items.csv-file"""
+
+    def get_item_dictionary(self):
+        """Gets items and returns them as a dictionary
+
+        Parameter: self
+        Returns: dict
+        """
+        data_dict = {}
+        data_dict[0] = {'Item': 'Kartoffeln', 'Quantity': '2', 'Unit': 'kg'}
+        data_dict[1] = {'Item': 'Spaghetti', 'Quantity': '500', 'Unit': 'g'}
+        data_dict[2] = {'Item': 'Tomaten', 'Quantity': '250', 'Unit': 'g'}
+        data_dict[3] = {'Item': 'Tomatenmark', 'Quantity': '100', 'Unit': 'ml'}
+        data_dict[4] = {'Item': 'Mehl', 'Quantity': '500', 'Unit': 'g'}
+        data_dict[5] = {'Item': 'Kidneybohnen', 'Quantity': '250', 'Unit': 'g'}
+        data_dict[6] = {'Item': 'Essig', 'Quantity': '1', 'Unit': 'l'}
+
+        return data_dict
+
+    def convert_dictionary_to_json(self):
+        """Converty dictionary of get_item_dictionary() into JSON
+
+        Parameter: self
+        Returns: str
+        """
+        data_dictionary = self.get_item_dictionary()
+        json_data = json.dumps(data_dictionary, ensure_ascii=False)
+        return json_data
 
 
 app = Flask(__name__)
@@ -14,13 +45,13 @@ class InventoryManager(FlaskView):
         return self.get_json()
 
     def get_json(self):
-        """Calls ItemsAccessor() to access item.csv
-        and converts it into json-object
+        """Calls ItemsAccessor() to access items
+        and converts them into a json-object
 
-        Parameter: self
+       Parameter: self
         Returns: str
         """
-        accessor = ia()
+        accessor = ItemsAccessor()
         json_data = accessor.convert_dictionary_to_json()
 
         return json_data
