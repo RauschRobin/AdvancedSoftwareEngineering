@@ -87,10 +87,3 @@ class TheMealDb:
             return response.json()
         else:
             return {}
-
-
-# Testing the code
-test = TheMealDb()
-
-temp = test.lookup_single_random_meal()
-print(temp)
