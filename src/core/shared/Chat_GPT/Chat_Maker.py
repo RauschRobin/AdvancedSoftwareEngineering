@@ -1,7 +1,7 @@
 import openai
 
 class ChatMaker:
-    def __init__(self, maps_api_key):
+    def __init__(self, maps_api_key="API_KEY"):
         self.api_key = maps_api_key
 
     def get_response(self, request):
@@ -14,5 +14,5 @@ class ChatMaker:
         return response.choices[0].text.strip()
         
 if __name__ == "__main__":
-    myObj = ChatMaker('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')
+    myObj = ChatMaker('')
     respones = myObj.get_response("Write a tagline for an ice cream shop.")

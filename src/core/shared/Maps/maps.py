@@ -1,26 +1,10 @@
 import requests
 
 class Maps:
-    def __init__(self, maps_api_key):
+    def __init__(self, maps_api_key='API_KEY'):
         self.maps_api_key = maps_api_key
         
-    # def get_nearby_restaurants(self, location, radius=6000, keyword='restaurant'):
-    #     base_url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json"
-    #     params = {
-    #         'location': location,
-    #         'radius': radius,
-    #         'type': keyword,
-    #         'key': self.maps_api_key,
-    #     }
-
-    #     response = requests.get(base_url, params=params)
-    #     print(response)
-    #     results = response.json().get('results', [])
-
-    #     print(results)
-    #     return results
-    
-    def get_nearby_restaurants(self, location, radius=1000, keyword='restaurant'):
+    def get_nearby_places(self, location, radius=2000, keyword='restaurant'):
         base_url = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json'
         
         params = {
@@ -50,6 +34,6 @@ class Maps:
 
 
 if __name__ == "__main__":
-    myobj = Maps('AIzaSyA7chC-01o61wlNkzdLbb5hRLyVZTqNKc0')
-    location = "49.03843923727726, 9.094928563014196"
+    myobj = Maps('API_KEY')
+    location = "49.03843923727726, 9.094928563014196" # Example Coordinates of Bönnigheim
     locations = myobj.get_nearby_restaurants(location)

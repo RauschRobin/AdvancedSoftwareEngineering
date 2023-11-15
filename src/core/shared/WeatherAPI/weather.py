@@ -11,7 +11,7 @@ class Weather(object):
             cls.instance = super(Weather, cls).__new__(cls)
         return cls.instance
     
-    def __init__(self, weather_api_key):
+    def __init__(self, weather_api_key='API_KEY'):
         self.weather_api_key = weather_api_key
 
     # returns json string of following weather events in german
@@ -40,14 +40,14 @@ class Weather(object):
       return date_object.date() == current_date
     
 if __name__ == "__main__":
-  singleton = Weather("Pq19L4H2VnKl2imW9A9YdqpOweR6piOf")
+  singleton = Weather("API_KEY")
   print(singleton.is_weather_data_up_to_date())
   current_weather_data = singleton.get_weather_of_date()
 
   # Use the current_weather_data as needed
   print(current_weather_data)
 
-  newobj = Weather("Pq19L4H2VnKl2imW9A9YdqpOweR6piOf")
+  newobj = Weather("API_KEY")
   print(newobj.is_weather_data_up_to_date())
   if not newobj.is_weather_data_up_to_date():
     current_weather_data = newobj.get_weather_of_date()
