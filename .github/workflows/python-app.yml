@@ -46,6 +46,7 @@ jobs:
           pip install beautifulsoup4
           pip install newsapi-python
           pip install flask
+          pip install flask_classful
 
       - name: Lint with flake8
         run: |
