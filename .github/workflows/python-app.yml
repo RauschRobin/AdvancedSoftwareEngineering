@@ -26,7 +26,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install flake8 pytest
-          pip install -r requirements.txt --exclude-package pyaudio
+          pip install -r requirements.txt -e pyaudio
 
       - name: Lint with flake8
         run: |
