@@ -39,16 +39,16 @@ class Weather(object):
       # Compare the dates
       return date_object.date() == current_date
     
-if __name__ == "__main__":
-  singleton = Weather("API_KEY")
-  print(singleton.is_weather_data_up_to_date())
-  current_weather_data = singleton.get_weather_of_date()
+# if __name__ == "__main__":
+#   singleton = Weather("API_KEY")
+#   print(singleton.is_weather_data_up_to_date())
+#   current_weather_data = singleton.get_weather_of_date()
 
-  # Use the current_weather_data as needed
-  print(current_weather_data)
+#   # Use the current_weather_data as needed
+#   print(current_weather_data)
 
-  newobj = Weather("API_KEY")
-  print(newobj.is_weather_data_up_to_date())
-  if not newobj.is_weather_data_up_to_date():
-    current_weather_data = newobj.get_weather_of_date()
-    print(current_weather_data)
+#   newobj = Weather("API_KEY")
+#   print(newobj.is_weather_data_up_to_date())
+#   if not newobj.is_weather_data_up_to_date():
+#     current_weather_data = newobj.get_weather_of_date()
+#     print(current_weather_data)

@@ -33,7 +33,7 @@ class Maps:
             print(f"Error2: {e}")
 
 
-if __name__ == "__main__":
-    myobj = Maps('API_KEY')
-    location = "49.03843923727726, 9.094928563014196" # Example Coordinates of Bönnigheim
-    locations = myobj.get_nearby_restaurants(location)
+# if __name__ == "__main__":
+#     myobj = Maps('API_KEY')
+#     location = "49.03843923727726, 9.094928563014196" # Example Coordinates of Bönnigheim
+#     locations = myobj.get_nearby_restaurants(location)

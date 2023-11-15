@@ -13,6 +13,6 @@ class ChatMaker:
         print(response.choices[0].text.strip())
         return response.choices[0].text.strip()
         
-if __name__ == "__main__":
-    myObj = ChatMaker('')
-    respones = myObj.get_response("Write a tagline for an ice cream shop.")
+# if __name__ == "__main__":
+#     myObj = ChatMaker('')
+#     respones = myObj.get_response("Write a tagline for an ice cream shop.")
