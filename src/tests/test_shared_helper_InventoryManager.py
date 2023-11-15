@@ -9,19 +9,19 @@ class TestInventoryManager(unittest.TestCase):
         result = im()
         expected = im
         self.assertIsInstance(result, expected,
-                              "Error in ItemsAccessor.__init__()")
+                              "Error in InventoryManager.__init__()")
 
     def test_index(self):
         result = requests.get("http://127.0.0.1:5000/")
         expected = requests.models.Response
         self.assertIsInstance(result, expected,
-                              "Error in ItemsAccessor.test_index()")
+                              "Error in InventoryManager.test_index()")
 
     def test_get_json(self):
         result = im().get_json()
         expected = str
         bool_expression = len(result) > 5
         self.assertIsInstance(result, expected,
-                              "Error in ItemsAccessor.get_json()")
+                              "Error in InventoryManager.get_json()")
         self.assertTrue(bool_expression,
-                        "Error in ItemsAccessor.get_json()")
+                        "Error in InventoryManager.get_json()")

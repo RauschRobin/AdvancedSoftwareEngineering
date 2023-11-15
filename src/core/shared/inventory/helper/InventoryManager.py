@@ -20,7 +20,7 @@ class InventoryManager(FlaskView):
         Parameter: self
         Returns: str
         """
-        accessor = ia.ItemsAccessor()
+        accessor = ia()
         json_data = accessor.convert_dictionary_to_json()
 
         return json_data
