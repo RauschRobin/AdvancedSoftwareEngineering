@@ -1,6 +1,6 @@
 from flask import Flask
 from flask_classful import FlaskView
-import ItemsAccessor as ia
+from .ItemsAccessor import ItemsAccessor as ia
 
 
 app = Flask(__name__)
