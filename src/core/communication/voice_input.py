@@ -70,6 +70,9 @@ class VoiceInput(metaclass=SingletonMeta):
                     print("Listening...")
                     audio = self.recognizer.listen(source)
                     try:
+                        if self.stop_listening_event.is_set():
+                            print("Stopped listening: Carschten said something during the listening phase.")
+                            break
                         recognized_text = self.recognizer.recognize_google(audio, language=self.language)
                         print(recognized_text)
 
