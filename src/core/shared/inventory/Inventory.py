@@ -39,5 +39,5 @@ class Inventory:
         Returns: response object
         """
         self.start_thread()
-        response_obj = requests.get("http://127.0.0.1:5000/")
+        response_obj = requests.get("http://127.0.0.1:8000/")
         return response_obj
