@@ -169,4 +169,4 @@ cython_debug/
 
 *.DS_Store
 *.python-version
-*output.mp3
+*output*.mp3

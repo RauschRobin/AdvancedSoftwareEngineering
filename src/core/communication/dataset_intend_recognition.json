@@ -198,5 +198,37 @@
     {
         "recorded_voice_command": "Was ist heute passiert?",
         "intent": "GetNewsOfToday"
+    },
+    {
+        "recorded_voice_command": "Gib mir alle Nachrichten zum Thema Politik.",
+        "intent": "GetNewsWithKeyword"
+    },
+    {
+        "recorded_voice_command": "Gib mir alle Nachrichten zum Thema Sport.",
+        "intent": "GetNewsWithKeyword"
+    },
+    {
+        "recorded_voice_command": "Gib mir Nachrichten zum Thema Politik.",
+        "intent": "GetNewsWithKeyword"
+    },
+    {
+        "recorded_voice_command": "Gib mir Nachrichten zum Thema Sport.",
+        "intent": "GetNewsWithKeyword"
+    },
+    {
+        "recorded_voice_command": "Was ist heute innenpolitisches passiert?",
+        "intent": "GetNewsWithKeyword"
+    },
+    {
+        "recorded_voice_command": "Was ist heute außenpolitisches passiert?",
+        "intent": "GetNewsWithKeyword"
+    },
+    {
+        "recorded_voice_command": "Gib mir Nachrichten zu ki.",
+        "intent": "GetNewsWithKeyword"
+    },
+    {
+        "recorded_voice_command": "Gib mir Nachrichten zum Thema Künstliche Intelligenz.",
+        "intent": "GetNewsWithKeyword"
     }
 ]

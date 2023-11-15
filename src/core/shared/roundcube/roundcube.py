@@ -1,14 +1,30 @@
 import random
 
 class RoundcubeMock():
+    '''
+    This class is a mock of the roundcube email api.
+    '''
+    
     def __init__(self):
         pass
 
     def checkForNewEmail(self):
+        '''
+        Checks the email account for new emails. If there is a new email, it returns a random email from the example_emails list. This is a mock so it's based on randomness.
+        
+        Parameters: None
+        Returns: None or a random email (string)
+        '''
         if random.randint(0, 6) == 3:
             return random.choice(example_emails)
         
     def getLastReceivedEmail(self):
+        '''
+        Returns a random email as last received email because this is a mock!
+        
+        Parameters: None
+        Returns: random email (string)
+        '''
         return example_emails[0]
         
 example_emails = [

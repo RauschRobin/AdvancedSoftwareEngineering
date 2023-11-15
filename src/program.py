@@ -7,8 +7,10 @@ from core.features.news.news import News
 from core.features.terminplaner.terminplaner import Terminplaner
 from core.communication.FeatureComposite import FeatureComposite
 
+stop_listening_event = threading.Event()
+
 # Start the voice of carschten
-voice_output = VoiceOutput()
+voice_output = VoiceOutput(stop_listening_event)
 voice_output.start()
 
 # Create instances of features --> pass the features the VoiceOutput instance
@@ -30,7 +32,7 @@ for feature in features:
 feature_composite = FeatureComposite(features)
 
 # Pass the composite to the VoiceInput instance
-voice_input = VoiceInput(feature_composite)
+voice_input = VoiceInput(feature_composite, stop_listening_event)
 voice_input.start()
 
 # Main class to coordinate features and user input
