@@ -10,3 +10,5 @@ beautifulsoup4==4.12.2
 requests==2.31.0
 lxml==4.9.3
 newsapi-python==0.2.7
+flask==2.3.3
+flask_classful
