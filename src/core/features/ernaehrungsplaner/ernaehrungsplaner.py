@@ -76,7 +76,7 @@ class Ernaehrungsplaner:
 
             is_lunchbreak_hour, is_lunchbreak_minute, lunchbreak_duration_in_minutes = self.calculate_lunchbreak_time()
             # Proactive calculation for the lunchbreak
-            # if True only for testing purposes
+            # if True only for testing purpose
             if True:  # now.hour == is_lunchbreak_hour and now.minute == is_lunchbreak_minute:
                 # Find a restaurant near the user with given preferences
                 location = self.currentLocation.get_location_adress()
