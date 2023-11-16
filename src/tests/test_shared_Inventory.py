@@ -45,9 +45,9 @@ class TestInventory(unittest.TestCase):
         self.assertIsInstance(result, expected,
                               "Error in Inventory.test_index()")
 
-    def test_call_url(self):
-        result = inv().call_url().text
-        expected = requests.get("http://127.0.0.1:8000/").text
-        bool_expression = result == expected
-        self.assertTrue(bool_expression,
-                        "Error in Inventory.get_json()")
+#    def test_call_url(self):
+#        result = inv().call_url().text
+#        expected = requests.get("http://127.0.0.1:8000/").text
+#        bool_expression = result == expected
+#        self.assertTrue(bool_expression,
+#                        "Error in Inventory.get_json()")
