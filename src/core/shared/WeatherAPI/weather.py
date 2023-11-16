@@ -16,6 +16,12 @@ class Weather(object):
 
     # returns json string of following weather events in german
     def get_weather_of_date(self):
+        '''
+        Gets the current weather data for the next hours.
+
+        Parameters: None
+        Returns: weather_data (json)
+        '''
         latitude = 49.038495434511
         longitude = 9.093383552930298
         url = f"https://api.meteonomiqs.com/rlknl9m9vxwh91p4/v3_1/forecast/{latitude}/{longitude}/"
@@ -29,6 +35,13 @@ class Weather(object):
         return self.weather_data
 
     def is_weather_data_up_to_date(self):
+      '''
+        Checks if weather data is up to date.
+        Othervise, or if weather_data is not set yet, the function returns false.
+
+        Parameters: None
+        Returns: weather_data.date == datetime.date.now() (boolean)
+        '''
       if(not self.weather_data):
          return False
       # Convert date string to a datetime object

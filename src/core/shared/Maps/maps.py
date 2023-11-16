@@ -5,6 +5,13 @@ class Maps:
         self.maps_api_key = maps_api_key
         
     def get_nearby_places(self, location, radius=2000, keyword='restaurant'):
+        '''
+        Selects places nearby a specific location, within a certain radius(default: 2000).
+        Keywords can be modified. By default it is 'restaurant'
+
+        Parameters: location, radius, keywords
+        Returns: places (list)
+        '''
         base_url = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json'
         
         params = {
