@@ -1,8 +1,19 @@
 import yaml
 
 class PreferencesFetcher:
+    '''
+    This class allows the fetching of preferences from a yaml file.
+    '''
+
     @staticmethod
     def fetch(key, filepath="preferences.yaml"):
+        '''
+        This method fetches a preference from a yaml file.
+
+        Parameters: key - string
+                    filepath - string (optional)
+        Returns: value - string
+        '''
         try:
             with open(filepath, 'r') as file:
                 preferences = yaml.safe_load(file)

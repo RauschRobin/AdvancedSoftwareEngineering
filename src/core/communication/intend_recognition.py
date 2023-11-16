@@ -18,6 +18,12 @@ class IntendRecognizer:
         return cls._instance
 
     def _initialize(self):
+        '''
+        Initializes the class by loading the dataset and training the model.
+
+        Parameters: None 
+        Returns: None
+        '''
         # Get the directory of the script
         script_dir = os.path.dirname(os.path.realpath(__file__))
         file_path = os.path.join(script_dir, 'dataset_intend_recognition.json')
@@ -42,6 +48,12 @@ class IntendRecognizer:
         self.clf.fit(self.X_train_tfidf, self.y_train)
 
     def recognize_intend(self, recorded_command):
+        '''
+        Takes a new command and predicts the intent of the command. 
+
+        Parameters: recorded_command (string) 
+        Returns: predicted_intend (string=function name)
+        '''
         # Preprocess and vectorize the recorded command
         recorded_command_tfidf = self.tfidf_vectorizer.transform([recorded_command])
 
