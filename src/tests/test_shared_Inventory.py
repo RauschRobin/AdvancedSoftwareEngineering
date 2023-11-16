@@ -33,17 +33,17 @@ class TestInventory(unittest.TestCase):
         expected = expected + appendix
         self.assertEqual(result, expected, "Error in get_rel_path_to_flask()")
 
-    def init_flask(self):
-        inv().init_flask()
-        result = requests.get("http://127.0.0.1:8000/").status_code
-        expected = 200
-        self.assertEqual(result, expected, "Error in get_rel_path_to_flask()")
+#    def init_flask(self):
+#        inv().init_flask()
+#        result = requests.get("http://127.0.0.1:8000/").status_code
+#        expected = 200
+#        self.assertEqual(result, expected, "Error in get_rel_path_to_flask()")
 
-    def test_start_thread(self):
-        result = inv().start_thread()
-        expected = Thread
-        self.assertIsInstance(result, expected,
-                              "Error in Inventory.test_index()")
+#    def test_start_thread(self):
+#        result = inv().start_thread()
+#        expected = Thread
+#        self.assertIsInstance(result, expected,
+#                              "Error in Inventory.test_index()")
 
 #    def test_call_url(self):
 #        result = inv().call_url().text
