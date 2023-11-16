@@ -2,6 +2,8 @@ import datetime
 import time
 import json
 
+from .helper.lunchbreakBuilder import MessageBuilder
+
 from ...shared.PreferencesFetcher.PreferencesFetcher import PreferencesFetcher
 from ...communication.voice_output import VoiceOutput
 from ...shared.yelp.yelp import Yelp
@@ -114,6 +116,18 @@ class Ernaehrungsplaner:
                         "Die Adresse ist " + your_restaurant_display_adress_street + \
                         " in " + your_restaurant_display_adress_city
 
+                    # use the builder pattern to dynamically create the message
+                    builder = MessageBuilder()
+
+                    builder.add_current_time(current_hour_minute_string)
+                    builder.add_lunchbreak_duration_in_minutes(
+                        lunchbreak_duration_in_minutes)
+                    builder.add_name_of_the_restaurant(your_restaurant_name)
+                    builder.add_restaurant_adress(
+                        your_restaurant_display_adress_street, your_restaurant_display_adress_city)
+
+                    message = builder.sentence.get_all()
+
                     self.voice_output.add_message(message)
 
                 else:
@@ -128,7 +142,10 @@ class Ernaehrungsplaner:
             # ...- Check the inventory and use the meal db if everything is available to cook
 
             # Proactive calculation for cooking and meal shopping in the evening
-            if now.hour == 18 and now.minute == 0:
+            if True:  # now.hour == 18 and now.minute == 0:
+                message = "Hi, du hast nicht viel Zuhause, geh doch einkaufen du blödes Stück!"
+
+                self.voice_output.add_message(message)
                 pass
 
             # Check every day
