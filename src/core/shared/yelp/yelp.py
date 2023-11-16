@@ -1,7 +1,7 @@
 import requests
-from helper.yelpSearchRequestBuilder import YelpSearchRequestBuilder
-from helper.director import Director
-from helper.apiAuthenticationSingleton import ApiAuthenticationSingleton
+from .helper.yelpSearchRequestBuilder import YelpSearchRequestBuilder
+from .helper.director import Director
+from .helper.apiAuthenticationSingleton import ApiAuthenticationSingleton
 
 
 class Yelp:
