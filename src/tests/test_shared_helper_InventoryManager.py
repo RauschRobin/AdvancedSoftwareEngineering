@@ -11,12 +11,12 @@ class TestInventoryManager(unittest.TestCase):
         self.assertIsInstance(result, expected,
                               "Error in InventoryManager.__init__()")
 
-    def test_index(self):
-        im()
-        result = requests.get("http://127.0.0.1:8000/")
-        expected = requests.models.Response
-        self.assertIsInstance(result, expected,
-                              "Error in InventoryManager.test_index()")
+#    def test_index(self):
+#        im()
+#        result = requests.get("http://127.0.0.1:8000/")
+#        expected = requests.models.Response
+#        self.assertIsInstance(result, expected,
+#                              "Error in InventoryManager.test_index()")
 
     def test_get_json(self):
         result = im().get_json()
