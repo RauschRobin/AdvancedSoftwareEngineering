@@ -139,7 +139,6 @@ class Ernaehrungsplaner:
         Parameters: None
         Returns: None
         '''
-        now = datetime.datetime.now()
 
         # TODO
         # Bsic evening meal shopping (18 pm)
@@ -149,12 +148,22 @@ class Ernaehrungsplaner:
 
         # Proactive calculation for cooking and meal shopping in the evening
         if self.is_time_for_dinner():
-            random_meal = self.theMealDb.lookup_single_random_meal()
-            inventory = self.inventory.call_url()
+            random_meal_object = self.theMealDb.lookup_single_random_meal()
+            random_meal = random_meal_object["meals"][0]
 
-            meal_id = random_meal["meals"][0]["idMeal"]
-            meal_details = self.theMealDb.lookup_meal_details_by_id(meal_id)
-            print(meal_details["meals"][0])
+            ingredients = []
+            for key in random_meal:
+                if key.startswith("strIngredient") and random_meal[key]:
+                    ingredients.append(random_meal[key])
+
+            for ingredient in ingredients:
+                print(ingredient)
+
+            inventory = self.inventory.call_url()
+            # print(meal_id)
+            # meal_details = self.theMealDb.lookup_meal_details_by_id(meal_id)
+            # print(meal_details["meals"][0])
+
             message = "Hier muss man noch einiges ändern - sad"
 
             self.voice_output.add_message(message)
