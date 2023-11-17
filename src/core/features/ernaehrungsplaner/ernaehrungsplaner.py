@@ -2,10 +2,11 @@ import datetime
 import time
 import json
 
-from .helper.lunchbreakBuilder import MessageBuilder
+from .helper.message.failureMessageBuilder import LunchbreakFailureMessageBuilder
+from .helper.message.successMessageBuilder import LunchbreakSuccessMessageBuilder
 
-from ...shared.PreferencesFetcher.PreferencesFetcher import PreferencesFetcher
 from ...communication.voice_output import VoiceOutput
+from ...shared.PreferencesFetcher.PreferencesFetcher import PreferencesFetcher
 from ...shared.yelp.yelp import Yelp
 from ...shared.theMealDb.theMealDb import TheMealDb
 from ...shared.currentLocation.CurrentLocation import CurrentLocation
@@ -34,8 +35,6 @@ class Ernaehrungsplaner:
         self.currentCalendarWeek = dp.get_current_calendar_week()
         self.currentWeekTimeTable = json.loads(self.rapla.fetchLecturesOfWeek(
             self.currentCalendarWeek, datetime.datetime.now().isocalendar()[0]))
-
-        self.calculate_lunchbreak_time()
 
     def loadPreferences(self):
         '''
@@ -70,86 +69,96 @@ class Ernaehrungsplaner:
             raise SystemError("WakeUp has no instance of VoiceOutput")
 
         while True:
-            now = datetime.datetime.now()
+            # check lunchbreak case at round about 12 am
+            self.loop_lunchbreak()
+            # check dinner case at round about 18 pm
+            self.loop_dinner()
 
-            # TODO
-            # Basic Lunchbreak (12 am)
-            # - Calculate the lunchbreak time via rapla
+            time.sleep(45)
 
-            is_lunchbreak_hour, is_lunchbreak_minute, lunchbreak_duration_in_minutes = self.calculate_lunchbreak_time()
-            # Proactive calculation for the lunchbreak
-            # if True only for testing purpose
-            if True:  # now.hour == is_lunchbreak_hour and now.minute == is_lunchbreak_minute:
-                # Find a restaurant near the user with given preferences
-                location = self.currentLocation.get_location_adress()
-                limit = 1
-                radius = 1000
-                categories = self.prefred_user_restaurant_categories
+    def loop_lunchbreak(self):
+        '''
+        This function is running in a loop and will proactively tell the user options about the lunchbreak
 
-                response_businesses = self.yelp.get_restaurants_by_location_limit_radius_categories(
-                    location, limit, radius, categories)
+        Parameters: None
+        Returns: None
+        '''
+        now = datetime.datetime.now()
 
-                if len(response_businesses.get("businesses", [])) > 0:
-                    your_restaurant = response_businesses["businesses"][0]
-                    # destruct restaurant
-                    your_restaurant_name = your_restaurant["name"]
-                    your_restaurant_rating = your_restaurant["rating"]
-                    your_restaurant_price = your_restaurant["price"]
-                    your_restaurant_location = your_restaurant["location"]
+        # TODO
+        # Basic Lunchbreak (12 am)
+        # - Calculate the lunchbreak time via rapla // if no then tell the user 30 minutes
 
-                    # destruct restaurant location
-                    your_restaurant_display_adress_street = your_restaurant_location[
-                        "display_address"][0]
-                    your_restaurant_display_adress_city = your_restaurant_location[
-                        "display_address"][1]
+        if self.is_time_for_lunchbreak():
+            # Find a restaurant near the user with given preferences
+            location = self.currentLocation.get_location_adress()
+            limit = 1
+            radius = 1000
+            categories = self.prefred_user_restaurant_categories
 
-                    # construct and convert to string
-                    current_hour_minute_string = str(
-                        now.hour) + ":" + str(now.minute)
-                    current_lunchbreak_duration_string = str(
-                        lunchbreak_duration_in_minutes) + " Minuten"
+            response_businesses = self.yelp.get_restaurants_by_location_limit_radius_categories(
+                location, limit, radius, categories)
 
-                    # construct the output message
-                    message = "Es ist " + current_hour_minute_string + " und " + current_lunchbreak_duration_string + " Mittagspause." + \
-                        " Du kannst heute im Restaurant " + \
-                        your_restaurant_name + " essen gehen. " + \
-                        "Die Adresse ist " + your_restaurant_display_adress_street + \
-                        " in " + your_restaurant_display_adress_city
+            if self.is_businesses_not_none(response_businesses):
+                your_restaurant = response_businesses["businesses"][0]
+                # destruct restaurant
+                your_restaurant_name = your_restaurant["name"]
+                your_restaurant_location = your_restaurant["location"]
+                # destruct restaurant location
+                your_restaurant_display_adress_street = your_restaurant_location[
+                    "display_address"][0]
+                your_restaurant_display_adress_city = your_restaurant_location[
+                    "display_address"][1]
 
-                    # use the builder pattern to dynamically create the message
-                    builder = MessageBuilder()
+                # use the builder pattern to dynamically create the message
+                success_message_builder = LunchbreakSuccessMessageBuilder()
 
-                    builder.add_current_time(current_hour_minute_string)
-                    builder.add_lunchbreak_duration_in_minutes(
-                        lunchbreak_duration_in_minutes)
-                    builder.add_name_of_the_restaurant(your_restaurant_name)
-                    builder.add_restaurant_adress(
-                        your_restaurant_display_adress_street, your_restaurant_display_adress_city)
+                success_message_builder.add_current_time(now.hour, now.minute)
+                # success_message_builder.add_lunchbreak_duration_in_minutes(60)
+                success_message_builder.add_name_of_the_restaurant(
+                    your_restaurant_name)
+                success_message_builder.add_restaurant_adress(
+                    your_restaurant_display_adress_street, your_restaurant_display_adress_city)
 
-                    message = builder.sentence.get_all()
-
-                    self.voice_output.add_message(message)
-
-                else:
-                    message = "Ich habe kein Restaurant für dich in der Nähe gefunden."
-
-                    self.voice_output.add_message(message)
-
-            # TODO
-            # Bsic evening meal shopping (18 pm)
-            # - Notify the user at 18 pm which things he/she can cook or have to buy
-            # ...- Use preferences to know what the user likes
-            # ...- Check the inventory and use the meal db if everything is available to cook
-
-            # Proactive calculation for cooking and meal shopping in the evening
-            if True:  # now.hour == 18 and now.minute == 0:
-                message = "Hi, du hast nicht viel Zuhause, geh doch einkaufen du blödes Stück!"
+                message = success_message_builder.sentence.get_all()
 
                 self.voice_output.add_message(message)
-                pass
 
-            # Check every day
-            time.sleep(1440)
+            else:
+                # construct message when no restaurant was found
+                failure_message_builder = LunchbreakFailureMessageBuilder()
+                failure_message_builder.add_failure()
+                message = failure_message_builder.sentence.get_all()
+
+                self.voice_output.add_message(message)
+
+    def loop_dinner(self):
+        '''
+        This function is running in a loop and will proactively tell the user options about the lunchbreak
+
+        Parameters: None
+        Returns: None
+        '''
+        now = datetime.datetime.now()
+
+        # TODO
+        # Bsic evening meal shopping (18 pm)
+        # - Notify the user at 18 pm which things he/she can cook or have to buy
+        # ...- Use preferences to know what the user likes
+        # ...- Check the inventory and use the meal db if everything is available to cook
+
+        # Proactive calculation for cooking and meal shopping in the evening
+        if self.is_time_for_dinner():
+            random_meal = self.theMealDb.lookup_single_random_meal()
+            inventory = self.inventory.call_url()
+
+            meal_id = random_meal["meals"][0]["idMeal"]
+            meal_details = self.theMealDb.lookup_meal_details_by_id(meal_id)
+            print(meal_details["meals"][0])
+            message = "Hier muss man noch einiges ändern - sad"
+
+            self.voice_output.add_message(message)
+            pass
 
     def calculate_lunchbreak_time(self):
         '''Calculate the lunchbreak time for the user via rapla
@@ -176,11 +185,47 @@ class Ernaehrungsplaner:
                 if end_time_hour > 10 and end_time_hour < 15:
                     lunchbreak_hour = end_time_hour
                     lunchbreak_minute = end_time_minute
-                    lunchbreak_duration_in_minutes = 50
 
         else:
             lunchbreak_hour = 12
             lunchbreak_minute = 0
-            lunchbreak_duration_in_minutes = 60
 
-        return lunchbreak_hour, lunchbreak_minute, lunchbreak_duration_in_minutes
+        return lunchbreak_hour, lunchbreak_minute
+
+    def is_time_for_lunchbreak(self) -> bool:
+        '''Calculate the lunchtime and return true/false
+
+        Parameters: None
+        Returns: True/False
+        '''
+        now = datetime.datetime.now()
+        is_lunchbreak_hour, is_lunchbreak_minute = self.calculate_lunchbreak_time()
+
+        if now.hour == is_lunchbreak_hour and now.minute == is_lunchbreak_minute:
+            return True
+        else:
+            return False
+
+    def is_businesses_not_none(self, businesses) -> bool:
+        '''Find out if the businesses response are not null and return true/false
+
+        Parameters: businesses (Dic, None)
+        Returns: True/False
+        '''
+        if len(businesses.get("businesses", [])) > 0:
+            return True
+        else:
+            return False
+
+    def is_time_for_dinner(self) -> bool:
+        '''Calculate the dinner and return true/false
+
+        Parameters: None
+        Returns: True/False
+        '''
+        now = datetime.datetime.now()
+        if now.hour == 18 and now.minute == 0:
+            return True
+        else:
+            # For testing True
+            return True

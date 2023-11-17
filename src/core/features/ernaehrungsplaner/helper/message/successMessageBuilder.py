@@ -2,8 +2,10 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 from typing import Any
 
+from .sentence import Sentence1
 
-class LunchbreakBuilder(ABC):
+
+class SuccessLunchbreakBuilder(ABC):
     """
     The Builder interface specifies methods for creating the different parts of
     the Product objects.
@@ -15,7 +17,7 @@ class LunchbreakBuilder(ABC):
         pass
 
     @abstractmethod
-    def add_current_time(self, time) -> None:
+    def add_current_time(self, hour, minute) -> None:
         '''Add current time to the sentence
 
         Pramaters: time (string) e.g. "12:45"
@@ -51,7 +53,7 @@ class LunchbreakBuilder(ABC):
         pass
 
 
-class MessageBuilder(LunchbreakBuilder):
+class LunchbreakSuccessMessageBuilder(SuccessLunchbreakBuilder):
     """
     The Concrete Builder classes follow the Builder interface and provide
     specific implementations of the building steps. Your program may have
@@ -88,8 +90,8 @@ class MessageBuilder(LunchbreakBuilder):
         self.reset()
         return sentence
 
-    def add_current_time(self, time) -> None:
-        self._sentence.add(f"Es ist {time}")
+    def add_current_time(self, hour, minute) -> None:
+        self._sentence.add(f"Es ist {str(hour)}:{str(minute)}")
 
     def add_lunchbreak_duration_in_minutes(self, duration: int) -> None:
         self._sentence.add(f"Du hast {str(duration)} Minuten Mittagspause")
@@ -101,26 +103,3 @@ class MessageBuilder(LunchbreakBuilder):
     def add_restaurant_adress(self, street, city) -> None:
         self._sentence.add(
             f"Die Adresse ist {street} in {city}")
-
-
-class Sentence1():
-    """
-    It makes sense to use the Builder pattern only when your products are quite
-    complex and require extensive configuration.
-
-    Unlike in other creational patterns, different concrete builders can produce
-    unrelated products. In other words, results of various builders may not
-    always follow the same interface.
-    """
-
-    def __init__(self) -> None:
-        self.sentences = []
-
-    def add(self, sentence: Any) -> None:
-        self.sentences.append(sentence)
-
-    def get_all(self):
-        return '. '.join(self.sentences)
-
-    def list_sentences(self) -> None:
-        print(f"Combined sentences: {', '.join(self.sentences)}", end="")
