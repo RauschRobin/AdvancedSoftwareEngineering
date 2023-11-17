@@ -2,6 +2,8 @@ import datetime
 import time
 import json
 
+from .helper.message.dinnerMessageBuilder import SuccessDinnerMessageBuilder
+
 from .helper.message.failureMessageBuilder import LunchbreakFailureMessageBuilder
 from .helper.message.successMessageBuilder import LunchbreakSuccessMessageBuilder
 
@@ -112,7 +114,6 @@ class Ernaehrungsplaner:
 
                 # use the builder pattern to dynamically create the message
                 success_message_builder = LunchbreakSuccessMessageBuilder()
-
                 success_message_builder.add_current_time(now.hour, now.minute)
                 # success_message_builder.add_lunchbreak_duration_in_minutes(60)
                 success_message_builder.add_name_of_the_restaurant(
@@ -148,26 +149,36 @@ class Ernaehrungsplaner:
 
         # Proactive calculation for cooking and meal shopping in the evening
         if self.is_time_for_dinner():
+            # TODO: select a meal from the preferences
             random_meal_object = self.theMealDb.lookup_single_random_meal()
             random_meal = random_meal_object["meals"][0]
+
+            your_meal_name = random_meal["strMeal"]
+            your_meal_category = random_meal["strCategory"]
+            your_meal_instructions = random_meal["strInstructions"]
 
             ingredients = []
             for key in random_meal:
                 if key.startswith("strIngredient") and random_meal[key]:
                     ingredients.append(random_meal[key])
 
-            for ingredient in ingredients:
-                print(ingredient)
+            inventory_objects = json.loads(self.inventory.call_url())
 
-            inventory = self.inventory.call_url()
-            # print(meal_id)
-            # meal_details = self.theMealDb.lookup_meal_details_by_id(meal_id)
-            # print(meal_details["meals"][0])
+            inventory = []
+            for key in inventory_objects:
+                inventory.append(inventory_objects[key]["Item"])
 
-            message = "Hier muss man noch einiges ändern - sad"
+            have = list(set(ingredients) & set(inventory))
+            missing_ingredients = list(set(ingredients) - set(inventory))
+
+            dinner_builder = SuccessDinnerMessageBuilder()
+            dinner_builder.add_meal_name(your_meal_name)
+            dinner_builder.add_meal_category(your_meal_category)
+            dinner_builder.add_meal_to_buy_ingredients(missing_ingredients)
+
+            message = dinner_builder.sentence.get_all()
 
             self.voice_output.add_message(message)
-            pass
 
     def calculate_lunchbreak_time(self):
         '''Calculate the lunchbreak time for the user via rapla
