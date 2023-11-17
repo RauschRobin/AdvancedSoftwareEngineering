@@ -4,8 +4,9 @@ import json
 
 from .helper.message.dinnerMessageBuilder import SuccessDinnerMessageBuilder
 
-from .helper.message.failureMessageBuilder import LunchbreakFailureMessageBuilder
-from .helper.message.successMessageBuilder import LunchbreakSuccessMessageBuilder
+from .helper.message.failureLunchbreakMessageBuilder import LunchbreakFailureMessageBuilder
+from .helper.message.successLunchbreakMessageBuilder import LunchbreakSuccessMessageBuilder
+from .helper.baseErneahrungsplanerHelper import BaseErneahrungsplanerHelper
 
 from ...communication.voice_output import VoiceOutput
 from ...shared.PreferencesFetcher.PreferencesFetcher import PreferencesFetcher
@@ -33,6 +34,7 @@ class Ernaehrungsplaner:
         self.currentLocation = CurrentLocation()
         self.inventory = Inventory()
         self.rapla = Rapla(self.rapla_url)
+        self.helper = BaseErneahrungsplanerHelper()
         # store current week timetable & calendar week to reduce number of requests
         self.currentCalendarWeek = dp.get_current_calendar_week()
         self.currentWeekTimeTable = json.loads(self.rapla.fetchLecturesOfWeek(
@@ -91,7 +93,7 @@ class Ernaehrungsplaner:
         # Basic Lunchbreak (12 am)
         # - Calculate the lunchbreak time via rapla // if no then tell the user 30 minutes
 
-        if self.is_time_for_lunchbreak():
+        if self.helper.is_time_for_lunchbreak():
             # Find a restaurant near the user with given preferences
             location = self.currentLocation.get_location_adress()
             limit = 1
@@ -101,7 +103,7 @@ class Ernaehrungsplaner:
             response_businesses = self.yelp.get_restaurants_by_location_limit_radius_categories(
                 location, limit, radius, categories)
 
-            if self.is_businesses_not_none(response_businesses):
+            if self.helper.is_businesses_not_none(response_businesses):
                 your_restaurant = response_businesses["businesses"][0]
                 # destruct restaurant
                 your_restaurant_name = your_restaurant["name"]
@@ -140,16 +142,7 @@ class Ernaehrungsplaner:
         Parameters: None
         Returns: None
         '''
-
-        # TODO
-        # Bsic evening meal shopping (18 pm)
-        # - Notify the user at 18 pm which things he/she can cook or have to buy
-        # ...- Use preferences to know what the user likes
-        # ...- Check the inventory and use the meal db if everything is available to cook
-
-        # Proactive calculation for cooking and meal shopping in the evening
-        if self.is_time_for_dinner():
-            # TODO: select a meal from the preferences
+        if self.helper.is_time_for_dinner():
             preferred_meals = PreferencesFetcher.fetch(
                 "meal-dinner-plan").split(";")
             now = datetime.datetime.now()
@@ -157,15 +150,15 @@ class Ernaehrungsplaner:
             meal_object = self.theMealDb.search_meal_by_name(
                 preferrd_meal_for_today)
 
-            random_meal = meal_object["meals"][0]
+            your_meal = meal_object["meals"][0]
 
-            your_meal_name = random_meal["strMeal"]
-            your_meal_category = random_meal["strCategory"]
+            your_meal_name = your_meal["strMeal"]
+            your_meal_category = your_meal["strCategory"]
 
             ingredients = []
-            for key in random_meal:
-                if key.startswith("strIngredient") and random_meal[key]:
-                    ingredients.append(random_meal[key])
+            for key in your_meal:
+                if key.startswith("strIngredient") and your_meal[key]:
+                    ingredients.append(your_meal[key])
 
             inventory_objects = json.loads(self.inventory.call_url())
 
@@ -184,73 +177,3 @@ class Ernaehrungsplaner:
             message = dinner_builder.sentence.get_all()
 
             self.voice_output.add_message(message)
-
-    def calculate_lunchbreak_time(self):
-        '''Calculate the lunchbreak time for the user via rapla
-
-        Parameters: None
-        Returns: lunchbreak_hour (int) lunchbreak_minute (int) lunchbreak_duration_in_minutes (int)
-        '''
-        now = datetime.datetime.now()
-        weekday_as_string = now.strftime("%A").lower()
-
-        todays_lectures = self.currentWeekTimeTable.get(
-            weekday_as_string, [])
-
-        # TODO
-        # - Use Rapla to calculate the lunchbreak
-
-        if todays_lectures is not None:
-            # find the end time of the lecture near the lunchbreak time
-            for lecture in todays_lectures:
-                end_time_hour_minute_string = lecture['lecture']['time_end']
-                end_time_hour = int(end_time_hour_minute_string.split(":")[0])
-                end_time_minute = int(
-                    end_time_hour_minute_string.split(":")[1])
-                if end_time_hour > 10 and end_time_hour < 15:
-                    lunchbreak_hour = end_time_hour
-                    lunchbreak_minute = end_time_minute
-
-        else:
-            lunchbreak_hour = 12
-            lunchbreak_minute = 0
-
-        return lunchbreak_hour, lunchbreak_minute
-
-    def is_time_for_lunchbreak(self) -> bool:
-        '''Calculate the lunchtime and return true/false
-
-        Parameters: None
-        Returns: True/False
-        '''
-        now = datetime.datetime.now()
-        is_lunchbreak_hour, is_lunchbreak_minute = self.calculate_lunchbreak_time()
-
-        if now.hour == is_lunchbreak_hour and now.minute == is_lunchbreak_minute:
-            return True
-        else:
-            return False
-
-    def is_businesses_not_none(self, businesses) -> bool:
-        '''Find out if the businesses response are not null and return true/false
-
-        Parameters: businesses (Dic, None)
-        Returns: True/False
-        '''
-        if len(businesses.get("businesses", [])) > 0:
-            return True
-        else:
-            return False
-
-    def is_time_for_dinner(self) -> bool:
-        '''Calculate the dinner and return true/false
-
-        Parameters: None
-        Returns: True/False
-        '''
-        now = datetime.datetime.now()
-        if now.hour == 18 and now.minute == 0:
-            return True
-        else:
-            # For testing True
-            return True
