@@ -150,12 +150,17 @@ class Ernaehrungsplaner:
         # Proactive calculation for cooking and meal shopping in the evening
         if self.is_time_for_dinner():
             # TODO: select a meal from the preferences
-            random_meal_object = self.theMealDb.lookup_single_random_meal()
-            random_meal = random_meal_object["meals"][0]
+            prefered_meals = PreferencesFetcher.fetch(
+                "meal-dinner-plan").split(";")
+            now = datetime.datetime.now()
+            preferd_meal_for_today = prefered_meals[now.weekday()]
+            meal_object = self.theMealDb.search_meal_by_name(
+                preferd_meal_for_today)
+
+            random_meal = meal_object["meals"][0]
 
             your_meal_name = random_meal["strMeal"]
             your_meal_category = random_meal["strCategory"]
-            your_meal_instructions = random_meal["strInstructions"]
 
             ingredients = []
             for key in random_meal:
