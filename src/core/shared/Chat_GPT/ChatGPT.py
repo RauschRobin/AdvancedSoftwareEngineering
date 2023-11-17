@@ -1,6 +1,6 @@
 import openai
 
-class ChatMaker:
+class ChatGpt:
     def __init__(self, maps_api_key="API_KEY"):
         self.api_key = maps_api_key
 
@@ -15,8 +15,6 @@ class ChatMaker:
         model="gpt-3.5-turbo",
         prompt=request
         )
-
-        print(response.choices[0].text.strip())
         return response.choices[0].text.strip()
         
 # if __name__ == "__main__":
