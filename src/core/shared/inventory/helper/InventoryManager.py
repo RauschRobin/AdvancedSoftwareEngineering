@@ -13,13 +13,14 @@ class ItemsAccessor:
         Returns: dict
         """
         data_dict = {}
-        data_dict[0] = {'Item': 'Kartoffeln', 'Quantity': '2', 'Unit': 'kg'}
+        data_dict[0] = {'Item': 'Potatoes', 'Quantity': '2', 'Unit': 'kg'}
         data_dict[1] = {'Item': 'Spaghetti', 'Quantity': '500', 'Unit': 'g'}
-        data_dict[2] = {'Item': 'Tomaten', 'Quantity': '250', 'Unit': 'g'}
-        data_dict[3] = {'Item': 'Tomatenmark', 'Quantity': '100', 'Unit': 'ml'}
-        data_dict[4] = {'Item': 'Mehl', 'Quantity': '500', 'Unit': 'g'}
-        data_dict[5] = {'Item': 'Kidneybohnen', 'Quantity': '250', 'Unit': 'g'}
-        data_dict[6] = {'Item': 'Essig', 'Quantity': '1', 'Unit': 'l'}
+        data_dict[2] = {'Item': 'Tomatoes', 'Quantity': '250', 'Unit': 'g'}
+        data_dict[3] = {'Item': 'Tomato Paste',
+                        'Quantity': '100', 'Unit': 'ml'}
+        data_dict[4] = {'Item': 'Flour', 'Quantity': '500', 'Unit': 'g'}
+        data_dict[5] = {'Item': 'Kidney Beans', 'Quantity': '250', 'Unit': 'g'}
+        data_dict[6] = {'Item': 'Vinegar', 'Quantity': '1', 'Unit': 'l'}
 
         return data_dict
 
@@ -36,9 +37,11 @@ class ItemsAccessor:
 
 app = Flask(__name__)
 
+
 class InventoryManager(FlaskView):
     """Class to manage access to inventory
     """
+
     def index(self):
         """Returns index-route
         """
@@ -57,7 +60,7 @@ class InventoryManager(FlaskView):
         return json_data
 
 
-InventoryManager.register(app, route_base = '/')
+InventoryManager.register(app, route_base='/')
 
 
 if (__name__ == "__main__"):
