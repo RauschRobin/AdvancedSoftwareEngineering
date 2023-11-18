@@ -75,7 +75,7 @@ class Ernaehrungsplaner:
             # check dinner case at round about 18 pm
             self.tell_dinner_meal_and_missing_ingredients()
 
-            time.sleep(45)
+            time.sleep(60)
 
     def suggest_restaurant_for_lunchbreak(self):
         '''
@@ -153,7 +153,7 @@ class Ernaehrungsplaner:
                 if key.startswith("strIngredient") and your_meal[key]:
                     ingredients.append(your_meal[key])
 
-            inventory_objects = json.loads(self.inventory.call_url())
+            inventory_objects = json.loads(self.inventory.get_inventory())
 
             # Check which ingredients are at home
             inventory = []

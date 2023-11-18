@@ -17,7 +17,7 @@ class Inventory:
         """
         ret_str = ""
         if (os.name == 'nt'):
-            ret_str = "\\src\\core\\shared\\inventory\\helper\\"  # start aus src folder?
+            ret_str = "\\core\\shared\\inventory\\helper\\"
         elif (os.name == 'posix'):
             ret_str = "/core/shared/inventory/helper/"
         return ret_str
@@ -81,7 +81,7 @@ class Inventory:
             time.sleep(2)  # Wait for 2 seconds before trying again
         return False
 
-    def call_url(self):
+    def get_inventory(self):
         """Call the URL of the Web-API to get Inventory
         and response object
 

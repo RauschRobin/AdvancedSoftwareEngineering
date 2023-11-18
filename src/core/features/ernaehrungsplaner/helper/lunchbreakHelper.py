@@ -71,7 +71,7 @@ class LunchbreakHelper():
         if now.hour == is_lunchbreak_hour and now.minute == is_lunchbreak_minute:
             return True
         else:
-            return False
+            return True
 
     def is_businesses_not_none(self, businesses) -> bool:
         '''Find out if the businesses response are not null and return true/false
