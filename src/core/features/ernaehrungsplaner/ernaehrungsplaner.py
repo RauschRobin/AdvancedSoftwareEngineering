@@ -52,6 +52,8 @@ class Ernaehrungsplaner:
             "restraurants-categories-interests")
         self.prefred_user_restaurant_price = PreferencesFetcher.fetch(
             "restaurants-price")
+        self.preferred_meals = PreferencesFetcher.fetch(
+            "meal-dinner-plan").split(";")
 
     def run(self):
         '''
@@ -143,10 +145,9 @@ class Ernaehrungsplaner:
         Returns: None
         '''
         if self.helper.is_time_for_dinner():
-            preferred_meals = PreferencesFetcher.fetch(
-                "meal-dinner-plan").split(";")
+
             now = datetime.datetime.now()
-            preferrd_meal_for_today = preferred_meals[now.weekday()]
+            preferrd_meal_for_today = self.preferred_meals[now.weekday()]
             meal_object = self.theMealDb.search_meal_by_name(
                 preferrd_meal_for_today)
 
@@ -166,14 +167,15 @@ class Ernaehrungsplaner:
             for key in inventory_objects:
                 inventory.append(inventory_objects[key]["Item"])
 
-            have = list(set(ingredients) & set(inventory))
+            ingredients_at_home = list(set(ingredients) & set(inventory))
             missing_ingredients = list(set(ingredients) - set(inventory))
 
-            dinner_builder = SuccessDinnerMessageBuilder()
-            dinner_builder.add_meal_name(your_meal_name)
-            dinner_builder.add_meal_category(your_meal_category)
-            dinner_builder.add_meal_to_buy_ingredients(missing_ingredients)
+            dinner_message_builder = SuccessDinnerMessageBuilder()
+            dinner_message_builder.add_meal_name(your_meal_name)
+            dinner_message_builder.add_meal_category(your_meal_category)
+            dinner_message_builder.add_meal_to_buy_ingredients(
+                missing_ingredients)
 
-            message = dinner_builder.sentence.get_all()
+            message = dinner_message_builder.sentence.get_all()
 
             self.voice_output.add_message(message)
