@@ -44,12 +44,12 @@ class News:
                 self.voice_output.add_message(json.dumps(eilmeldung))
             
             currentTime = datetime.datetime.now()
+            # Between 9 am and 10 pm, inform me about news of my interest
             if currentTime.hour > 9 and currentTime.hour < 22 and currentTime.minute == 0:
-                for interest in self.interests:
-                    top_headlines = self.newsapi.get_top_headlines(q=interest, language='de')
-                    print(top_headlines)
-                    #self.voice_output.add_message(json.dumps(random.choice(top_headlines['articles'])))
-                    # TODO: This throws an error!!
+                interest = random.choice(self.interests)
+                top_headlines = self.newsapi.get_top_headlines(q=interest, language='de')
+                if top_headlines['articles'] != []:
+                    self.voice_output.add_message(json.dumps(random.choice(top_headlines['articles'])))
 
             newEmail = self.roundcube.checkForNewEmail()
             if newEmail is not None:

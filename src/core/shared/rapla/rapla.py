@@ -2,7 +2,6 @@ import requests
 from bs4 import BeautifulSoup
 from .DateParser import DateParser as dp
 import json
-import datetime
 
 class Rapla:
     '''
