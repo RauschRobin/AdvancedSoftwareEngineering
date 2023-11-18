@@ -1,6 +1,8 @@
 import datetime
 import json
 
+from ..core.features.ernaehrungsplaner.helper.dinnerHelper import DinnerHelper
+
 from ..core.features.ernaehrungsplaner.helper.lunchbreakHelper import LunchbreakHelper
 from ..core.features.ernaehrungsplaner.helper.message.sentence import Sentence1
 from ..core.features.ernaehrungsplaner.helper.message.lunchbreakMessageBuilder import LunchbreakMessageBuilder
@@ -87,6 +89,35 @@ def test_get_all_sentences():
 
 
 # test dinner helper
+def test_check_which_ingredients_needed():
+    dinner = DinnerHelper()
+    your_meal = {
+        "strIngredient1": "Tomato",
+        "strIngredient2": "Cheese",
+    }
+
+    expected_ingredients = ["Tomato", "Cheese"]
+    ingredients = dinner.check_which_ingredients_needed(your_meal)
+
+    assert ingredients == expected_ingredients, "The ingredients list does not match the expected outcome"
+
+
+def test_check_which_ingredients_are_at_home():
+    dinner = DinnerHelper()
+    inventory_objects = {
+        "item1": {"Item": "Tomato"},
+        "item2": {"Item": "Cheese"},
+        "item3": {"Item": "Basil"}
+    }
+
+    # Expected outcome
+    expected_ingredients = ["Tomato", "Cheese", "Basil"]
+
+    # Test
+    ingredients = dinner.check_which_ingredients_are_at_home(inventory_objects)
+
+    # Assert
+    assert ingredients == expected_ingredients, "The ingredients list does not match the expected outcome"
 
 
 # test lunchbreak helper
