@@ -1,7 +1,33 @@
 import datetime
+import json
+
+from ....shared.PreferencesFetcher.PreferencesFetcher import PreferencesFetcher
+
+from ....shared.rapla.rapla import Rapla
+from ....shared.rapla.DateParser import DateParser as dp
 
 
-class BaseErneahrungsplanerHelper():
+class LunchbreakHelper():
+    def __init__(self):
+        self.load_preferences()
+
+        self.rapla = Rapla(self.rapla_url)
+        # store current week timetable & calendar week to reduce number of requests
+        self.current_calendar_week = dp.get_current_calendar_week()
+        self.current_week_time_table = json.loads(self.rapla.fetchLecturesOfWeek(
+            self.current_calendar_week, datetime.datetime.now().isocalendar()[0]))
+
+        self.calculate_lunchbreak_time()
+
+    def load_preferences(self):
+        '''
+        This methods loads all the preferences used in this class and stores them in variables.
+
+        Parameters: None
+        Returns: None
+        '''
+        self.rapla_url = PreferencesFetcher.fetch("rapla-url")
+
     def calculate_lunchbreak_time(self):
         '''Calculate the lunchbreak time for the user via rapla
 
@@ -11,8 +37,11 @@ class BaseErneahrungsplanerHelper():
         now = datetime.datetime.now()
         weekday_as_string = now.strftime("%A").lower()
 
-        todays_lectures = self.currentWeekTimeTable.get(
+        todays_lectures = self.current_week_time_table.get(
             weekday_as_string, [])
+
+        lunchbreak_hour = 12
+        lunchbreak_minute = 0
 
         # TODO
         # - Use Rapla to calculate the lunchbreak
@@ -27,10 +56,6 @@ class BaseErneahrungsplanerHelper():
                 if end_time_hour > 10 and end_time_hour < 15:
                     lunchbreak_hour = end_time_hour
                     lunchbreak_minute = end_time_minute
-
-        else:
-            lunchbreak_hour = 12
-            lunchbreak_minute = 0
 
         return lunchbreak_hour, lunchbreak_minute
 
@@ -58,16 +83,3 @@ class BaseErneahrungsplanerHelper():
             return True
         else:
             return False
-
-    def is_time_for_dinner(self) -> bool:
-        '''Calculate the dinner and return true/false
-
-        Parameters: None
-        Returns: True/False
-        '''
-        now = datetime.datetime.now()
-        if now.hour == 18 and now.minute == 0:
-            return True
-        else:
-            # For testing True
-            return True

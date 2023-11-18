@@ -5,7 +5,7 @@ from typing import Any
 from .sentence import Sentence1
 
 
-class SuccessLunchbreakBuilder(ABC):
+class LunchbreakBuilder(ABC):
     """
     The Builder interface specifies methods for creating the different parts of
     the Product objects.
@@ -53,7 +53,7 @@ class SuccessLunchbreakBuilder(ABC):
         pass
 
 
-class LunchbreakSuccessMessageBuilder(SuccessLunchbreakBuilder):
+class LunchbreakMessageBuilder(LunchbreakBuilder):
     """
     The Concrete Builder classes follow the Builder interface and provide
     specific implementations of the building steps. Your program may have
