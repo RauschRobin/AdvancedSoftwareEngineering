@@ -2,17 +2,17 @@
 
 ## Description
 
-Der Ernährungsplaner ermittelt die Mittagspause (freie Zeit im Stundenplan) und erstellt Vorschläge für ein gutes gesundes Mittagessen. Verwendet aus der Präferenz den Arbeits/Uni Standort.​
+The nutrition planner determines the lunch break (free time in the timetable) and creates suggestions for a good, healthy lunch. It uses the work/university location from the preferences.
 
-Abends überprüft Carschten das Inventar und schlägt vor, was gekocht werden kann bzw. was eingekauft werden muss.​
+In the evenings, Carschten checks the inventory and suggests what can be cooked or what needs to be purchased.
 
-Carschten weiß aus den Präferenzen was der Benutzer mag und auf was geachtet werden soll.​
+Carschten knows from the preferences what the user likes and what should be considered.
 
-Der Anwender kann jederzeit details zu … erfragen​
+The user can inquire about details at any time regarding:
 
-- Restaurants​
-- Inventar​
-- Rezepte
+- Restaurants
+- Inventory
+- Recipes
 
 ## Shared
 
