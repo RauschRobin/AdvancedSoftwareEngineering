@@ -9,6 +9,7 @@ from ...communication.voice_output import VoiceOutput
 from ...shared.deutschebahn.deutschebahn import DeutscheBahn
 from ...shared.PreferencesFetcher.PreferencesFetcher import PreferencesFetcher
 from ...shared.rapla.DateParser import DateParser as dp
+from ...shared.Chat_GPT.ChatGPT import ChatGpt
 
 alarm_sound_file = os.path.join(os.path.dirname(__file__), "alarm_sound.mp3")
 
@@ -26,6 +27,7 @@ class WakeUpAssistant:
         '''
         self.voice_output = voice_output
         self.loadPreferences()
+        self.chatgpt = ChatGpt()
 
         self.rapla = Rapla(self.rapla_url)
         # store current week timetable & calendar week to reduce number of requests
