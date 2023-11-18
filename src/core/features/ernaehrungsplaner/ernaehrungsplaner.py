@@ -28,7 +28,7 @@ class Ernaehrungsplaner:
         self.load_preferences()
 
         self.yelp = Yelp()
-        self.theMealDb = TheMealDb()
+
         self.currentLocation = CurrentLocation()
         self.inventory = Inventory()
 
@@ -111,6 +111,7 @@ class Ernaehrungsplaner:
                 your_restaurant_display_adress_city = your_restaurant_location[
                     "display_address"][1]
 
+                # TODO: refactor with director pattern
                 # use the builder pattern to dynamically create the message
                 success_message_builder = LunchbreakMessageBuilder()
                 success_message_builder.add_current_time(now.hour, now.minute)
@@ -138,32 +139,18 @@ class Ernaehrungsplaner:
         Returns: None
         '''
         if self.dinner.is_time_for_dinner():
-            now = datetime.datetime.now()
-            preferrd_meal_for_today = self.preferred_meals_week[now.weekday()]
-            meal_object = self.theMealDb.search_meal_by_name(
-                preferrd_meal_for_today)
-
-            your_meal = meal_object["meals"][0]
-            your_meal_name = your_meal["strMeal"]
-            your_meal_category = your_meal["strCategory"]
-
-            # Check what ingredients are neccessary for this meal
-            ingredients = []
-            for key in your_meal:
-                if key.startswith("strIngredient") and your_meal[key]:
-                    ingredients.append(your_meal[key])
+            your_meal, your_meal_name, your_meal_category = self.dinner.find_the_best_meal()
+            ingredients = self.dinner.check_which_ingredients_needed(your_meal)
 
             inventory_objects = json.loads(self.inventory.get_inventory())
-
-            # Check which ingredients are at home
-            inventory = []
-            for key in inventory_objects:
-                inventory.append(inventory_objects[key]["Item"])
+            inventory = self.dinner.check_which_ingredients_are_at_home(
+                inventory_objects)
 
             ingredients_at_home = list(set(ingredients) & set(inventory))
             missing_ingredients = list(set(ingredients) - set(inventory))
 
             # construct the output message
+            # TODO: refactor with director pattern
             dinner_message_builder = DinnerMessageBuilder()
             dinner_message_builder.add_meal_name(your_meal_name)
             dinner_message_builder.add_meal_category(your_meal_category)
