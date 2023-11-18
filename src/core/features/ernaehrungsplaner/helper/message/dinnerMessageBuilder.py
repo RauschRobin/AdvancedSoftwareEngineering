@@ -44,7 +44,7 @@ class DinnerBuilder(ABC):
         pass
 
 
-class SuccessDinnerMessageBuilder(DinnerBuilder):
+class DinnerMessageBuilder(DinnerBuilder):
     """
     The Concrete Builder classes follow the Builder interface and provide
     specific implementations of the building steps. Your program may have

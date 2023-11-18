@@ -2,7 +2,7 @@ import datetime
 import time
 import json
 
-from .helper.message.dinnerMessageBuilder import SuccessDinnerMessageBuilder
+from .helper.message.dinnerMessageBuilder import DinnerMessageBuilder
 
 from .helper.message.lunchbreakMessageBuilder import LunchbreakMessageBuilder
 from .helper.lunchbreakHelper import LunchbreakHelper
@@ -164,7 +164,7 @@ class Ernaehrungsplaner:
             missing_ingredients = list(set(ingredients) - set(inventory))
 
             # construct the output message
-            dinner_message_builder = SuccessDinnerMessageBuilder()
+            dinner_message_builder = DinnerMessageBuilder()
             dinner_message_builder.add_meal_name(your_meal_name)
             dinner_message_builder.add_meal_category(your_meal_category)
             dinner_message_builder.add_meal_to_buy_ingredients(
