@@ -1,26 +1,104 @@
-def test_success_dinner_message_builder():
-    # 1. Setup Test Environment
+import datetime
+import json
+
+from ..core.features.ernaehrungsplaner.helper.lunchbreakHelper import LunchbreakHelper
+from ..core.features.ernaehrungsplaner.helper.message.sentence import Sentence1
+from ..core.features.ernaehrungsplaner.helper.message.lunchbreakMessageBuilder import LunchbreakMessageBuilder
+from ..core.features.ernaehrungsplaner.helper.message.dinnerMessageBuilder import DinnerMessageBuilder
+
+from ..core.shared.rapla.rapla import Rapla
+from ..core.shared.rapla.DateParser import DateParser as dp
+
+
+# Test the dinner message builder
+def test_dinner_message_builder():
     builder = DinnerMessageBuilder()
 
-    # 2. Simulate Building Process
     builder.add_meal_name("Spaghetti Carbonara")
     builder.add_meal_category("Italienische Küche")
     builder.add_meal_to_buy_ingredients(["Speck", "Eier", "Parmesan"])
 
-    # 3. Retrieve the Built Product
-    sentence = builder.sentence
+    sentence = builder.sentence.get_all()
 
-    # 4. Define Expected Outcome
     expected_sentence = "Du kannst heute Spaghetti Carbonara kochen. " \
                         "Das essen gehört zur Kategorie Italienische Küche. " \
-                        "Für dieses Gericht musst du noch Speck, Eier und Parmesan kaufen."
+                        "Für dieses Gericht musst du noch Speck, Eier und Parmesan kaufen"
 
-    # 5. Assertion
-    # Assuming Sentence1 implements __str__ method
     assert str(sentence) == expected_sentence
 
-    # 6. Reset Behavior Check (Optional)
-    builder.add_meal_name("Pizza")
-    new_sentence = builder.sentence
-    # New sentence should be different
-    assert str(new_sentence) != expected_sentence
+
+def test_dinner_message_builder_reset():
+    builder = DinnerMessageBuilder()
+
+    builder.add_meal_name("Spaghetti Carbonara")
+
+    builder.reset()
+    sentence = builder.sentence.get_all()
+
+    assert str(sentence) == ""
+
+
+# test the lunchbreak message builder
+def test_lunchbreak_message_builder():
+    builder = LunchbreakMessageBuilder()
+
+    builder.add_current_time(12, 30)
+    builder.add_lunchbreak_duration_in_minutes(60)
+    builder.add_name_of_the_restaurant("Bella Italia")
+    builder.add_restaurant_adress("Main Street", "Stuttgart")
+
+    sentence = builder.sentence.get_all()
+
+    expected_sentence = "Es ist 12:30. Du hast 60 Minuten Mittagspause. " \
+                        "Du kannst heute im Restaurant Bella Italia essen gehen. " \
+                        "Die Adresse ist Main Street in Stuttgart"
+
+    assert str(sentence) == expected_sentence
+
+
+def test_lunchbreak_message_builder_reset():
+    builder = LunchbreakMessageBuilder()
+
+    builder.add_current_time(12, 30)
+    builder.reset()
+    sentence = builder.sentence.get_all()
+
+    assert str(sentence) == ""
+
+
+# Test the Sentence Class
+def test_initialization():
+    sentence = Sentence1()
+    assert sentence.sentences == []
+
+
+def test_adding_sentences():
+    sentence = Sentence1()
+    sentence.add("Hello")
+    sentence.add("World")
+    assert sentence.sentences == ["Hello", "World"]
+
+
+def test_get_all_sentences():
+    sentence = Sentence1()
+    sentence.add("Hello")
+    sentence.add("World")
+    assert sentence.get_all() == "Hello. World"
+
+
+# test dinner helper
+
+
+# test lunchbreak helper
+def test_is_businesses_not_none_with_non_empty_list():
+    # Test with a non-empty list
+    businesses = {"businesses": ["business1", "business2"]}
+    lunchbreak = LunchbreakHelper()
+    assert lunchbreak.is_businesses_not_none(businesses) == True
+
+
+def test_is_businesses_not_none_with_empty_list():
+    # Test with an empty list
+    businesses = {"businesses": []}
+    lunchbreak = LunchbreakHelper()
+    assert lunchbreak.is_businesses_not_none(businesses) == False
