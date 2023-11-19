@@ -1,5 +1,5 @@
 from gtts import gTTS
-from ..shared.PreferencesFetcher.PreferencesFetcher import PreferencesFetcher
+from ..shared.YamlFetcher.YamlFetcher import YamlFetcher
 import playsound
 import os
 import threading
@@ -41,7 +41,7 @@ class VoiceOutput(metaclass=SingletonMeta):
         self.is_running = True
         self.speech_thread = threading.Thread(target=self.speak)
         self.speech_thread.start()
-        user_name = PreferencesFetcher.fetch('user-name')
+        user_name = YamlFetcher.fetch('user-name')
         self.add_message("Hallo " + user_name)
 
     def stop(self):

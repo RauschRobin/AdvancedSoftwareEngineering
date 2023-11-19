@@ -1,6 +1,6 @@
 import yaml
 
-class PreferencesFetcher:
+class YamlFetcher:
     '''
     This class allows the fetching of preferences from a yaml file.
     '''
