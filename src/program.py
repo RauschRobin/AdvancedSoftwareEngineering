@@ -32,7 +32,7 @@ for feature in features:
 feature_composite = FeatureComposite(features)
 
 # Pass the composite to the VoiceInput instance
-voice_input = VoiceInput(feature_composite, stop_listening_event)
+voice_input = VoiceInput(feature_composite, stop_listening_event, voice_output)
 voice_input.start()
 
 # Main class to coordinate features and user input

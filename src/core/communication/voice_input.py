@@ -2,6 +2,7 @@ import threading
 import speech_recognition as sr
 from ..communication.intend_recognition import IntendRecognizer
 from ..communication.FeatureComposite import FeatureComposite
+from ..communication.voice_output import VoiceOutput
 import playsound
 import os
 import time
@@ -18,7 +19,7 @@ class SingletonMeta(type):
         return cls._instances[cls]
     
 class VoiceInput(metaclass=SingletonMeta):
-    def __init__(self, featureComposite:FeatureComposite, stop_listening_event:threading.Event, language="de-DE"):
+    def __init__(self, featureComposite:FeatureComposite, stop_listening_event:threading.Event, voice_ouput:VoiceOutput, language="de-DE"):
         '''
         Initializes the VoiceInput class.
 
@@ -30,6 +31,7 @@ class VoiceInput(metaclass=SingletonMeta):
         self.featureComposite = featureComposite
         self.recognizer = sr.Recognizer()
         self.intent_recognizer = IntendRecognizer()
+        self.voice_output = voice_ouput
         self.language = language
         self.is_running = False
 
@@ -150,7 +152,7 @@ class VoiceInput(metaclass=SingletonMeta):
                 self.featureComposite.call_feature_method("getNewsWithKeyword", keyword=detected_keyword)
                 return
             case "fallback":
-                # TODO: VoiceOutput needs to respond and explain that he did not understand what to do
+                self.voice_output.add_message("Ich bin mir nicht sicher was du von mir willst. Kannst du das anders formulieren?")
                 print("I could not match your voice command onto a function. I do not know what to do...")
                 return
             # ...
