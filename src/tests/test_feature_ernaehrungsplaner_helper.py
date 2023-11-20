@@ -4,7 +4,7 @@ import json
 from ..core.features.ernaehrungsplaner.helper.dinnerHelper import DinnerHelper
 
 from ..core.features.ernaehrungsplaner.helper.lunchbreakHelper import LunchbreakHelper
-from ..core.features.ernaehrungsplaner.helper.message.sentence import Sentence1
+from ..core.features.ernaehrungsplaner.helper.message.sentence import Sentence
 from ..core.features.ernaehrungsplaner.helper.message.lunchbreakMessageBuilder import LunchbreakMessageBuilder
 from ..core.features.ernaehrungsplaner.helper.message.dinnerMessageBuilder import DinnerMessageBuilder
 
@@ -70,19 +70,19 @@ def test_lunchbreak_message_builder_reset():
 
 # Test the Sentence Class
 def test_initialization():
-    sentence = Sentence1()
+    sentence = Sentence()
     assert sentence.sentences == []
 
 
 def test_adding_sentences():
-    sentence = Sentence1()
+    sentence = Sentence()
     sentence.add("Hello")
     sentence.add("World")
     assert sentence.sentences == ["Hello", "World"]
 
 
 def test_get_all_sentences():
-    sentence = Sentence1()
+    sentence = Sentence()
     sentence.add("Hello")
     sentence.add("World")
     assert sentence.get_all() == "Hello. World"

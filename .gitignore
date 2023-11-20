@@ -120,6 +120,7 @@ celerybeat.pid
 *.sage.py
 
 # Environments
+API_Keys.yaml
 .env
 .venv
 env/
