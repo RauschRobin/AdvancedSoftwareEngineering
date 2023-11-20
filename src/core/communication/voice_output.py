@@ -41,7 +41,7 @@ class VoiceOutput(metaclass=SingletonMeta):
         self.is_running = True
         self.speech_thread = threading.Thread(target=self.speak)
         self.speech_thread.start()
-        user_name = YamlFetcher.fetch('user-name')
+        user_name = YamlFetcher.fetch('user-name', "preferences.yaml")
         self.add_message("Hallo " + user_name)
 
     def stop(self):

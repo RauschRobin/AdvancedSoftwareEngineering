@@ -20,7 +20,7 @@ class News:
         self.tagesschau = TagesschauAPI()
         self.roundcube = RoundcubeMock()
         self.newsapi = NewsAPI()
-        self.interests = YamlFetcher.fetch("news-interests").split(';')
+        self.interests = YamlFetcher.fetch("news-interests", "preferences.yaml").split(';')
 
     def run(self):
         '''

@@ -45,10 +45,10 @@ class WakeUpAssistant:
         Parameters: None
         Returns: None
         '''
-        self.rapla_url = YamlFetcher.fetch("rapla-url")
-        self.wakeUpTimeNeeded = YamlFetcher.fetch("time-user-needs-between-waking-up-and-arriving-at-local-train-station")
-        self.timeItTakesFromHomeStationToUniversity = YamlFetcher.fetch("travel-time-from-home-station-to-university-via-train")
-        self.localTrainStationName = YamlFetcher.fetch("home-train-station-name")
+        self.rapla_url = YamlFetcher.fetch("rapla-url", "preferences.yaml")
+        self.wakeUpTimeNeeded = YamlFetcher.fetch("time-user-needs-between-waking-up-and-arriving-at-local-train-station", "preferences.yaml")
+        self.timeItTakesFromHomeStationToUniversity = YamlFetcher.fetch("travel-time-from-home-station-to-university-via-train", "preferences.yaml")
+        self.localTrainStationName = YamlFetcher.fetch("home-train-station-name", "preferences.yaml")
 
     def run(self):
         '''

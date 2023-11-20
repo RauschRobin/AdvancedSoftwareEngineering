@@ -6,7 +6,7 @@ class YamlFetcher:
     '''
 
     @staticmethod
-    def fetch(key, filepath="preferences.yaml"):
+    def fetch(key, filepath):
         '''
         This method fetches a preference from a yaml file.
 
