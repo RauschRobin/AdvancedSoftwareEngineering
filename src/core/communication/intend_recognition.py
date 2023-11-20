@@ -24,6 +24,8 @@ class IntendRecognizer:
         Parameters: None 
         Returns: None
         '''
+        self.threshhold = 0.2
+
         # Get the directory of the script
         script_dir = os.path.dirname(os.path.realpath(__file__))
         file_path = os.path.join(script_dir, 'dataset_intend_recognition.json')
@@ -59,4 +61,11 @@ class IntendRecognizer:
 
         # Predict the intent
         predicted_intend = self.clf.predict(recorded_command_tfidf)[0]
-        return predicted_intend
+
+        confidence = self.clf.predict_proba(recorded_command_tfidf).max()
+        print("CONFIDENCE: " + str(confidence))
+        
+        if confidence > self.threshhold:
+            return predicted_intend
+        else:
+            return "fallback"
