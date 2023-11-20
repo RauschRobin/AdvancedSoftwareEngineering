@@ -1,7 +1,7 @@
 from ...communication.voice_output import VoiceOutput
 from ...shared.tagesschau.tagesschau import TagesschauAPI
 from ...shared.roundcube.roundcube import RoundcubeMock
-from ...shared.PreferencesFetcher.PreferencesFetcher import PreferencesFetcher
+from ...shared.YamlFetcher.YamlFetcher import YamlFetcher
 from ...shared.newsapiorg.news import NewsAPI
 import time
 import json
@@ -20,7 +20,7 @@ class News:
         self.tagesschau = TagesschauAPI()
         self.roundcube = RoundcubeMock()
         self.newsapi = NewsAPI()
-        self.interests = PreferencesFetcher.fetch("news-interests").split(';')
+        self.interests = YamlFetcher.fetch("news-interests", "preferences.yaml").split(';')
 
     def run(self):
         '''
