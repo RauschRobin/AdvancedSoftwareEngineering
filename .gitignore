@@ -173,3 +173,6 @@ cython_debug/
 
 # Private API keys must be kept private and should not be published in a repository
 API_Keys.yaml
+
+# Metadata
+server_user_id.txt
