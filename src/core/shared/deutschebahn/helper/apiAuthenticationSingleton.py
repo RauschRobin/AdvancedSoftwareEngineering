@@ -1,12 +1,15 @@
-from threading import Lock
-
 import requests
+
+from threading import Lock
+from ....shared.YamlFetcher.YamlFetcher import YamlFetcher
 
 # Singleton Pattern
 # Thread save singleton
+
+
 class ApiAuthenticationSingletonMeta(type):
     _instances = {}
-   
+
     _lock: Lock = Lock()
 
     def __call__(cls, *args, **kwargs):
@@ -15,24 +18,25 @@ class ApiAuthenticationSingletonMeta(type):
                 instance = super().__call__(*args, **kwargs)
                 cls._instances[cls] = instance
         return cls._instances[cls]
-    
+
+
 class ApiAuthenticationSingleton(metaclass=ApiAuthenticationSingletonMeta):
     def __init__(self) -> None:
-        self.client_id = "eaace190c7864a763aabef94bc7a9170"
-        self.client_secret = "83060b5545efc7db0593f3974cde71ad"
+        self.client_id = "79b6f4c7600564e7aca526eb7f74c25e"
+        self.client_secret = YamlFetcher.fetch("deutscheBahn", "API_Keys.yaml")
 
     def test_credentials(self) -> bool:
         response = requests.get(
             "https://apis.deutschebahn.com/db-api-marketplace/apis/timetables/v1/station/BLS",
             headers={
-                "DB-Api-Key": self.client_secret,
                 "DB-Client-Id": self.client_id,
+                "DB-Api-Key": self.client_secret,
             }
         )
         return response.status_code == 200
 
     def get_headers(self) -> dict[str, str]:
         return {
-            "DB-Api-Key": self.client_secret,
             "DB-Client-Id": self.client_id,
+            "DB-Api-Key": self.client_secret,
         }
