@@ -6,14 +6,17 @@ class NewsAPI:
     This class communicates with the newsapi.org API.
     '''
 
-    def __init__(self):
+    def __init__(self, override_api_key=None):
         '''
         This method initializes the class.
 
         Parameters: api_key - string (optional)
         Returns: None
         '''
-        self.newsapi = NewsApiClient(YamlFetcher.fetch("newsapi", "API_Keys.yaml"))
+        if override_api_key:
+            self.newsapi = NewsApiClient(api_key=override_api_key)
+        else:
+            self.newsapi = NewsApiClient(YamlFetcher.fetch("newsapi", "API_Keys.yaml"))
 
     def get_top_headlines(self, q=None, sources=None, category=None, language=None, country=None):
         '''
