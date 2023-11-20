@@ -2,7 +2,7 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 from typing import Any
 
-from .sentence import Sentence1
+from .sentence import Sentence
 
 
 class LunchbreakBuilder(ABC):
@@ -57,10 +57,10 @@ class LunchbreakMessageBuilder(LunchbreakBuilder):
         self.reset()
 
     def reset(self) -> None:
-        self._sentence = Sentence1()
+        self._sentence = Sentence()
 
     @property
-    def sentence(self) -> Sentence1:
+    def sentence(self) -> Sentence:
         sentence = self._sentence
         self.reset()
         return sentence

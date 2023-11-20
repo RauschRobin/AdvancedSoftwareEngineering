@@ -1,7 +1,7 @@
 from typing import Any
 
 
-class Sentence1():
+class Sentence():
     def __init__(self) -> None:
         self.sentences = []
 
