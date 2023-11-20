@@ -149,7 +149,10 @@ class VoiceInput(metaclass=SingletonMeta):
                 print("COMMAND: GetNewsWithKeyword")
                 self.featureComposite.call_feature_method("getNewsWithKeyword", keyword=detected_keyword)
                 return
+            case "fallback":
+                # TODO: VoiceOutput needs to respond and explain that he did not understand what to do
+                print("I could not match your voice command onto a function. I do not know what to do...")
+                return
             # ...
             case _:
-                print("COMMAND: I don't know what to do?")
-                return
+                raise SyntaxError("Something went wrong while trying to match your voice command onto a function.")
