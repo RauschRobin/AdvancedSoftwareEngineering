@@ -34,6 +34,8 @@ class NewsAPI:
         Parameters: q - string (optional), sources - string (optional), domains - string (optional), from_param - string (optional), to - string (optional), language - string (optional), sort_by - string (optional), page - string (optional)
         Returns: everything (json)
         '''
+        if q is None or q == "":
+            return None
         return self.newsapi.get_everything(q=q, sources=sources, domains=domains, from_param=from_param, to=to, language=language, sort_by=sort_by, page=page)
 
     def get_sources(self):

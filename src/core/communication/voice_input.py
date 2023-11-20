@@ -79,7 +79,7 @@ class VoiceInput(metaclass=SingletonMeta):
                         recognized_text = self.recognizer.recognize_google(audio, language=self.language)
                         print(recognized_text)
 
-                        if "stop" in recognized_text.lower() or "stopp" in recognized_text.lower() or "danke" in recognized_text.lower():
+                        if "stop" in recognized_text.lower() or "stopp" in recognized_text.lower() or "danke" in recognized_text.lower() or "dankeschön" in recognized_text.lower():
                             just_said_something = False
                             recognized_text = ""
 
