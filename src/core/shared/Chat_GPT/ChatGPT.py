@@ -1,8 +1,9 @@
+from ...shared.YamlFetcher.YamlFetcher import YamlFetcher
 import openai
 
 class ChatGpt:
-    def __init__(self, maps_api_key="API_KEY"):
-        self.api_key = maps_api_key
+    def __init__(self):
+        self.api_key = YamlFetcher.fetch("chatgpt", "API_Keys.yaml")
 
     def get_response(self, request):
         '''

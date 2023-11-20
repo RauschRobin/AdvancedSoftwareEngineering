@@ -2,13 +2,13 @@ import yaml
 
 class YamlFetcher:
     '''
-    This class allows the fetching of preferences from a yaml file.
+    This class allows the fetching of preferences or api keys from yaml files.
     '''
 
     @staticmethod
     def fetch(key, filepath):
         '''
-        This method fetches a preference from a yaml file.
+        This method fetches a value from a yaml file with its key.
 
         Parameters: key - string
                     filepath - string (optional)
