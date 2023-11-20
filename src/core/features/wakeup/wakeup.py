@@ -7,7 +7,7 @@ from playsound import playsound
 from ...shared.rapla.rapla import Rapla
 from ...communication.voice_output import VoiceOutput
 from ...shared.deutschebahn.deutschebahn import DeutscheBahn
-from ...shared.PreferencesFetcher.PreferencesFetcher import PreferencesFetcher
+from ...shared.YamlFetcher.YamlFetcher import YamlFetcher
 from ...shared.rapla.DateParser import DateParser as dp
 from ...shared.Chat_GPT.ChatGPT import ChatGpt
 
@@ -45,10 +45,10 @@ class WakeUpAssistant:
         Parameters: None
         Returns: None
         '''
-        self.rapla_url = PreferencesFetcher.fetch("rapla-url")
-        self.wakeUpTimeNeeded = PreferencesFetcher.fetch("time-user-needs-between-waking-up-and-arriving-at-local-train-station")
-        self.timeItTakesFromHomeStationToUniversity = PreferencesFetcher.fetch("travel-time-from-home-station-to-university-via-train")
-        self.localTrainStationName = PreferencesFetcher.fetch("home-train-station-name")
+        self.rapla_url = YamlFetcher.fetch("rapla-url", "preferences.yaml")
+        self.wakeUpTimeNeeded = YamlFetcher.fetch("time-user-needs-between-waking-up-and-arriving-at-local-train-station", "preferences.yaml")
+        self.timeItTakesFromHomeStationToUniversity = YamlFetcher.fetch("travel-time-from-home-station-to-university-via-train", "preferences.yaml")
+        self.localTrainStationName = YamlFetcher.fetch("home-train-station-name", "preferences.yaml")
 
     def run(self):
         '''

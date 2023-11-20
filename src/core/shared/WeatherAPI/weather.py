@@ -1,6 +1,6 @@
 import requests
 from datetime import datetime
-
+from ..YamlFetcher.YamlFetcher import YamlFetcher
 
 class Weather(object):
     # shared variable
@@ -11,8 +11,8 @@ class Weather(object):
             cls.instance = super(Weather, cls).__new__(cls)
         return cls.instance
     
-    def __init__(self, weather_api_key='API_KEY'):
-        self.weather_api_key = weather_api_key
+    def __init__(self):
+        self.weather_api_key = YamlFetcher.fetch("weather", "API_Keys.yaml")
 
     # returns json string of following weather events in german
     def get_weather_of_date(self):

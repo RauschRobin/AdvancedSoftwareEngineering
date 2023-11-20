@@ -1,18 +1,22 @@
 from newsapi import NewsApiClient
+from ..YamlFetcher.YamlFetcher import YamlFetcher
 
 class NewsAPI:
     '''
     This class communicates with the newsapi.org API.
     '''
 
-    def __init__(self, api_key="4664c3868e8e41bd9b9c8d41245ba35a"):
+    def __init__(self, override_api_key=None):
         '''
         This method initializes the class.
 
         Parameters: api_key - string (optional)
         Returns: None
         '''
-        self.newsapi = NewsApiClient(api_key)
+        if override_api_key:
+            self.newsapi = NewsApiClient(api_key=override_api_key)
+        else:
+            self.newsapi = NewsApiClient(YamlFetcher.fetch("newsapi", "API_Keys.yaml"))
 
     def get_top_headlines(self, q=None, sources=None, category=None, language=None, country=None):
         '''
