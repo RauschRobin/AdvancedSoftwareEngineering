@@ -152,6 +152,7 @@ class VoiceInput(metaclass=SingletonMeta):
                 self.featureComposite.call_feature_method("getNewsWithKeyword", keyword=detected_keyword)
                 return
             case "fallback":
+                # TODO: You could also redirect the question/recorded text to chatgpt
                 self.voice_output.add_message("Ich bin mir nicht sicher was du von mir willst. Kannst du das anders formulieren?")
                 print("I could not match your voice command onto a function. I do not know what to do...")
                 return
