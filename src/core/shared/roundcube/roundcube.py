@@ -15,7 +15,7 @@ class RoundcubeMock():
         Parameters: None
         Returns: None or a random email (string)
         '''
-        if random.randint(0, 6) == 3:
+        if random.randint(0, 9) == 3:
             return random.choice(example_emails)
         
     def getLastReceivedEmail(self):
