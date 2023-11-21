@@ -289,7 +289,7 @@ class WakeUpAssistant:
         Parameters: None
         Returns: None
         '''
-        self.voice_output.add_message(self.chatgpt.get_response("Formuliere mir diese API Response einer Vorlesung als Klartext: " + self.nextLecture))
+        self.voice_output.add_message(self.chatgpt.get_response("Formuliere mir diese API Response einer Vorlesung als Klartext: " + json.dumps(self.nextLecture)))
 
 '''
 EXAMPLE RAPLA WEEK TIMETABLE RESPONSE
