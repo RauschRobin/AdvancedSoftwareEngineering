@@ -49,7 +49,7 @@ class News:
             # Between 9 am and 10 pm, inform me about news of my interest
             if currentTime.hour > 9 and currentTime.hour < 22 and currentTime.minute == 0:
                 interest = random.choice(self.interests)
-                top_headlines = self.newsapi.get_top_headlines(q=interest, language='de')
+                top_headlines = self.newsapi.get_top_headlines(search_keyword=interest, language='de')
                 if top_headlines['articles'] != []:
                     self.voice_output.add_message(self.chatgpt.get_response("Formuliere mir diese API Response als Klartext in 2-4 Sätzen:" + json.dumps(random.choice(top_headlines['articles']))))
 
@@ -76,7 +76,7 @@ class News:
         Returns: None
         '''
         for interest in self.interests:
-            newsOfInterest = self.newsapi.get_everything(q=interest, language='de')
+            newsOfInterest = self.newsapi.get_everything(search_keyword=interest, language='de')
             #print(newsOfInterest)
             self.voice_output.add_message(self.chatgpt.get_response("Formuliere mir diese API Response als Klartext in 2-4 Sätzen:" + json.dumps(random.choice(newsOfInterest['articles']))))
 
@@ -87,5 +87,5 @@ class News:
         Parameters: keyword (string)
         Returns: None
         '''
-        newsOfInterest = self.newsapi.get_everything(q=keyword, language='de')
+        newsOfInterest = self.newsapi.get_everything(search_keyword=keyword, language='de')
         self.voice_output.add_message(self.chatgpt.get_response("Formuliere mir diese API Response als Klartext in 2-4 Sätzen:" + json.dumps(random.choice(newsOfInterest['articles']))))
