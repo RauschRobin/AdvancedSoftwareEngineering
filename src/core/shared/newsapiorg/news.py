@@ -18,25 +18,25 @@ class NewsAPI:
         else:
             self.newsapi = NewsApiClient(YamlFetcher.fetch("newsapi", "API_Keys.yaml"))
 
-    def get_top_headlines(self, q=None, sources=None, category=None, language=None, country=None):
+    def get_top_headlines(self, search_keyword=None, sources=None, category=None, language=None, country=None):
         '''
         This method returns the top headlines from the newsapi.org API.
 
-        Parameters: q - string (optional), sources - string (optional), category - string (optional), language - string (optional), country - string (optional)
+        Parameters: search_keyword - string (optional), sources - string (optional), category - string (optional), language - string (optional), country - string (optional)
         Returns: top headlines (json)
         '''
-        return self.newsapi.get_top_headlines(q=q, sources=sources, category=category, language=language, country=country)
+        return self.newsapi.get_top_headlines(q=search_keyword, sources=sources, category=category, language=language, country=country)
 
-    def get_everything(self, q=None, sources=None, domains=None, from_param=None, to=None, language=None, sort_by=None, page=None):
+    def get_everything(self, search_keyword=None, sources=None, domains=None, from_param=None, to=None, language=None, sort_by=None, page=None):
         '''
         This method returns everything from the newsapi.org API.
 
-        Parameters: q - string (optional), sources - string (optional), domains - string (optional), from_param - string (optional), to - string (optional), language - string (optional), sort_by - string (optional), page - string (optional)
+        Parameters: search_keyword - string (optional), sources - string (optional), domains - string (optional), from_param - string (optional), to - string (optional), language - string (optional), sort_by - string (optional), page - string (optional)
         Returns: everything (json)
         '''
-        if q is None or q == "":
+        if search_keyword is None or search_keyword == "":
             return None
-        return self.newsapi.get_everything(q=q, sources=sources, domains=domains, from_param=from_param, to=to, language=language, sort_by=sort_by, page=page)
+        return self.newsapi.get_everything(q=search_keyword, sources=sources, domains=domains, from_param=from_param, to=to, language=language, sort_by=sort_by, page=page)
 
     def get_sources(self):
         '''
