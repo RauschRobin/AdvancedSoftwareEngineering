@@ -45,13 +45,11 @@ class Rapla:
 
         for table in tables:
             th = table.find('th', {'class': 'week_number'})
-            kw_str = "KW " + str(calendar_week)
-
-            if th and kw_str in th.text:
+            if th and th.text.strip() == f'KW {calendar_week}':
                 for row in table.find_all('tr'):  # Iterate through each row in the table
                     day_counter = 0
                     for td in row.find_all('td'):  # 'week_separatorcell' only at the end of columns -> defines new day
-                        if td.get('class') and ('week_separatorcell' in td.get('class')):
+                        if td.get('class') and ('week_separatorcell' in td.get('class') or 'week_separatorcell_black' in td.get('class')):
                             day_counter += 1
                         elif td.get('class') and ('week_block' in td.get('class')):
                             # Scrape lecture properties
