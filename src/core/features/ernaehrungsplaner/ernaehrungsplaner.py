@@ -139,7 +139,8 @@ class Ernaehrungsplaner:
         Returns: None
         '''
         if self.dinner.is_time_for_dinner():
-            your_meal, your_meal_name, your_meal_category = self.dinner.find_the_best_meal()
+            your_meal, your_meal_name, your_meal_category = self.dinner.find_the_best_meal(
+                self.preferred_meals_week)
             ingredients = self.dinner.check_which_ingredients_needed(your_meal)
 
             inventory_objects = json.loads(self.inventory.get_inventory())

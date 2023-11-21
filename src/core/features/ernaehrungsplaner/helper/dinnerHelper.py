@@ -60,4 +60,4 @@ class DinnerHelper():
             return True
         else:
             # For testing True
-            return False
+            return True
