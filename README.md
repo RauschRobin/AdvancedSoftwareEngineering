@@ -1,5 +1,11 @@
 # Carschten
-Carschten is our AI based assistant. This is a project from the lecture advanced software engineering. 
+Introducing Carschten, your all-in-one voice-controlled assistant designed to seamlessly integrate into your daily routine. Imagine starting your day with a personalized wake-up call, where Carschten not only ensures you rise on time but also provides a brief overview of the Deutsche Bahn route for your commute.
+
+As you prepare for the day, Carschten becomes your indispensable companion, updating you on the next lecture at university, suggesting activities based on the weather forecast, and keeping you informed about the latest news and emails. Need help deciding what to eat? Carschten has you covered, offering meal suggestions and even checking your calendar to make sure your dining plans align with your schedule.
+
+With its intuitive voice recognition technology, Carschten effortlessly responds to your commands, making it easy to manage your day hands-free. Stay organized, informed, and on track with Carschten, your personalized assistant for a smoother, more efficient daily life.
+
+Carschten is the result of our group work in the lecture advanced software engineering.
 
 ## Dependencies
 To install the dependencies, please execute `pip install -r requirements.txt`
