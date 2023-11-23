@@ -77,7 +77,6 @@ class News:
         '''
         for interest in self.interests:
             newsOfInterest = self.newsapi.get_everything(search_keyword=interest, language='de')
-            #print(newsOfInterest)
             self.voice_output.add_message(self.chatgpt.get_response("Formuliere mir diese API Response als Klartext in 2-4 Sätzen:" + json.dumps(random.choice(newsOfInterest['articles']))))
 
     def getNewsWithKeyword(self, keyword):

@@ -1,11 +1,9 @@
-import time
 from ..core.features.wakeup.wakeup import WakeUpAssistant  
 import datetime
 
 class TestWakeUpAssistant:
     def setup(self):
         # Initialize the WakeUpAssistant with a mock VoiceOutput instance
-        # You may need to create a mock class for VoiceOutput or use a testing library like unittest.mock
         self.wake_up_assistant = WakeUpAssistant(MockVoiceOutput())
 
     def test_get_next_lecture(self):
@@ -29,10 +27,6 @@ class TestWakeUpAssistant:
         if next_lecture:
             result = self.wake_up_assistant.isLectureFirstOfTheDay(next_lecture)
             assert isinstance(result, bool)
-
-    def teardown(self):
-        # Clean up any resources if needed
-        pass
 
 # Mock class for VoiceOutput (replace with actual implementation)
 class MockVoiceOutput:
