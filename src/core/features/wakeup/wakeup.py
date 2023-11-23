@@ -31,7 +31,7 @@ class WakeUpAssistant:
         self.rapla = Rapla(self.rapla_url)
         # store current week timetable & calendar week to reduce number of requests
         self.currentCalendarWeek = dp.get_current_calendar_week()
-        self.currentWeekTimeTable = json.loads(self.rapla.fetchLecturesOfWeek(self.currentCalendarWeek, dp.get_current_year()))
+        self.currentWeekTimeTable = self.fetchAndUpdateTimetable()
 
         self.deutsche_bahn = DeutscheBahn()
         self.localTrainStationDetails = self.deutsche_bahn.getStationDetailByStationname(self.localTrainStationName)
@@ -76,7 +76,7 @@ class WakeUpAssistant:
             # When a new week begins, the new timetable gets fetched and stored
             if self.currentCalendarWeek != dp.get_current_calendar_week():
                 self.currentCalendarWeek = dp.get_current_calendar_week()
-                self.currentWeekTimeTable = json.loads(self.rapla.fetchLecturesOfWeek(self.currentCalendarWeek, dp.get_current_year()))
+                self.currentWeekTimeTable = self.fetchAndUpdateTimetable()
             
             # When the next lecture is today or tomorrow and the time is right, calculate the wakeuptime
             if self.nextLecture["lecture"]["date"] == now.date() or self.nextLecture["lecture"]["date"] == now.date() + datetime.timedelta(days=1) and self.nextLecture["lecture"]["time_start"] <= now.time():
@@ -85,12 +85,8 @@ class WakeUpAssistant:
                     self.voice_output.add_message("Morgen musst du um " + wakeUpTime.strftime("%H:%M") + " aufstehen.")
 
             # Wake the user up if it's wakeuptime
-            if wakeUpTime:
-                if now.date() == wakeUpTime.date() and now.hour == wakeUpTime.hour and now.minute == wakeUpTime.minute:
-                    playsound(alarm_sound_file)
-                    self.voice_output.add_message("Guten morgen. Es ist Zeit aufzustehen.")
-                    self.getNextLecture()
-                    self.getTrainConnectionForNextLecture()
+            if wakeUpTime and self.isWakeUpTime(wakeUpTime):
+                self.performWakeUpActions()
                 
             # check if the rapla timetable changed and tell user about it
             if now.minute == 30:
@@ -105,7 +101,22 @@ class WakeUpAssistant:
             if now.minute % 5 == 0:
                 self.nextLecture = self.getNextLecture()
 
-            time.sleep(60)  # Sleep for 1 minute before checking again
+            time.sleep(60)  # Sleep for 1 minute before running and checking again
+
+    @staticmethod
+    def isWakeUpTime(now, wakeUpTime):
+        return now.date() == wakeUpTime.date() and now.hour == wakeUpTime.hour and now.minute == wakeUpTime.minute
+    
+    def performWakeUpActions(self):
+        playsound(alarm_sound_file)
+        self.voice_output.add_message("Guten morgen. Es ist Zeit aufzustehen.")
+        self.getNextLecture()
+        self.getTrainConnectionForNextLecture()
+
+    def fetchAndUpdateTimetable(self):
+        currentTimetable = json.loads(self.rapla.fetchLecturesOfWeek(self.currentCalendarWeek, dp.get_current_year()))
+        self.currentWeekTimeTable = currentTimetable
+        return currentTimetable
 
     def getNextLecture(self):
         '''
@@ -118,6 +129,7 @@ class WakeUpAssistant:
         current_week = self.currentCalendarWeek
         current_datetime = dp.get_current_datetime()
         current_timetable = self.currentWeekTimeTable
+        # if current_week >= 53, a new year begins --> During the holidays we don't need to check for lectures
         while current_week < 53:
             for day in current_timetable:
                 for lecture in current_timetable[day]:

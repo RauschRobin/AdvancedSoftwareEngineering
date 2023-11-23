@@ -2,6 +2,7 @@
 
 ## Overview
 The `WakeUpAssistant` class is a feature class responsible for waking up the user in the morning. It also manages the train and rapla (lecture timetable) logic. The class uses various preferences loaded from a YAML file and interfaces with external APIs for Deutsche Bahn and Rapla.
+The alarm_sound.mp3 is a sound to wake up the user in the morning.
 
 ## Dependencies
 - `time`, `datetime`: Python standard library modules for handling time and dates.
