@@ -17,9 +17,9 @@ class TestInventory(unittest.TestCase):
         result = inv().get_rel_path_to_flask()
         expected = ""
         if (os.name == 'nt'):
-            expected = "\\src\\core\\shared\\inventory\\helper\\"
+            expected = "\\core\\shared\\inventory\\helper\\"
         elif (os.name == 'posix'):
-            expected = "/src/core/shared/inventory/helper/"
+            expected = "/core/shared/inventory/helper/"
         self.assertEqual(result, expected, "Error in get_rel_path_to_flask()")
 
     def test_get_path_to_flask(self):
@@ -27,9 +27,9 @@ class TestInventory(unittest.TestCase):
         expected = os.getcwd()
         appendix = ""
         if (os.name == 'nt'):
-            appendix = "\\src\\core\\shared\\inventory\\helper\\"
+            appendix = "\\core\\shared\\inventory\\helper\\"
         elif (os.name == 'posix'):
-            appendix = "/src/core/shared/inventory/helper/"
+            appendix = "/core/shared/inventory/helper/"
         expected = expected + appendix
         self.assertEqual(result, expected, "Error in get_rel_path_to_flask()")
 

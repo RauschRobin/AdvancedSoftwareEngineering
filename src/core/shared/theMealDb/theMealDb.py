@@ -1,6 +1,6 @@
 import requests
 
-from helper.urlCreator import SearchByMealURLCreator, ListAllMealsByFirstLetterURLCreator, LookupMealDetailsByIdURLCreator
+from .helper.urlCreator import SearchByMealURLCreator, ListAllMealsByFirstLetterURLCreator, LookupMealDetailsByIdURLCreator
 
 
 class TheMealDb:
