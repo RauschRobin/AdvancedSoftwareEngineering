@@ -1,48 +1,101 @@
-from ..core.shared.theMealDb.helper.urlCreator import (ConcreteSearchByMeal, ConcreteListAllMealsByFirstLetter,
-                                                       ConcreteLookupMealDetailsById, SearchByMealURLCreator,
-                                                       ListAllMealsByFirstLetterURLCreator, LookupMealDetailsByIdURLCreator)
+import unittest
+from unittest.mock import patch, Mock
+
+from ..core.shared.theMealDb.theMealDb import TheMealDb
 
 
-# Test ConcreteSearchByMeal
-def test_concrete_search_by_meal():
-    obj = ConcreteSearchByMeal()
-    assert obj.base_url() == "https://www.themealdb.com/api/json/v1/1/search.php"
-    assert obj.search_param("chicken") == "s=chicken"
+class TestTheMealDb(unittest.TestCase):
+    @patch('AdvancedSoftwareEngineering.src.core.shared.theMealDb.theMealDb.SearchByMealURLCreator')
+    @patch('AdvancedSoftwareEngineering.src.core.shared.theMealDb.theMealDb.requests.get')
+    def test_search_meal_by_name(self, mock_get, mock_url_creator):
+        mock_creator_instance = mock_url_creator.return_value
+        mock_creator_instance.construct_url.return_value = 'http://testurl.com/search?name=Arrabiata'
 
+        mock_response = Mock()
+        mock_response.status_code = 200
+        mock_response.json.return_value = {"meals": [{"name": "Arrabiata"}]}
+        mock_get.return_value = mock_response
 
-# Test ConcreteListAllMealsByFirstLetter
-def test_concrete_list_all_meals_by_first_letter():
-    obj = ConcreteListAllMealsByFirstLetter()
-    assert obj.base_url() == "https://www.themealdb.com/api/json/v1/1/search.php"
-    assert obj.search_param("c") == "f=c"
+        obj = TheMealDb()
+        result = obj.search_meal_by_name("Arrabiata")
 
+        self.assertEqual(result, {"meals": [{"name": "Arrabiata"}]})
 
-# Test ConcreteLookupMealDetailsById
-def test_concrete_lookup_meal_details_by_id():
-    obj = ConcreteLookupMealDetailsById()
-    assert obj.base_url() == "https://www.themealdb.com/api/json/v1/1/lookup.php"
-    assert obj.search_param(52772) == "i=52772"
+        mock_url_creator.assert_called_with("Arrabiata")
 
+        mock_get.assert_called_with('http://testurl.com/search?name=Arrabiata')
 
-# Test SearchByMealURLCreator
-def test_search_by_meal_url_creator():
-    creator = SearchByMealURLCreator("chicken")
-    assert isinstance(creator.factory_method(), ConcreteSearchByMeal)
-    assert creator.construct_url(
-    ) == "https://www.themealdb.com/api/json/v1/1/search.php?s=chicken"
+    @patch('AdvancedSoftwareEngineering.src.core.shared.theMealDb.theMealDb.ListAllMealsByFirstLetterURLCreator')
+    @patch('AdvancedSoftwareEngineering.src.core.shared.theMealDb.theMealDb.requests.get')
+    def test_list_all_meals_by_first_letter(self, mock_get, mock_url_creator):
+        # Set up the mock URL Creator
+        mock_creator_instance = mock_url_creator.return_value
+        mock_creator_instance.construct_url.return_value = 'http://testurl.com/list?first_letter=a'
 
+        # Mock the response from the external API call
+        mock_response = Mock()
+        mock_response.status_code = 200
+        mock_response.json.return_value = {"meals": [{"name": "Apple Pie"}]}
+        mock_get.return_value = mock_response
 
-# Test ListAllMealsByFirstLetterURLCreator
-def test_list_all_meals_by_first_letter_url_creator():
-    creator = ListAllMealsByFirstLetterURLCreator("c")
-    assert isinstance(creator.factory_method(),
-                      ConcreteListAllMealsByFirstLetter)
-    assert creator.construct_url() == "https://www.themealdb.com/api/json/v1/1/search.php?f=c"
+        # Create an instance of YourClass and call the method
+        obj = TheMealDb()
+        result = obj.list_all_meals_by_first_letter("a")
 
+        # Check if the correct data is returned
+        self.assertEqual(result, {"meals": [{"name": "Apple Pie"}]})
 
-# Test LookupMealDetailsByIdURLCreator
-def test_lookup_meal_details_by_id_url_creator():
-    creator = LookupMealDetailsByIdURLCreator(52772)
-    assert isinstance(creator.factory_method(), ConcreteLookupMealDetailsById)
-    assert creator.construct_url(
-    ) == "https://www.themealdb.com/api/json/v1/1/lookup.php?i=52772"
+        # Check if the correct URL is constructed
+        mock_url_creator.assert_called_with("a")
+
+        # Check if the correct URL is called in requests.get
+        mock_get.assert_called_with('http://testurl.com/list?first_letter=a')
+
+    @patch('AdvancedSoftwareEngineering.src.core.shared.theMealDb.theMealDb.LookupMealDetailsByIdURLCreator')
+    @patch('AdvancedSoftwareEngineering.src.core.shared.theMealDb.theMealDb.requests.get')
+    def test_lookup_meal_details_by_id(self, mock_get, mock_url_creator):
+        mock_url_creator_instance = mock_url_creator.return_value
+        mock_url_creator_instance.construct_url.return_value = 'http://testurl.com/lookup?id=52772'
+
+        mock_response = Mock()
+        mock_response.status_code = 200
+        mock_response.json.return_value = {"meals": [{"id": "52772"}]}
+        mock_get.return_value = mock_response
+
+        # Test the method
+        obj = TheMealDb()
+        result = obj.lookup_meal_details_by_id("52772")
+
+        # Assertions
+        self.assertEqual(result, {"meals": [{"id": "52772"}]})
+        mock_url_creator.assert_called_with("52772")
+        mock_get.assert_called_with('http://testurl.com/lookup?id=52772')
+
+    @patch('AdvancedSoftwareEngineering.src.core.shared.theMealDb.theMealDb.requests.get')
+    def test_lookup_meal_details_by_id(self, mock_get):
+        mock_response = Mock()
+        mock_response.status_code = 200
+        mock_response.json.return_value = {"meals": [{"name": "Random Meal"}]}
+        mock_get.return_value = mock_response
+
+        obj = TheMealDb()
+        result = obj.lookup_single_random_meal()
+
+        self.assertEqual(result, {"meals": [{"name": "Random Meal"}]})
+        mock_get.assert_called_with(
+            "https://www.themealdb.com/api/json/v1/1/random.php")
+
+    @patch('AdvancedSoftwareEngineering.src.core.shared.theMealDb.theMealDb.requests.get')
+    def test_lookup_categories(self, mock_get):
+        mock_response = Mock()
+        mock_response.status_code = 200
+        mock_response.json.return_value = {
+            "categories": [{"name": "Category 1"}]}
+        mock_get.return_value = mock_response
+
+        obj = TheMealDb()
+        result = obj.lookup_categories()
+
+        self.assertEqual(result, {"categories": [{"name": "Category 1"}]})
+        mock_get.assert_called_with(
+            "https://www.themealdb.com/api/json/v1/1/categories.php")
