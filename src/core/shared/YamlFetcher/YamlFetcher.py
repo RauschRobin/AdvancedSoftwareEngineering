@@ -1,14 +1,14 @@
 import yaml
 
-class PreferencesFetcher:
+class YamlFetcher:
     '''
-    This class allows the fetching of preferences from a yaml file.
+    This class allows the fetching of preferences or api keys from yaml files.
     '''
 
     @staticmethod
-    def fetch(key, filepath="preferences.yaml"):
+    def fetch(key, filepath):
         '''
-        This method fetches a preference from a yaml file.
+        This method fetches a value from a yaml file with its key.
 
         Parameters: key - string
                     filepath - string (optional)
@@ -19,6 +19,8 @@ class PreferencesFetcher:
                 preferences = yaml.safe_load(file)
                 if 'user_preferences' in preferences and key in preferences['user_preferences']:
                     return preferences['user_preferences'][key]
+                elif 'api_keys' in preferences and key in preferences['api_keys']:
+                    return preferences['api_keys'][key]
                 else:
                     raise KeyError(f"Key '{key}' not found in preferences file")
         except FileNotFoundError:

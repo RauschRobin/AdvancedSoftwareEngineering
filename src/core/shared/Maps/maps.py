@@ -1,8 +1,9 @@
 import requests
+from ...shared.YamlFetcher.YamlFetcher import YamlFetcher
 
 class Maps:
-    def __init__(self, maps_api_key='API_KEY'):
-        self.maps_api_key = maps_api_key
+    def __init__(self):
+        self.maps_api_key = YamlFetcher.fetch("maps", "API_Keys.yaml")
         
     def get_nearby_places(self, location, radius=2000, keyword='restaurant'):
         '''

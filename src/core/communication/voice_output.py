@@ -1,5 +1,5 @@
 from gtts import gTTS
-from ..shared.PreferencesFetcher.PreferencesFetcher import PreferencesFetcher
+from ..shared.YamlFetcher.YamlFetcher import YamlFetcher
 import playsound
 import os
 import threading
@@ -41,7 +41,7 @@ class VoiceOutput(metaclass=SingletonMeta):
         self.is_running = True
         self.speech_thread = threading.Thread(target=self.speak)
         self.speech_thread.start()
-        user_name = PreferencesFetcher.fetch('user-name')
+        user_name = YamlFetcher.fetch('user-name', "preferences.yaml")
         self.add_message("Hallo " + user_name)
 
     def stop(self):
@@ -84,7 +84,7 @@ class VoiceOutput(metaclass=SingletonMeta):
 
     def remove_unpronounceable_characters(self, input_string):
         '''
-        Removes unpronounceable characters from strings (like &/($% etc.) and replaces special characters like ':' with 'Uhr'.
+        Removes unpronounceable characters from strings (like &/($% etc.) and replaces special characters like ':' with 'Uhr' if it represents a time, otherwise replaces with '.'.
 
         Parameters: input_string - String
         Returns: cleaned_string - String
@@ -94,7 +94,7 @@ class VoiceOutput(metaclass=SingletonMeta):
 
         # Define a dictionary of special characters and their replacements
         special_characters = {
-            ':': 'Uhr'  # Replace ':' with 'Uhr'
+            ':': 'Uhr'  # Replace ':' with 'Uhr' if it represents a time
         }
 
         # Use regular expressions to replace unwanted characters
@@ -102,9 +102,21 @@ class VoiceOutput(metaclass=SingletonMeta):
 
         # Replace special characters defined in the dictionary
         for char, replacement in special_characters.items():
+            if char == ':' and not self.is_time(input_string):
+                replacement = '.'  # Replace ':' with '.' if it doesn't represent a time
             cleaned_string = cleaned_string.replace(char, replacement)
             
         return cleaned_string
+
+    def is_time(self, input_string):
+        '''
+        Checks if the input string represents a time in the format HH:MM.
+
+        Parameters: input_string - String
+        Returns: is_time - Boolean
+        '''
+        time_pattern = r'^\d{2}:\d{2}$'
+        return re.match(time_pattern, input_string) is not None
 
     def text_to_speech(self, text, filename=output_file):
         '''

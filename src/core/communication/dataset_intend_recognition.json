@@ -68,6 +68,26 @@
         "intent": "GetNextDhbwLecture"
     },
     {
+        "recorded_voice_command": "Was ist meine nächste Vorlesung?",
+        "intent": "GetNextDhbwLecture"
+    },
+    {
+        "recorded_voice_command": "Wann habe ich Vorlesung?",
+        "intent": "GetNextDhbwLecture"
+    },
+    {
+        "recorded_voice_command": "Wann findet meine nächste Vorlesung statt?",
+        "intent": "GetNextDhbwLecture"
+    },
+    {
+        "recorded_voice_command": "Und was ist meine nächste Vorlesung?",
+        "intent": "GetNextDhbwLecture"
+    },
+    {
+        "recorded_voice_command": "Und wann ist meine nächste Vorlesung?",
+        "intent": "GetNextDhbwLecture"
+    },
+    {
         "recorded_voice_command": "Welches Fach habe ich als nächstes?",
         "intent": "GetNextDhbwLecture"
     },
@@ -149,6 +169,22 @@
     },
     {
         "recorded_voice_command": "Sind heute interessante Dinge passiert?",
+        "intent": "GetNewsOfInterest"
+    },
+    {
+        "recorded_voice_command": "Gibt es weite interessante Nachrichten?",
+        "intent": "GetNewsOfInterest"
+    },
+    {
+        "recorded_voice_command": "Und was ist noch interessantes passiert?",
+        "intent": "GetNewsOfInterest"
+    },
+    {
+        "recorded_voice_command": "Gib mir Nachrichten nach meinen Interessen",
+        "intent": "GetNewsOfInterest"
+    },
+    {
+        "recorded_voice_command": "Lese mir Nachrichten zu meinen Interessen vor",
         "intent": "GetNewsOfInterest"
     },
     {
