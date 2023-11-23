@@ -1,8 +1,7 @@
 import datetime
 import json
 
-from ....shared.PreferencesFetcher.PreferencesFetcher import PreferencesFetcher
-
+from ....shared.YamlFetcher.YamlFetcher import YamlFetcher
 from ....shared.rapla.rapla import Rapla
 from ....shared.rapla.DateParser import DateParser as dp
 
@@ -26,7 +25,7 @@ class LunchbreakHelper():
         Parameters: None
         Returns: None
         '''
-        self.rapla_url = PreferencesFetcher.fetch("rapla-url")
+        self.rapla_url = YamlFetcher.fetch("rapla-url", "preferences.yaml")
 
     def calculate_lunchbreak_time(self):
         '''Calculate the lunchbreak time for the user via rapla

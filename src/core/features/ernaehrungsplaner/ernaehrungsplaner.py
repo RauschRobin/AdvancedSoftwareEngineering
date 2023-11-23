@@ -9,7 +9,7 @@ from .helper.lunchbreakHelper import LunchbreakHelper
 from .helper.dinnerHelper import DinnerHelper
 
 from ...communication.voice_output import VoiceOutput
-from ...shared.PreferencesFetcher.PreferencesFetcher import PreferencesFetcher
+from ...shared.YamlFetcher.YamlFetcher import YamlFetcher
 from ...shared.yelp.yelp import Yelp
 from ...shared.theMealDb.theMealDb import TheMealDb
 from ...shared.currentLocation.CurrentLocation import CurrentLocation
@@ -42,13 +42,13 @@ class Ernaehrungsplaner:
         Parameters: None
         Returns: None
         '''
-        self.rapla_url = PreferencesFetcher.fetch("rapla-url")
-        self.prefred_user_restaurant_categories = PreferencesFetcher.fetch(
-            "restraurants-categories-interests")
-        self.prefred_user_restaurant_price = PreferencesFetcher.fetch(
-            "restaurants-price")
-        self.preferred_meals_week = PreferencesFetcher.fetch(
-            "meal-dinner-plan").split(";")
+        self.rapla_url = YamlFetcher.fetch("rapla-url", "preferences")
+        self.prefred_user_restaurant_categories = YamlFetcher.fetch(
+            "restraurants-categories-interests", "preferences")
+        self.prefred_user_restaurant_price = YamlFetcher.fetch(
+            "restaurants-price", "preferences")
+        self.preferred_meals_week = YamlFetcher.fetch(
+            "meal-dinner-plan", "preferences").split(";")
 
     def run(self):
         '''
