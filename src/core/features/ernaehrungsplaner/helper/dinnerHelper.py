@@ -59,5 +59,4 @@ class DinnerHelper():
         if now.hour == 18 and now.minute == 0:
             return True
         else:
-            # For testing True
-            return True
+            return False
