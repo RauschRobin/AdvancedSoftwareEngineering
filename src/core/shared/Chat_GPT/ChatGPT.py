@@ -22,9 +22,10 @@ class ChatGpt:
         """
         Initializes the ChatGPT class.
         """
-        # test
         load_dotenv()
-        self.client = OpenAI()
+        self.client = OpenAI(
+            api_key=os.getenv('OPENAI_API_KEY')
+        )
 
     def get_response(self, request):
         '''
