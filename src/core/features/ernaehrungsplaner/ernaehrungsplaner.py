@@ -42,13 +42,10 @@ class Ernaehrungsplaner:
         Parameters: None
         Returns: None
         '''
-        self.rapla_url = YamlFetcher.fetch("rapla-url", "preferences")
-        self.prefred_user_restaurant_categories = YamlFetcher.fetch(
-            "restraurants-categories-interests", "preferences")
-        self.prefred_user_restaurant_price = YamlFetcher.fetch(
-            "restaurants-price", "preferences")
-        self.preferred_meals_week = YamlFetcher.fetch(
-            "meal-dinner-plan", "preferences").split(";")
+        self.rapla_url = YamlFetcher.fetch("rapla-url", "preferences.yaml")
+        self.prefred_user_restaurant_categories = YamlFetcher.fetch("restraurants-categories-interests", "preferences.yaml")
+        self.prefred_user_restaurant_price = YamlFetcher.fetch("restaurants-price", "preferences.yaml")
+        self.preferred_meals_week = YamlFetcher.fetch("meal-dinner-plan", "preferences.yaml").split(";")
 
     def run(self):
         '''
@@ -155,8 +152,7 @@ class Ernaehrungsplaner:
             dinner_message_builder = DinnerMessageBuilder()
             dinner_message_builder.add_meal_name(your_meal_name)
             dinner_message_builder.add_meal_category(your_meal_category)
-            dinner_message_builder.add_meal_to_buy_ingredients(
-                missing_ingredients)
+            dinner_message_builder.add_meal_to_buy_ingredients(missing_ingredients)
 
             message = dinner_message_builder.sentence.get_all()
 
