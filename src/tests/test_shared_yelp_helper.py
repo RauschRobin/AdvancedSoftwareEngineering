@@ -8,7 +8,6 @@ from ..core.shared.yelp.helper.yelpSearchRequestBuilder import YelpSearchRequest
 # def test_try_credentials():
 #     instance = ApiAuthenticationSingleton()
 #     result = instance.try_credentials()
-
 #     assert result == True
 
 
