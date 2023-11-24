@@ -1,6 +1,7 @@
-from ..core.communication.voice_input import VoiceInput
+import pytest
 from unittest.mock import Mock
 from ..core.communication.FeatureComposite import FeatureComposite
+from ..core.communication.voice_input import VoiceInput
 from ..core.communication.voice_output import VoiceOutput
 import threading
 

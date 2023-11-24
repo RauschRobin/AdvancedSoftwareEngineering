@@ -1,5 +1,4 @@
 import datetime
-import dateutil.relativedelta as rd
 
 class DateParser:
     @staticmethod
@@ -12,6 +11,14 @@ class DateParser:
         '''
         calendar_week = datetime.datetime.now().isocalendar()[1]
         return calendar_week
+
+    @staticmethod
+    def get_current_year():
+        return datetime.datetime.now().isocalendar()[0]
+    
+    @staticmethod
+    def get_current_datetime():
+        return datetime.datetime.now()
 
     @staticmethod
     def get_calendar_week(year, month, day):
