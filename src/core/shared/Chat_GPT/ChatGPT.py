@@ -23,9 +23,7 @@ class ChatGpt:
         Initializes the ChatGPT class.
         """
         load_dotenv()
-        self.client = OpenAI(
-            api_key=os.getenv('CHATGPT_SECRET')
-        )
+        self.client = OpenAI()
 
     def get_response(self, request):
         '''
