@@ -13,3 +13,4 @@ newsapi-python==0.2.7
 openai==1.2.4
 flask==2.3.3
 flask_classful
+python-dotenv=1.0.0
