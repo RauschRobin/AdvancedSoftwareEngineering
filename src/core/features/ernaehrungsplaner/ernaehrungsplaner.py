@@ -42,13 +42,13 @@ class Ernaehrungsplaner:
         Parameters: None
         Returns: None
         '''
-        self.rapla_url = YamlFetcher.fetch("rapla-url", "preferences")
+        self.rapla_url = YamlFetcher.fetch("rapla-url", "preferences.yaml")
         self.prefred_user_restaurant_categories = YamlFetcher.fetch(
-            "restraurants-categories-interests", "preferences")
+            "restraurants-categories-interests", "preferences.yaml")
         self.prefred_user_restaurant_price = YamlFetcher.fetch(
-            "restaurants-price", "preferences")
+            "restaurants-price", "preferences.yaml")
         self.preferred_meals_week = YamlFetcher.fetch(
-            "meal-dinner-plan", "preferences").split(";")
+            "meal-dinner-plan", "preferences.yaml").split(";")
 
     def run(self):
         '''
