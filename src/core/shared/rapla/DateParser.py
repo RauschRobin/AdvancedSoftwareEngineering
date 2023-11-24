@@ -1,5 +1,4 @@
 import datetime
-import dateutil.relativedelta as rd
 
 class DateParser:
     @staticmethod

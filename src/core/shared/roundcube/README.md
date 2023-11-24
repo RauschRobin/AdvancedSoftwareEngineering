@@ -25,8 +25,3 @@ This method returns a random email as the last received email. It simply retriev
 ## Example Emails
 
 The `example_emails` list contains strings that represent example email messages. These messages cover various scenarios such as professor announcements, lecture cancellations, event invitations, and more. These example emails are used by the `RoundcubeMock` methods to simulate email interactions.
-
-```python
-example_emails = [
-    # ... (list of example emails)
-]
