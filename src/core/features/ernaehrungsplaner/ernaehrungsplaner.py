@@ -92,6 +92,10 @@ class Ernaehrungsplaner:
         '''
         now = datetime.datetime.now()
 
+        chat = ChatGpt()
+        test = chat.get_response("Hallo")
+        print(test)
+
         # TODO
         # Basic Lunchbreak (12 am)
         # - Calculate the lunchbreak time via rapla // if no then tell the user 30 minutes
