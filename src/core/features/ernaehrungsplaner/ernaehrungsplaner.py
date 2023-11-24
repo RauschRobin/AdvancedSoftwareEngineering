@@ -131,11 +131,6 @@ class Ernaehrungsplaner:
 
                 self.voice_output.add_message(message)
 
-                chat = ChatGpt()
-                test = chat.get_response("hallo")
-                print(test)
-                news = NewsAPI()
-
             else:
                 # construct message when no restaurant was found
                 message = "Ich habe leider kein passendes Restaurant in der Nähe gefunden."
