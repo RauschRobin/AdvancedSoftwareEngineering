@@ -20,7 +20,7 @@ class NewsAPI:
         if override_api_key:
             self.newsapi = NewsApiClient(api_key=override_api_key)
         else:
-            self.newsapi = NewsApiClient(api_key=os.getenv('NESAPI_SECRET'))
+            self.newsapi = NewsApiClient(api_key=os.getenv('NEWSAPI_SECRET'))
 
     def get_top_headlines(self, search_keyword=None, sources=None, category=None, language=None, country=None):
         '''
