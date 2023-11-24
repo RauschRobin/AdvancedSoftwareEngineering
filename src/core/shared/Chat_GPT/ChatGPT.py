@@ -22,6 +22,7 @@ class ChatGpt:
         """
         Initializes the ChatGPT class.
         """
+        # test
         load_dotenv()
         self.client = OpenAI()
 
