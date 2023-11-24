@@ -4,9 +4,6 @@ from .helper.urlCreator import SearchByMealURLCreator, ListAllMealsByFirstLetter
 
 
 class TheMealDb:
-    def __init__(self):
-        pass
-
     def search_meal_by_name(self, name: str):
         ''' Search a meal by name
 
