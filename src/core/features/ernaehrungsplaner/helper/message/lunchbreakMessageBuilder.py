@@ -66,7 +66,12 @@ class LunchbreakMessageBuilder(LunchbreakBuilder):
         return sentence
 
     def add_current_time(self, hour, minute) -> None:
-        self._sentence.add(f"Es ist {str(hour)}:{str(minute)}")
+        # Ensures hour is in two-digit format
+        formatted_hour_hh = f"{hour:02d}"
+        # Ensures minute is in two-digit format
+        formatted_minute_mm = f"{minute:02d}"
+        self._sentence.add(
+            f"Es ist {str(formatted_hour_hh)}:{str(formatted_minute_mm)}")
 
     def add_lunchbreak_duration_in_minutes(self, duration: int) -> None:
         self._sentence.add(f"Du hast {str(duration)} Minuten Mittagspause")
