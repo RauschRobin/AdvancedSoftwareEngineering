@@ -1,15 +1,13 @@
 import os
 from dotenv import load_dotenv
 from newsapi import NewsApiClient
-from ..YamlFetcher.YamlFetcher import YamlFetcher
-
 
 class NewsAPI:
     '''
     This class communicates with the newsapi.org API.
     '''
 
-    def __init__(self, override_api_key=None):
+    def __init__(self):
         '''
         This method initializes the class.
 
