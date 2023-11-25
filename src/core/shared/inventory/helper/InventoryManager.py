@@ -60,7 +60,20 @@ class ItemsAccessor:
         return json_data
 
 
-app = Flask(__name__)
+class AppContext(object):
+    _app = None
+
+    def __init__(self):
+        raise RuntimeError('call app()')
+
+    @classmethod
+    def app(cls):
+        if cls._app is None:
+            cls._app = Flask(__name__)
+        return cls._app
+
+
+app = AppContext.app()
 
 
 class InventoryManager(FlaskView):
@@ -83,6 +96,7 @@ class InventoryManager(FlaskView):
         json_data = accessor.convert_dictionary_to_json()
 
         return json_data
+
 
 
 InventoryManager.register(app, route_base='/')

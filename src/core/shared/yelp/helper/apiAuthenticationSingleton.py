@@ -4,6 +4,8 @@ from dotenv import load_dotenv
 
 import requests
 
+from ....shared.YamlFetcher.YamlFetcher import YamlFetcher
+
 # Singleton Pattern
 # Thread save singleton
 
@@ -25,6 +27,7 @@ class ApiAuthenticationSingleton(metaclass=ApiAuthenticationSingletonMeta):
     def __init__(self) -> None:
         load_dotenv()
         self.token = os.getenv("YELP_SECRET")
+
 
     def try_credentials(self) -> bool:
         response = requests.get(
