@@ -22,7 +22,7 @@ jobs:
         uses: actions/setup-python@v3
         with:
           python-version: "3.10"
-          
+
       - name: Install PortAudio development files
         run: |
           sudo apt-get update
@@ -44,14 +44,13 @@ jobs:
       - name: Set API Key as Environment Variable
         run: |
           echo "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}" >> $GITHUB_ENV
-        run: |
           echo "YELP_SECRET=${{ secrets.YELP_SECRET }}" >> $GITHUB_ENV
-        run: |
           echo "NEWSAPI_SECRET=${{ secrets.NEWSAPI_SECRET }}" >> $GITHUB_ENV
-        run: |
           echo "DEUTSCHEBAHN_CLIENT_ID=${{ secrets.DEUTSCHEBAHN_CLIENT_ID }}" >> $GITHUB_ENV
-        run: |
           echo "DEUTSCHEBAHN_SECRET=${{ secrets.DEUTSCHEBAHN_SECRET }}" >> $GITHUB_ENV
+
+      - name: Debug Environment Variables
+        run: cat $GITHUB_ENV
 
       - name: Test with pytest
         working-directory: ./src
