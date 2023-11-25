@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 from .DateParser import DateParser as dp
 import json
+import datetime
 
 class Rapla:
     '''
@@ -80,7 +81,8 @@ class Rapla:
         json_string = json.dumps(lecture_data)
         return json_string
 
-    def compareTimetablesAndRespondWithLecturesThatChanged(self, timetable1, timetable2):
+    @staticmethod
+    def compareTimetablesAndRespondWithLecturesThatChanged(timetable1, timetable2):
         '''
         Checks if 2 given timetables differ from each other and returns the lectures that are different.
 
@@ -112,3 +114,31 @@ class Rapla:
                                 })
 
         return changed_lectures
+
+    def isLectureFirstOfTheDay(self, lecture):
+        '''
+        This method checks if a given lecture is the first one of the day.
+
+        Parameters: lecture (dictionary)
+        Returns: boolean
+        '''
+        # Split the date string into year, month, and day
+        year, month, day = map(int, lecture["lecture"]["date"].split('-'))
+        week = dp.get_calendar_week(year, month, day)
+
+        timetable = json.loads(self.fetchLecturesOfWeek(week, year))
+
+        # Get the list of lectures for the same day as the given lecture
+        weekday = datetime.date(year, month, day).strftime("%A")
+        lectures_for_day = timetable[weekday.lower()]
+
+        # Convert the lecture's start time to a datetime object
+        lecture_start_time = datetime.datetime.strptime(lecture["lecture"]["time_start"], '%H:%M')
+
+        # Check if the lecture is the first one of the day
+        for other_lecture in lectures_for_day:
+            if other_lecture != lecture:
+                other_lecture_start_time = datetime.datetime.strptime(other_lecture["lecture"]["time_start"], '%H:%M')
+                if lecture_start_time > other_lecture_start_time:
+                    return False
+        return True

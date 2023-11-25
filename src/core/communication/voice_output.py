@@ -97,6 +97,13 @@ class VoiceOutput(metaclass=SingletonMeta):
             ':': 'Uhr'  # Replace ':' with 'Uhr' if it represents a time
         }
 
+        # Use regular expressions to find time expressions
+        time_expressions = re.findall(r'\d+:\d+', input_string)
+
+        # Replace ':' with 'Uhr' within time expressions
+        for time_expression in time_expressions:
+            input_string = input_string.replace(time_expression, time_expression.replace(':', 'Uhr'))
+
         # Use regular expressions to replace unwanted characters
         cleaned_string = re.sub(r'[{}]'.format(re.escape(unpronounceable_characters)), ' ', input_string)
 
@@ -105,7 +112,7 @@ class VoiceOutput(metaclass=SingletonMeta):
             if char == ':' and not self.is_time(input_string):
                 replacement = '.'  # Replace ':' with '.' if it doesn't represent a time
             cleaned_string = cleaned_string.replace(char, replacement)
-            
+
         return cleaned_string
 
     def is_time(self, input_string):

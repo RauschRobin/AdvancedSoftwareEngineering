@@ -1,4 +1,6 @@
+import os
 from threading import Lock
+from dotenv import load_dotenv
 
 import requests
 
@@ -21,7 +23,8 @@ class ApiAuthenticationSingletonMeta(type):
 
 class ApiAuthenticationSingleton(metaclass=ApiAuthenticationSingletonMeta):
     def __init__(self) -> None:
-        self.token = "bYSsCZNRkZrpu2FDmwIQbKZO8a9dSIUbQLNNB3ZKNE6GLl2-xguUmfhBunTJmpmJkvV8zbl_Wg-G7MI76OXOBeOSgueurc-ZsbX5SoaQFny3B3URu9wHBcpNzDdBZXYx"
+        load_dotenv()
+        self.token = os.getenv("YELP_SECRET")
 
     def try_credentials(self) -> bool:
         response = requests.get(
