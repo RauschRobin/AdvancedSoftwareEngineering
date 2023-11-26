@@ -3,7 +3,7 @@ import pytest
 
 @pytest.fixture
 def news_api():
-    return NewsAPI()
+    return NewsAPI()    #does not work?
 
 def test_get_top_headlines(news_api):
     response = news_api.get_top_headlines(search_keyword='bitcoin')
@@ -16,4 +16,3 @@ def test_get_everything(news_api):
 def test_get_sources(news_api):
     response = news_api.get_sources()
     assert response['status'] == 'ok'
-    
