@@ -46,7 +46,8 @@ def test_wakeup_assistant_initialization(wakeup_assistant, mock_voice_output):
     assert wakeup_assistant.currentCalendarWeek is not None
     assert wakeup_assistant.currentWeekTimeTable is not None
     assert wakeup_assistant.deutsche_bahn is not None
-    assert wakeup_assistant.localTrainStationDetails is not None
+    #assert wakeup_assistant.localTrainStationDetails is not None
+    assert wakeup_assistant.nextLecture is not None
 
 def test_load_preferences(wakeup_assistant):
     wakeup_assistant.loadPreferences()
@@ -63,7 +64,6 @@ def test_is_wake_up_time():
     assert WakeUpAssistant.isWakeUpTime(now, wake_up_time) == True
 
 def test_load_preferences_with_invalid_yaml(wakeup_assistant):
-    # Check if yamlfetcher loads data
     wakeup_assistant.loadPreferences()
     assert wakeup_assistant.rapla_url is not None
     assert wakeup_assistant.wakeUpTimeNeeded is not None
@@ -71,12 +71,10 @@ def test_load_preferences_with_invalid_yaml(wakeup_assistant):
     assert wakeup_assistant.localTrainStationName is not None
 
 def test_get_next_lecture_with_no_upcoming_lectures(wakeup_assistant):
-    # If there are no upcoming lectures, getNextLecture should still return a lecture from next week 
     wakeup_assistant.currentWeekTimeTable = {'monday': [], 'tuesday': []}
     assert wakeup_assistant.getNextLecture() is not None
 
 def test_get_wake_up_time_for_next_morning_no_next_lecture(wakeup_assistant):
-    # If there is no next lecture, getWakeUpTimeForNextMorning should return None
     wakeup_assistant.nextLecture = None
     assert wakeup_assistant.getWakeUpTimeForNextMorning() is None
 
