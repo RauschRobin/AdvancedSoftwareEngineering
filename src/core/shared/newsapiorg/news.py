@@ -4,7 +4,7 @@ from newsapi import NewsApiClient
 
 class NewsAPI:
     '''
-    This class communicates with the newsapi.org API.
+    This class communicates with the newsapi.org API and is responsible for fetching news.
     '''
 
     def __init__(self):

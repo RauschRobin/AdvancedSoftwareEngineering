@@ -52,6 +52,15 @@ jobs:
 
       - name: Debug Environment Variables
         run: env
+      
+      - name: Debug Environment Variables 2
+        run: |
+          echo "OPENAI_API_KEY=$OPENAI_API_KEY"
+          echo "YELP_SECRET=$YELP_SECRET"
+          echo "NEWSAPI_SECRET=$NEWSAPI_SECRET"
+          echo "DEUTSCHEBAHN_CLIENT_ID=$DEUTSCHEBAHN_CLIENT_ID"
+          echo "DEUTSCHEBAHN_SECRET=$DEUTSCHEBAHN_SECRET"
+          echo "NEWSAPI_SECRET=$NEWSAPI_SECRET"
 
       - name: Test with pytest
         working-directory: ./src
