@@ -21,7 +21,7 @@ class ApiAuthenticationSingletonMeta(type):
 class ApiAuthenticationSingleton(metaclass=ApiAuthenticationSingletonMeta):
     def __init__(self) -> None:
         load_dotenv()
-        self.token = os.getenv("YELP_SECRET")
+        self.token = os.environ("YELP_SECRET")
 
 
     def try_credentials(self) -> bool:

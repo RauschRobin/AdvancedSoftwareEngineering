@@ -24,7 +24,7 @@ class ChatGpt:
         """
         load_dotenv()
         self.client = OpenAI(
-            api_key=os.getenv('OPENAI_API_KEY')
+            api_key=os.environ('OPENAI_API_KEY')
         )
 
     def get_response(self, request):
