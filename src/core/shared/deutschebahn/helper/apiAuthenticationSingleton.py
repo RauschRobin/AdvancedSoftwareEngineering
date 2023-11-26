@@ -25,8 +25,8 @@ class ApiAuthenticationSingletonMeta(type):
 class ApiAuthenticationSingleton(metaclass=ApiAuthenticationSingletonMeta):
     def __init__(self) -> None:
         load_dotenv()
-        self.client_id = os.environ("DEUTSCHEBAHN_CLIENT_ID")
-        self.client_secret = os.environ("DEUTSCHEBAHN_SECRET")
+        self.client_id = os.getenv("DEUTSCHEBAHN_CLIENT_ID")
+        self.client_secret = os.getenv("DEUTSCHEBAHN_SECRET")
 
     def test_credentials(self) -> bool:
         response = requests.get(

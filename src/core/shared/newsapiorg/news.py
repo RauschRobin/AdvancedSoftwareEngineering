@@ -15,7 +15,7 @@ class NewsAPI:
         Returns: None
         '''
         load_dotenv()
-        key=os.environ('NEWSAPI_SECRET')
+        key=os.getenv('NEWSAPI_SECRET')
         self.newsapi = NewsApiClient(api_key=key)
 
     def get_top_headlines(self, search_keyword=None, sources=None, category=None, language=None, country=None):
