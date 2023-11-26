@@ -41,21 +41,16 @@ jobs:
           # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
-      - name: Set API Key as Environment Variable
-        run: |
-          echo "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}" >> $GITHUB_ENV
-          echo "YELP_SECRET=${{ secrets.YELP_SECRET }}" >> $GITHUB_ENV
-          echo "NEWSAPI_SECRET=${{ secrets.NEWSAPI_SECRET }}" >> $GITHUB_ENV
-          echo "DEUTSCHEBAHN_CLIENT_ID=${{ secrets.DEUTSCHEBAHN_CLIENT_ID }}" >> $GITHUB_ENV
-          echo "DEUTSCHEBAHN_SECRET=${{ secrets.DEUTSCHEBAHN_SECRET }}" >> $GITHUB_ENV
-          echo "NEWSAPI_SECRET=${{ secrets.NEWSAPI_SECRET }}" 
+      - name: Test with pytest
+        working-directory: ./src
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           YELP_SECRET: ${{ secrets.YELP_SECRET }}
           NEWSAPI_SECRET: ${{ secrets.NEWSAPI_SECRET }}
           DEUTSCHEBAHN_CLIENT_ID: ${{ secrets.DEUTSCHEBAHN_CLIENT_ID }}
           DEUTSCHEBAHN_SECRET: ${{ secrets.DEUTSCHEBAHN_SECRET }}
-          NEWSAPI_SECRET: ${{ secrets.NEWSAPI_SECRET }} 
+        run: |
+          pytest
 
       - name: Debug Environment Variables
         run: env
@@ -68,8 +63,3 @@ jobs:
           echo "DEUTSCHEBAHN_CLIENT_ID=$DEUTSCHEBAHN_CLIENT_ID"
           echo "DEUTSCHEBAHN_SECRET=$DEUTSCHEBAHN_SECRET"
           echo "NEWSAPI_SECRET=$NEWSAPI_SECRET"
-
-      - name: Test with pytest
-        working-directory: ./src
-        run: |
-          pytest

@@ -1,6 +1,7 @@
 from ..core.shared.newsapiorg.news import NewsAPI
 import pytest
 
+# pytest fixture
 @pytest.fixture
 def news_api():
     return NewsAPI()
