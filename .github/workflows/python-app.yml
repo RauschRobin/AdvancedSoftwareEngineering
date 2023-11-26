@@ -50,6 +50,15 @@ jobs:
           echo "DEUTSCHEBAHN_SECRET=${{ secrets.DEUTSCHEBAHN_SECRET }}" >> $GITHUB_ENV
           echo "NEWSAPI_SECRET=${{ secrets.NEWSAPI_SECRET }}" 
 
+      - name: Set API Keys correctly
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          YELP_SECRET: ${{ secrets.YELP_SECRET }}
+          NEWSAPI_SECRET: ${{ secrets.NEWSAPI_SECRET }}
+          DEUTSCHEBAHN_CLIENT_ID: ${{ secrets.DEUTSCHEBAHN_CLIENT_ID }}
+          DEUTSCHEBAHN_SECRET: ${{ secrets.DEUTSCHEBAHN_SECRET }}
+          NEWSAPI_SECRET: ${{ secrets.NEWSAPI_SECRET }} 
+
       - name: Debug Environment Variables
         run: env
       
