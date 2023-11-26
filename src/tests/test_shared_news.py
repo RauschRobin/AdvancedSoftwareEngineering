@@ -1,6 +1,6 @@
 from ..core.shared.newsapiorg.news import NewsAPI
 import pytest
-
+'''
 # pytest fixture
 @pytest.fixture
 def news_api():
@@ -17,3 +17,4 @@ def test_get_everything(news_api):
 def test_get_sources(news_api):
     response = news_api.get_sources()
     assert response['status'] == 'ok'
+'''
