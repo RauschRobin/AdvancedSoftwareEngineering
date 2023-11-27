@@ -1,5 +1,4 @@
 import os
-
 from dotenv import load_dotenv
 from ...shared.YamlFetcher.YamlFetcher import YamlFetcher
 from openai import OpenAI
@@ -47,3 +46,41 @@ class ChatGpt:
             model="gpt-3.5-turbo",
         )
         return chat_completion.choices[0].message.content
+
+    def extract_code_snippets(self, response_content):
+        """
+        Extracts code snippets from the response content.
+
+        Parameters:
+            response_content (string): The content of the ChatGPT response.
+
+        Returns:
+            code_snippets (list): List of code snippets found in the response.
+        """
+        # This is a simple example; you may need to enhance this based on specific patterns or criteria
+        code_snippets = []
+
+        # Split the response content into lines
+        lines = response_content.split('\n')
+
+        # Check each line for code-like content
+        in_code_block = False
+        current_code_block = ""
+
+        for line in lines:
+            # Example: Assume that code snippets start with "```" and end with "```"
+            if line.strip().startswith("```") and line.strip().endswith("```"):
+                if in_code_block:
+                    # End of code block
+                    code_snippets.append(current_code_block.strip())
+                    current_code_block = ""
+                    in_code_block = False
+                else:
+                    # Start of a new code block
+                    current_code_block += line + "\n"
+                    in_code_block = True
+            elif in_code_block:
+                # Inside a code block
+                current_code_block += line + "\n"
+
+        return code_snippets
