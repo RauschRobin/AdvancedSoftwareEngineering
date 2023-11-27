@@ -122,10 +122,6 @@ class VoiceInput(metaclass=SingletonMeta):
                 print("COMMAND: GetNextDhbwLecture")
                 self.featureComposite.call_feature_method("readNextDhbwLecture")
                 return
-            case "GetNewsOfToday":
-                # call function         --> Tim?
-                print("COMMAND: GetNewsOfToday")
-                return
             case "GetLastReceivedEmail":
                 # call function
                 print("COMMAND: GetLastReceivedEmail")
