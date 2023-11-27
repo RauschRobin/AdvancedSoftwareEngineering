@@ -27,13 +27,12 @@ class WakeUpAssistant:
         self.voice_output = voice_output
         self.loadPreferences()
         self.chatgpt = ChatGpt()
-
+        self.deutsche_bahn = DeutscheBahn()
         self.rapla = Rapla(self.rapla_url)
-        # store current week timetable & calendar week to reduce number of requests
+
+    def loadCurrentData(self):
         self.currentCalendarWeek = dp.get_current_calendar_week()
         self.currentWeekTimeTable = self.fetchAndUpdateTimetable()
-
-        self.deutsche_bahn = DeutscheBahn()
         self.localTrainStationDetails = self.deutsche_bahn.getStationDetailByStationname(self.localTrainStationName)
         self.nextLecture = self.getNextLecture()
 
@@ -56,6 +55,7 @@ class WakeUpAssistant:
         Parameters: None
         Returns: None
         '''
+        self.loadCurrentData()
         self.startAndRunWakeUpAssistant()
 
     def startAndRunWakeUpAssistant(self):

@@ -233,7 +233,7 @@
     },
     {
         "recorded_voice_command": "Was ist heute passiert?",
-        "intent": "GetNewsOfToday"
+        "intent": "GetNewsOfInterest"
     },
     {
         "recorded_voice_command": "Gib mir alle Nachrichten zum Thema Politik.",

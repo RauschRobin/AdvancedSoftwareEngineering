@@ -39,7 +39,9 @@ def mock_voice_output():
 
 @pytest.fixture
 def wakeup_assistant(mock_voice_output):
-    return WakeUpAssistant(mock_voice_output)
+    wakeup = WakeUpAssistant(mock_voice_output)
+    wakeup.loadCurrentData()
+    return wakeup
 
 def test_wakeup_assistant_initialization(wakeup_assistant, mock_voice_output):
     assert wakeup_assistant.voice_output == mock_voice_output
