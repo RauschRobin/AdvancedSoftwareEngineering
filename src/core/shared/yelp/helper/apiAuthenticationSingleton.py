@@ -1,15 +1,10 @@
 import os
 from threading import Lock
 from dotenv import load_dotenv
-
 import requests
-
-from ....shared.YamlFetcher.YamlFetcher import YamlFetcher
 
 # Singleton Pattern
 # Thread save singleton
-
-
 class ApiAuthenticationSingletonMeta(type):
     _instances = {}
 

@@ -1,15 +1,13 @@
 import os
 from dotenv import load_dotenv
 from newsapi import NewsApiClient
-from ..YamlFetcher.YamlFetcher import YamlFetcher
-
 
 class NewsAPI:
     '''
-    This class communicates with the newsapi.org API.
+    This class communicates with the newsapi.org API and is responsible for fetching news from newsapi.org.
     '''
 
-    def __init__(self, override_api_key=None):
+    def __init__(self):
         '''
         This method initializes the class.
 
@@ -17,10 +15,8 @@ class NewsAPI:
         Returns: None
         '''
         load_dotenv()
-        if override_api_key:
-            self.newsapi = NewsApiClient(api_key=override_api_key)
-        else:
-            self.newsapi = NewsApiClient(api_key=os.getenv('NEWSAPI_SECRET'))
+        key=os.getenv('NEWSAPI_SECRET')
+        self.newsapi = NewsApiClient(api_key=key)
 
     def get_top_headlines(self, search_keyword=None, sources=None, category=None, language=None, country=None):
         '''
