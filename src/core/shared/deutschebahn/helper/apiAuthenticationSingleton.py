@@ -1,3 +1,5 @@
+import os
+from dotenv import load_dotenv
 import requests
 
 from threading import Lock
@@ -22,8 +24,9 @@ class ApiAuthenticationSingletonMeta(type):
 
 class ApiAuthenticationSingleton(metaclass=ApiAuthenticationSingletonMeta):
     def __init__(self) -> None:
-        self.client_id = "79b6f4c7600564e7aca526eb7f74c25e"
-        self.client_secret = YamlFetcher.fetch("deutscheBahn", "API_Keys.yaml")
+        load_dotenv()
+        self.client_id = os.getenv("DEUTSCHEBAHN_CLIENT_ID")
+        self.client_secret = os.getenv("DEUTSCHEBAHN_SECRET")
 
     def test_credentials(self) -> bool:
         response = requests.get(

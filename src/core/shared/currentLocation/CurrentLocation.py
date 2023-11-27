@@ -1,4 +1,4 @@
-import time
+import datetime
 
 
 class CurrentLocation:
@@ -8,14 +8,15 @@ class CurrentLocation:
     def __init__(self) -> None:
         pass
 
-    def get_location(self) -> str:
-        """Returns the location based on the current time
-        
+    def get_location_adress(self) -> str:
+        """Returns the location adress based on the current time
+
         Returns: String
         """
-        t = time.localtime()
-        current_time = time.strftime("%H", t)
-        if (int(current_time) > 7 or int(current_time) < 16):
-            return "Uni"
+
+        # This simulates the user location and can be changed later wit google maps api
+        now = datetime.datetime.now()
+        if (now.hour > 7 and now.hour < 16):
+            return "Stuttgart"
         else:
-            return "Home"
+            return "Ludwigsburg"

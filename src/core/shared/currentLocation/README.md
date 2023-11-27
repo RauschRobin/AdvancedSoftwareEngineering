@@ -8,26 +8,21 @@
 CurrentLocation()
 ```
 
-2. Call the method get_location()
-
+2. Call the method get_location_adress()
 
 ```Python
-CurrentLocation.get_location()
+CurrentLocation.get_location_adress()
 ```
-
 
 ## Methods
 
 The following methods are available:
 
-- get_location
-
+- get_location_adress
 
 ### get_location
 
-Returns the location based on the current time
+Returns the location adress based on the current time
 
-Parameters: None        
+Parameters: None  
 Returns: String
-
-
