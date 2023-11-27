@@ -37,6 +37,9 @@ class IntendRecognizer:
         # Convert the data to a Pandas DataFrame
         self.df = pd.DataFrame(data)
 
+        # Shuffle the dataset order to improve the training
+        self.df = self.df.sample(frac=1, random_state=42).reset_index(drop=True)
+
         # Split the dataset into training and testing sets (for simplicity, we use the entire dataset)
         self.X_train = self.df['recorded_voice_command']
         self.y_train = self.df['intent']
