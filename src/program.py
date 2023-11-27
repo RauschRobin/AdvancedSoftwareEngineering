@@ -7,7 +7,7 @@ from core.features.news.news import News
 from core.features.terminplaner.terminplaner import Terminplaner
 from core.communication.FeatureComposite import FeatureComposite
 from core.shared.rapla.rapla import Rapla
-import datetime
+import datetime # delete after testing
 
 # stop_listening_event = threading.Event()
 
@@ -54,11 +54,11 @@ if __name__ == "__main__":
 
 
     raplaobj = Rapla()
-    print(raplaobj.fetchLecturesOfWeek(calendar_week = datetime.datetime.now().isocalendar()[1]), 2023)
+    print(raplaobj.fetchLecturesOfWeek(datetime.datetime.now().isocalendar()[1]), 2023)
 
-    tpobj = Terminplaner(None)
-    activity = tpobj.find_activity()
-    print(activity)
+    # tpobj = Terminplaner(None)
+    # activity = tpobj.find_activity()
+    # print(activity)
     # tpobj = Terminplaner(None)
     # places = tpobj.find_place("restaurant")
     # print(places)
