@@ -2,6 +2,8 @@ import os
 from dotenv import load_dotenv
 from ...shared.YamlFetcher.YamlFetcher import YamlFetcher
 from openai import OpenAI
+import re
+import json
 
 
 class ChatGpt:
@@ -57,15 +59,12 @@ class ChatGpt:
         Returns:
             json_code (list): List of JSON code snippets found in the response.
         """
-        json_code = []
+        # Use a regular expression to find the JSON substring
+        start = response_content.find('{')
+        end = response_content.rfind('}')
 
-        # Find the starting and ending indices of the JSON content
-        start_index = response_content.find("{")
-        end_index = response_content.rfind("}")
-
-        # Extract the JSON content
-        if start_index != -1 and end_index != -1:
-            json_content = response_content[start_index:end_index + 1]
-            json_code.append(json_content.replace('\n', '\n    '))  # Replace '\n' with actual line breaks
-
-        return json_code
+        if start != -1 and end != -1:
+            json_string = response_content[start:end+1]
+            return json.loads(json_string)
+        else:
+            return None

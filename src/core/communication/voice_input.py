@@ -143,6 +143,14 @@ class VoiceInput(metaclass=SingletonMeta):
                 print("COMMAND: GetNewsOfInterest")
                 self.featureComposite.call_feature_method("getNewsOfInterest")
                 return
+            case "GetActivitiesForToday":
+                print("COMMAND: GetActivitiesForToday")
+                self.featureComposite.call_feature_method("find_activity")
+                return
+            case "FindPlace":
+                print("COMMAND: FindPlace")
+                self.featureComposite.call_feature_method("find_place", None)
+                return
             case "GetNewsWithKeyword":
                 print("COMMAND: GetNewsWithKeyword")
                 self.featureComposite.call_feature_method("getNewsWithKeyword", keyword=detected_keyword)
