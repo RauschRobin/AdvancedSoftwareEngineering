@@ -33,23 +33,63 @@ class Terminplaner:
         else:
             weather_data = weather_obj.get_weather_of_date()
 
-        # get freetime span of today
-        rapla_obj = Rapla()
+        # # get freetime span of today
+        # rapla_obj = Rapla()
         
-        today = datetime.date.today()
-        current_year = today.year
+        # today = datetime.date.today()
+        # current_year = today.year
 
-        timetable = rapla_obj.fetchLecturesOfWeek(DateParser.get_current_calendar_week(), current_year)
+        # timetable = rapla_obj.fetchLecturesOfWeek(DateParser.get_current_calendar_week(), current_year)
+
+        # start: test mock ------------------------------------------------------------------
+        timetable = '''{"lectures": [
+        {
+        "title": "Einführung in die Informatik",
+        "professor": "Dr. Müller",
+        "time": "10:00 - 12:00",
+        "location": "Hauptgebäude, Raum 101"
+        },
+        {
+        "title": "Mathematik für Anfänger",
+        "professor": "Prof. Schmidt",
+        "time": "13:00 - 15:00",
+        "location": "Mathegebäude, Raum 203"
+        },
+        {
+        "title": "Geschichte der Kunst",
+        "professor": "Dr. Wagner",
+        "time": "15:30 - 17:30",
+        "location": "Kunstgebäude, Raum 301"
+        }]}'''
+        
+        # end: test mock ------------------------------------------------------------------
 
         # find activities using the ChatGPT API
+        example_json_output = '''
+        {
+        "activities": [
+            {
+            "activity-keyword": "Spazieren",
+            "location-keyword": "Park",
+            "time": "09:00 - 10:00"
+            },
+            {
+            "activity-keyword": "Mittagessen",
+            "location-keyword": "Restaurant",
+            "time": "12:00 - 13:00"
+            }
+        ]
+        }
+        '''
         chat_obj = ChatGpt()
         activity = chat_obj.get_response(
         f"Gebe mir eine JSON-Liste an Aktivitäten, die ich heute unternehmen kann. "
         f"Hier sind Wetterdaten für heute: {weather_data}. "
-        f"Und zu diesen Uhrzeiten habe ich keine Zeit aufgrund der Vorlesungen:{timetable}"
+        f"Und zu diesen Uhrzeiten habe ich keine Zeit aufgrund der Vorlesungen: {timetable}"
+        f"Der JSON String solte die Syntax aus folgendem Beispiel übernehmen: {example_json_output}"
         )
         print(activity)
-        activity = chat_obj.extract_code_snippets(activity)
+        activity = chat_obj.extract_json_code(activity)
         print(activity)
         return activity
 
