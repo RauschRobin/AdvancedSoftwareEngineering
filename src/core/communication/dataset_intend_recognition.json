@@ -266,5 +266,26 @@
     {
         "recorded_voice_command": "Gib mir Nachrichten zum Thema Künstliche Intelligenz.",
         "intent": "GetNewsWithKeyword"
+    },
+    {
+        "recorded_voice_command": "Wie groß ist die Menü-Auswahl?",
+        "intent": "getRestaurantMenue"
+    },
+    {
+        "recorded_voice_command": "Was bietet das Restaurant an?",
+        "intent": "getRestaurantMenue"
+    },
+    {
+        "recorded_voice_command": "Wie lautet Telefonnummer vom Restaurant?",
+        "intent": "getRestaurantContact"
+    },
+    {
+        "recorded_voice_command": "Hast du mir Kontakdaten zum Restaurant?",
+        "intent": "getRestaurantContact"
+    },
+    {
+        "recorded_voice_command": "Wo genau finde ich das Restaurant?",
+        "intent": "getRestaurantLocation"
     }
+
 ]

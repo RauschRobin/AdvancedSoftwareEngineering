@@ -8,7 +8,7 @@ import os
 import time
 
 keyword_recognized_sound_filepath = os.path.join(os.path.dirname(__file__), 'keyword.mp3')
-LIST_OF_KEYWORDS = ["politik", "umwelt", "klima", "wetter", "deutschland", "krieg", "ukraine", "außenpolitik", "fussball", "sport", "innenpolitik", "ki", "künstliche intelligenz", "innenpolitisches", "außenpolitisches", "künstlicher intelligenz"]
+LIST_OF_KEYWORDS = ["politik", "umwelt", "klima", "wetter", "deutschland", "krieg", "ukraine", "außenpolitik", "fussball", "sport", "innenpolitik", "ki", "künstliche intelligenz", "innenpolitisches", "außenpolitisches", "künstlicher intelligenz" ]
 
 class SingletonMeta(type):
     _instances = {}
@@ -150,6 +150,18 @@ class VoiceInput(metaclass=SingletonMeta):
             case "GetNewsWithKeyword":
                 print("COMMAND: GetNewsWithKeyword")
                 self.featureComposite.call_feature_method("getNewsWithKeyword", keyword=detected_keyword)
+                return
+            case "GetRestaurantMenue":
+                print("COMMAND: GetRestaurantMenue")
+                self.featureComposite.call_feature_method("getRestaurantMenue", keyword=detected_keyword)
+                return
+            case "GetRestaurantContact":
+                print("COMMAND: GetRestaurantContact")
+                self.featureComposite.call_feature_method("getRestaurantContact", keyword=detected_keyword)
+                return
+            case "GetRestaurantLocation":
+                print("COMMAND: GetRestaurantLocation")
+                self.featureComposite.call_feature_method("getRestaurantLocation", keyword=detected_keyword)
                 return
             case "fallback":
                 # TODO: You could also redirect the question/recorded text to chatgpt

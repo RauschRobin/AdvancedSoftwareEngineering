@@ -41,6 +41,8 @@ class Ernaehrungsplaner:
         self.dinner = DinnerHelper()
         self.lunchbreak = LunchbreakHelper()
 
+        self.restaurant = ""
+
     def load_preferences(self):
         '''
         This methods loads all the preferences used in this class and stores them in variables.
@@ -167,3 +169,34 @@ class Ernaehrungsplaner:
             message = dinner_message_builder.sentence.get_all()
 
             self.voice_output.add_message(message)
+
+    def getRestaurantMenue(self):
+        '''
+        Gets the Menue of a a specific restaurant and adds the message to the voice output message_queue.
+
+        Parameters: keyword (string)
+        Returns: None
+        '''
+        pass
+        #newsOfInterest = self.newsapi.get_everything(search_keyword=keyword, language='de')
+        #self.voice_output.add_message(self.chatgpt.get_response("Formuliere mir diese API Response als Klartext in 2-4 Sätzen:" + json.dumps(random.choice(newsOfInterest['articles']))))
+
+    def getRestaurantContact(self):
+        '''
+        Gets the Contact-Information of a a specific restaurant and adds the message to the voice output message_queue.
+
+        Parameters: keyword (string)
+        Returns: None
+        '''
+        pass
+
+    def getRestaurantLocation(self):
+        '''
+        Gets the Location-Information of a a specific restaurant and adds the message to the voice output message_queue.
+
+        Parameters: keyword (string)
+        Returns: None
+        '''
+        pass 
+
+    
