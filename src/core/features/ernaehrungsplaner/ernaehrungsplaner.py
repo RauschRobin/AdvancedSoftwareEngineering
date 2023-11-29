@@ -41,7 +41,8 @@ class Ernaehrungsplaner:
         self.dinner = DinnerHelper()
         self.lunchbreak = LunchbreakHelper()
 
-        self.restaurant = ""
+        self.restaurants = ""
+        self.current_restaurant = ""
 
     def load_preferences(self):
         '''
@@ -85,6 +86,20 @@ class Ernaehrungsplaner:
 
             time.sleep(60)
 
+    def get_response_businesses(self) -> None:
+        """ Find a restaurant near the user with 
+        given preferences and save it inside restaurants
+        
+        Parameters: self
+        Returns: None
+        """
+        location = self.currentLocation.get_location_adress()
+        limit = 1
+        radius = 1000
+        categories = self.prefred_user_restaurant_categories        
+        self.restaurants = self.yelp.get_restaurants_by_location_limit_radius_categories(
+                location, limit, radius, categories)
+
     def suggest_restaurant_for_lunchbreak(self):
         '''
         This function is running in a loop and will proactively tell the user options about the lunchbreak
@@ -99,14 +114,10 @@ class Ernaehrungsplaner:
         # - Calculate the lunchbreak time via rapla // if no then tell the user 30 minutes
 
         if self.lunchbreak.is_time_for_lunchbreak():
-            # Find a restaurant near the user with given preferences
-            location = self.currentLocation.get_location_adress()
-            limit = 1
-            radius = 1000
-            categories = self.prefred_user_restaurant_categories
 
-            response_businesses = self.yelp.get_restaurants_by_location_limit_radius_categories(
-                location, limit, radius, categories)
+            self.get_response_businesses()
+
+            response_businesses = self.restaurants 
 
             if self.lunchbreak.is_businesses_not_none(response_businesses):
                 your_restaurant = response_businesses["businesses"][0]
@@ -177,6 +188,13 @@ class Ernaehrungsplaner:
         Parameters: keyword (string)
         Returns: None
         '''
+        #TODO: Interaktion in dieser Form, wenn kein Restaurant ausgewählt ist
+        #Welches Restaurant meinst du?
+        # Restaurant 1
+        #(Sucht innerhalb von Json nach Restaurant)
+        #(Gibt Menu zurück - Erste fünf)
+        # Weiter
+        #(Nächsten fünf - etc)
         pass
         #newsOfInterest = self.newsapi.get_everything(search_keyword=keyword, language='de')
         #self.voice_output.add_message(self.chatgpt.get_response("Formuliere mir diese API Response als Klartext in 2-4 Sätzen:" + json.dumps(random.choice(newsOfInterest['articles']))))
