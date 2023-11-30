@@ -31,47 +31,11 @@ class Terminplaner:
         Parameters: None
         Returns: None
         '''
-        self.startNewsCheckingLoop()
+        while True:
+            # check if Time is in wake up time-span
+            # check if lecture has ended
 
-    def startNewsCheckingLoop(self):
-        '''
-        Runs the while loop of this feature.
-
-        Parameters: None
-        Returns: None
-        '''
-        # while True:
-        #     now = dp.get_current_datetime()
-
-        #     # When a new week begins, the new timetable gets fetched and stored
-        #     if self.currentCalendarWeek != dp.get_current_calendar_week():
-        #         self.currentCalendarWeek = dp.get_current_calendar_week()
-        #         self.currentWeekTimeTable = self.fetchAndUpdateTimetable()
-            
-        #     # When the next lecture is today or tomorrow and the time is right, calculate the wakeuptime
-        #     if self.nextLecture["lecture"]["date"] == now.date() or self.nextLecture["lecture"]["date"] == now.date() + datetime.timedelta(days=1) and self.nextLecture["lecture"]["time_start"] <= now.time():
-        #         wakeUpTime = self.getWakeUpTimeForNextMorning()
-        #         if wakeUpTime:
-        #             self.voice_output.add_message("Morgen musst du um " + wakeUpTime.strftime("%H:%M") + " aufstehen.")
-
-        #     # Wake the user up if it's wakeuptime
-        #     if wakeUpTime and self.isWakeUpTime(wakeUpTime):
-        #         self.performWakeUpActions()
-                
-        #     # check if the rapla timetable changed and tell user about it
-        #     if now.minute == 30:
-        #         updatedWeekTimeTable = json.loads(self.rapla.fetchLecturesOfWeek(self.currentCalendarWeek, dp.get_current_datetime().isocalendar()[0]))
-        #         lectureChanges = Rapla.compareTimetablesAndRespondWithLecturesThatChanged(self.currentWeekTimeTable, updatedWeekTimeTable)
-        #         if lectureChanges != []:
-        #             for lecture in lectureChanges:
-        #                 self.voice_output.add_message(self.chatgpt.get_response("Formuliere mir diese API Reponse einer Vorlesung als Klartext und erwähne dass sich diese Vorlesung gerade geändert hat und das der neue Stand sei: " + json.dumps(lecture)))
-        #             self.currentWeekTimeTable = updatedWeekTimeTable
-
-        #     # update nextLecture every 5 minutes
-        #     if now.minute % 5 == 0:
-        #         self.nextLecture = self.getNextLecture()
-
-        #     time.sleep(300)  # Sleep for 1 minute before running and checking again
+            time.sleep(300)  # Sleep before running and checking again
 
     def find_activity(self):
         '''
@@ -144,12 +108,16 @@ class Terminplaner:
             return answer
         else:
             # Loop for listing the activities
-            for activity in self.activity["activities"]:
-                places = self.maps.get_nearby_places("Stuttgart", keyword=activity['location-keyword'])
-                self.places = places
+            if self.activity:
+                for activity in self.activity["activities"]:
+                    places = self.maps.get_nearby_places("Stuttgart", keyword=activity['location-keyword'])
+                    self.places = places
 
-                request = f"Lese mir den JSON String kurz in grammatikalisch korrekten sätzen vor: {self.places}"
-                answer = self.chatgpt.get_response(request)
+                    request = f"Lese mir den JSON String kurz in grammatikalisch korrekten sätzen vor: {self.places}"
+                    answer = self.chatgpt.get_response(request)
 
-                # The return in for-loop only returns the first answer
-                return answer
+                    # The return in for-loop only returns the first answer
+                    return answer
+                
+            else:
+                return "Tut mir leid. Ich habe keinen passenden Ort gefunden."

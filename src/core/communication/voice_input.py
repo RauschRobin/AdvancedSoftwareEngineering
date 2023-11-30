@@ -8,7 +8,7 @@ import os
 import time
 
 keyword_recognized_sound_filepath = os.path.join(os.path.dirname(__file__), 'keyword.mp3')
-LIST_OF_KEYWORDS = ["politik", "umwelt", "klima", "wetter", "deutschland", "krieg", "ukraine", "außenpolitik", "fussball", "sport", "innenpolitik", "ki", "künstliche intelligenz", "innenpolitisches", "außenpolitisches", "künstlicher intelligenz"]
+LIST_OF_KEYWORDS = ["politik", "umwelt", "klima", "wetter", "deutschland", "krieg", "ukraine", "außenpolitik", "fussball", "sport", "innenpolitik", "ki", "künstliche intelligenz", "innenpolitisches", "außenpolitisches", "künstlicher intelligenz", "Spazieren gehen", "Musik hören", "Bücher lesen", "Kochen", "Fahrradfahren", "Fotografieren", "Yoga", "Gärtnern", "Malen", "Film schauen", "Reisen", "Klettern", "Treffen mit Freunden", "Sport treiben", "Meditieren", "Stricken", "Sprachen lernen", "Singen", "Theater besuchen", "Picknicken", "Gaming", "Badminton spielen", "Kunsthandwerk betreiben", "Tauchen", "Ski", "Tanzen", "Schach", "Segeln", "Vogelbeobachtung", "Flohmarkt", "Segway-Tour", "Konzerte", "Museum", "Angeln", "Surfen", "Freiwilligenarbeit", "Stadtbummel", "Schwimmen", "Höhlenforschung", "Stand-up-Paddeln", "Kajakfahren"]
 
 class SingletonMeta(type):
     _instances = {}
@@ -149,7 +149,7 @@ class VoiceInput(metaclass=SingletonMeta):
                 return
             case "FindPlace":
                 print("COMMAND: FindPlace")
-                self.featureComposite.call_feature_method("find_place", None)
+                self.featureComposite.call_feature_method("find_place", keyword=detected_keyword)
                 return
             case "GetNewsWithKeyword":
                 print("COMMAND: GetNewsWithKeyword")

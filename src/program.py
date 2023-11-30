@@ -49,15 +49,3 @@ class MainApp:
 if __name__ == "__main__":
     main_app = MainApp()
     main_app.run()
-
-    # klappt net ...
-    # raplaobj = Rapla()
-    # print(raplaobj.fetchLecturesOfWeek(datetime.datetime.now().isocalendar()[1], 2023))
-
-    # tpobj = Terminplaner(None)
-    # activity = tpobj.find_activity()
-    # print(activity)
-    
-    # tpobj = Terminplaner(None)
-    # places = tpobj.find_place("restaurant")
-    # print(places)
