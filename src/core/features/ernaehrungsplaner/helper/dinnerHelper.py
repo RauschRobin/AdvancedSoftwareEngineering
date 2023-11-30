@@ -25,16 +25,14 @@ class DinnerHelper():
 
         return your_meal, your_meal_name, your_meal_category
 
-    def find_details_for_meal(self, preferred_meals_week):
+    def find_details_for_meal(self, meal_name):
         '''Find the instructions for the meal
 
-        Parameters: preferred_meals_week
+        Parameters: meal_name
         Returns: your_meal, your_meal_name, your_meal_instruction
         '''
-        now = datetime.datetime.now()
-        preferrd_meal_for_today = preferred_meals_week[now.weekday()]
         meal_object = self.theMealDb.search_meal_by_name(
-            preferrd_meal_for_today)
+            meal_name)
 
         your_meal = meal_object["meals"][0]
         your_meal_name = your_meal["strMeal"]

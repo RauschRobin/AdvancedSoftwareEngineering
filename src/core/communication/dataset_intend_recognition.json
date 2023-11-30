@@ -345,34 +345,70 @@
     },
     {
         "recorded_voice_command": "Welche Zutaten habe ich für das Gericht zuhause?",
-        "intent": "ingredients_at_home_in_inventory"
+        "intent": "ingredients_at_home_to_cook"
     },
     {
         "recorded_voice_command": "Welche Zutaten sind für das Gericht in meiner Vorratskammer?",
-        "intent": "ingredients_at_home_in_inventory"
+        "intent": "ingredients_at_home_to_cook"
     },
     {
         "recorded_voice_command": "Habe ich die notwendigen Zutaten für das Rezept im Haus?",
-        "intent": "ingredients_at_home_in_inventory"
+        "intent": "ingredients_at_home_to_cook"
     },
     {
         "recorded_voice_command": "Welche Zutaten habe iche Zuhause für das Gericht?",
-        "intent": "ingredients_at_home_in_inventory"
+        "intent": "ingredients_at_home_to_cook"
     },
     {
         "recorded_voice_command": "Welche Lebensmittel habe ich für das Gericht in meinem Haus?",
-        "intent": "ingredients_at_home_in_inventory"
+        "intent": "ingredients_at_home_to_cook"
     },
     {
         "recorded_voice_command": "Was für Zutaten habe ich in meinem Kühlschrank für das Gericht?",
-        "intent": "ingredients_at_home_in_inventory"
+        "intent": "ingredients_at_home_to_cook"
     },
     {
         "recorded_voice_command": "Was für Zutaten habe ich in meinem Kühlschrank für das Essen?",
-        "intent": "ingredients_at_home_in_inventory"
+        "intent": "ingredients_at_home_to_cook"
     },
     {
         "recorded_voice_command": "Habe ich die notwendigen Zutaten für das Rezept im Kühlschrank?",
-        "intent": "ingredients_at_home_in_inventory"
+        "intent": "ingredients_at_home_to_cook"
+    },
+    {
+        "recorded_voice_command": "Was brauche ich für dieses Essen vom Supermarkt?",
+        "intent": "generate_shopping_list_for_meal"
+    },
+    {
+        "recorded_voice_command": "Welche Zutaten muss ich für das Gericht noch einkaufen?",
+        "intent": "generate_shopping_list_for_meal"
+    },
+    {
+        "recorded_voice_command": "Was muss ich für das Gericht noch einkaufen?",
+        "intent": "generate_shopping_list_for_meal"
+    },
+    {
+        "recorded_voice_command": "Was muss ich für das Gericht noch essen?",
+        "intent": "generate_shopping_list_for_meal"
+    },
+    {
+        "recorded_voice_command": "Welche Zutaten muss ich für das Gericht noch einkaufen?",
+        "intent": "generate_shopping_list_for_meal"
+    },
+    {
+        "recorded_voice_command": "Was muss ich noch einkaufen?",
+        "intent": "generate_shopping_list_for_meal"
+    },
+    {
+        "recorded_voice_command": "Welche Zutaten muss ich noch einkaufen?",
+        "intent": "generate_shopping_list_for_meal"
+    },
+    {
+        "recorded_voice_command": "Welche Zutaten fehlen mir zum kochen dieses Gerichts die ich einkaufen muss?",
+        "intent": "generate_shopping_list_for_meal"
+    },
+    {
+        "recorded_voice_command": "Welche Zutaten fehlen mir noch die ich einkaufen muss?",
+        "intent": "generate_shopping_list_for_meal"
     }
 ]

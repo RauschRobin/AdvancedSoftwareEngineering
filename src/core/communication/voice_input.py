@@ -170,10 +170,14 @@ class VoiceInput(metaclass=SingletonMeta):
                 print("COMMAND: cook_something_different")
                 self.featureComposite.call_feature_method(
                     "cook_something_different")
-            case "ingredients_at_home_in_inventory":
-                print("COMMAND: ingredients_at_home_in_inventory")
+            case "ingredients_at_home_to_cook":
+                print("COMMAND: ingredients_at_home_to_cook")
                 self.featureComposite.call_feature_method(
-                    "ingredients_at_home_in_inventory")
+                    "ingredients_at_home_to_cook")
+            case "generate_shopping_list_for_meal":
+                print("COMMAND: generate_shopping_list_for_meal")
+                self.featureComposite.call_feature_method(
+                    "generate_shopping_list_for_meal")
             case "fallback":
                 # TODO: You could also redirect the question/recorded text to chatgpt
                 self.voice_output.add_message(
