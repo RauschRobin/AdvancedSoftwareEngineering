@@ -5,17 +5,18 @@ from ....shared.theMealDb.theMealDb import TheMealDb
 
 
 class DinnerHelper():
+    def __init__(self):
+        self.theMealDb = TheMealDb()
+
     def find_the_best_meal(self, preferred_meals_week):
         '''Find the best meal for the user today
 
         Parameters: preferred_meals_week
         Returns: your_meal, your_meal_name, your_meal_category
         '''
-        theMealDb = TheMealDb()
-
         now = datetime.datetime.now()
         preferrd_meal_for_today = preferred_meals_week[now.weekday()]
-        meal_object = theMealDb.search_meal_by_name(
+        meal_object = self.theMealDb.search_meal_by_name(
             preferrd_meal_for_today)
 
         your_meal = meal_object["meals"][0]
@@ -23,6 +24,37 @@ class DinnerHelper():
         your_meal_category = your_meal["strCategory"]
 
         return your_meal, your_meal_name, your_meal_category
+
+    def find_details_for_meal(self, preferred_meals_week):
+        '''Find the instructions for the meal
+
+        Parameters: preferred_meals_week
+        Returns: your_meal, your_meal_name, your_meal_instruction
+        '''
+        now = datetime.datetime.now()
+        preferrd_meal_for_today = preferred_meals_week[now.weekday()]
+        meal_object = self.theMealDb.search_meal_by_name(
+            preferrd_meal_for_today)
+
+        your_meal = meal_object["meals"][0]
+        your_meal_name = your_meal["strMeal"]
+        your_meal_instruction = your_meal["strInstructions"]
+
+        return your_meal, your_meal_name, your_meal_instruction
+
+    def find_random_meal(self):
+        '''Find a random meal
+
+        Parameters: None
+        Returns: your_meal_name
+        '''
+        meal_object = self.theMealDb.lookup_single_random_meal()
+
+        your_meal = meal_object["meals"][0]
+        your_meal_name = your_meal["strMeal"]
+        your_meal_category = your_meal["strCategory"]
+
+        return your_meal_name
 
     def check_which_ingredients_needed(self, your_meal):
         '''Check which ingredients are needed for the meal

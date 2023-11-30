@@ -34,12 +34,19 @@ class Ernaehrungsplaner:
         self.load_preferences()
 
         self.yelp = Yelp()
+        self.chatgpt = ChatGpt()
 
         self.currentLocation = CurrentLocation()
         self.inventory = Inventory()
 
         self.dinner = DinnerHelper()
         self.lunchbreak = LunchbreakHelper()
+
+        self.meal_to_cook = ""
+
+        # self.cook_something_different()
+        # self.how_to_cook_the_meal()
+        self.ingredients_at_home_in_inventory()
 
     def load_preferences(self):
         '''
@@ -147,6 +154,9 @@ class Ernaehrungsplaner:
         if self.dinner.is_time_for_dinner():
             your_meal, your_meal_name, your_meal_category = self.dinner.find_the_best_meal(
                 self.preferred_meals_week)
+
+            self.your_meal_name = your_meal_name
+
             ingredients = self.dinner.check_which_ingredients_needed(your_meal)
 
             inventory_objects = json.loads(self.inventory.get_inventory())
@@ -167,3 +177,74 @@ class Ernaehrungsplaner:
             message = dinner_message_builder.sentence.get_all()
 
             self.voice_output.add_message(message)
+
+    def how_to_cook_the_meal(self):
+        '''
+        This function enables the user to get a detailed meal information.
+
+        Parameters: None
+        Returns: None
+        '''
+        # find the details for the meal to cook
+        if self.meal_to_cook:
+            your_meal_name, find_details_for_meal = self.dinner.find_details_for_meal(
+                self.meal_to_cook)
+            self.voice_output.add_message(
+                f"Hier sind die Schritte um {self.meal_to_cook} zu kochen.")
+        else:
+            your_meal_name, find_details_for_meal = self.dinner.find_the_best_meal(
+                self.preferred_meals_week)
+            self.voice_output.add_message(
+                f"Auf dem Ernährungsplan steht heute {your_meal_name}. Hier ist die Anleitung dazu.")
+
+        # tell the user the instructions
+        if isinstance(find_details_for_meal, str):
+            print(find_details_for_meal)
+            sentences = find_details_for_meal.split('. ')
+
+            for i, sentence in enumerate(sentences):
+                message = str(self.chatgpt.get_response(
+                    "Übersetzen auf deutsch: " + sentence.lower()))
+
+                self.voice_output.add_message(message)
+        else:
+            message = "Ich kann keine Anleitung finden."
+
+            self.voice_output.add_message(message)
+
+    def cook_something_different(self):
+        '''
+        This function finds a random meal
+
+        Parameters: None
+        Returns: None
+        '''
+        your_meal_name = self.dinner.find_random_meal()
+        self.meal_to_cook = your_meal_name
+
+        message = f"Du kannst stattdessen {your_meal_name} kochen. "
+
+        self.voice_output.add_message(message)
+
+    def ingredients_at_home_in_inventory(self):
+        # find the inventory for the meal to cook
+        if self.meal_to_cook:
+            your_meal, your_meal_name, find_details_for_meal = self.dinner.find_details_for_meal(
+                self.meal_to_cook)
+        else:
+            your_meal, your_meal_name, your_meal_category = self.dinner.find_the_best_meal(
+                self.preferred_meals_week)
+
+        ingredients = self.dinner.check_which_ingredients_needed(your_meal)
+
+        inventory_objects = json.loads(self.inventory.get_inventory())
+        inventory = self.dinner.check_which_ingredients_are_at_home(
+            inventory_objects)
+        ingredients_at_home = list(set(ingredients) & set(inventory))
+
+        message = self.chatgpt.get_response(
+            f"Umformulieren als Text und übersetzen auf deutsch: Du hast folgende Zutaten hast du für das Gericht {your_meal_name} daheim: {str(ingredients_at_home)}")
+        self.voice_output.add_message(message)
+
+    def ingredients_neccessary_to_cook_meal(self):
+        pass
