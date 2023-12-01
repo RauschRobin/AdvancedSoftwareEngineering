@@ -32,10 +32,25 @@ class Terminplaner:
         Returns: None
         '''
         while True:
-            # check if Time is in wake up time-span
-            # check if lecture has ended
+            # check if Time is between start- and endtime
+            start_time = "12:00"
+            end_time = "12:05"
+
+            if self.is_time_in_range(start_time, end_time):
+                self.find_activity()
 
             time.sleep(300)  # Sleep before running and checking again
+
+    def is_time_in_range(start_time, end_time):
+        # Aktuelle Uhrzeit und Datum abrufen
+        current_time = datetime.now().time()
+
+        # Start- und Endzeit erstellen
+        start = time(*map(int, start_time.split(':')))
+        end = time(*map(int, end_time.split(':')))
+
+        # Überprüfen, ob die aktuelle Uhrzeit im Bereich liegt
+        return start <= current_time <= end
 
     def find_activity(self):
         '''
@@ -88,7 +103,7 @@ class Terminplaner:
         request = f"lese mir den JSON String kurz in grammatikalisch korrekten sätzen vor: {self.activity}"
         proposal = self.chatgpt.get_response(request)
 
-        return proposal
+        self.voice_output.add_message(proposal)
 
     def find_place(self, activity = None):
         '''
@@ -105,7 +120,7 @@ class Terminplaner:
             request = f"Lese mir den JSON String kurz in grammatikalisch korrekten sätzen vor: {self.places}"
             answer = self.chatgpt.get_response(request)
 
-            return answer
+            self.voice_output.add_message(answer)
         else:
             # Loop for listing the activities
             if self.activity:
@@ -116,8 +131,9 @@ class Terminplaner:
                     request = f"Lese mir den JSON String kurz in grammatikalisch korrekten sätzen vor: {self.places}"
                     answer = self.chatgpt.get_response(request)
 
-                    # The return in for-loop only returns the first answer
-                    return answer
+                    # The output in for-loop only returns the first answer
+                    self.voice_output.add_message(answer)
+                    break
                 
             else:
-                return "Tut mir leid. Ich habe keinen passenden Ort gefunden."
+                self.voice_output.add_message("Tut mir leid. Ich habe keinen passenden Ort gefunden.")
