@@ -1,47 +1,48 @@
 import requests
 from ...shared.YamlFetcher.YamlFetcher import YamlFetcher
+import os
+import googlemaps
+from dotenv import load_dotenv
 
 class Maps:
     def __init__(self):
-        self.maps_api_key = YamlFetcher.fetch("maps", "API_Keys.yaml")
+        load_dotenv()
+        self.maps_api_key = os.getenv('MAPS_SECRET')
         
-    def get_nearby_places(self, location, radius=2000, keyword='restaurant'):
+    def get_nearby_places(self, location=None, radius=2000, keyword='restaurant'):
         '''
         Selects places nearby a specific location, within a certain radius(default: 2000).
         Keywords can be modified. By default it is 'restaurant'
+        Limit of locations is set to 3.
 
         Parameters: location, radius, keywords
-        Returns: places (list)
+        Returns: places (string[])
         '''
-        base_url = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json'
-        
-        params = {
-            'key': self.maps_api_key,
-            'location': location,
-            'radius': radius,
-            'keyword': keyword,
-        }
 
-        try:
-            response = requests.get(base_url, params=params)
-            data = response.json()
-            print(data)
-            if response.status_code == 200 and data['status'] == 'OK':
-                restaurants = []
+        # Replace 'YOUR_API_KEY' with your actual API key
+        gmaps = googlemaps.Client(key=self.maps_api_key)
 
-                for place in data['results']:
-                    name = place.get('name', 'N/A')
-                    address = place.get('vicinity', 'N/A')
-                    restaurants.append({'name': name, 'address': address})
+        # Perform a Places API nearby search
+        if location:
+            places_result = gmaps.places(query=f'{keyword} in {location}', radius=radius)
+        else:
+            # Default location are coordinates of Stuttgart DHBW Fakult#t Technik
+            latitude = 48.78308282048639
+            longitude = 9.165828554195217
 
-                return restaurants
-            else:
-                print(f"Error1: {data['status']}")
-        except Exception as e:
-            print(f"Error2: {e}")
+            places_result = gmaps.places_nearby(location=(latitude, longitude), radius=radius, type=keyword)
 
+        # Prepare a list to store formatted information about each place
+        formatted_places = []
 
-# if __name__ == "__main__":
-#     myobj = Maps('API_KEY')
-#     location = "49.03843923727726, 9.094928563014196" # Example Coordinates of Bönnigheim
-#     locations = myobj.get_nearby_restaurants(location)
+        # Format information about each place
+        for place in places_result['results'][:3]:
+            formatted_place = {
+                "Name": place['name'],
+                "Address": place.get('vicinity', 'N/A'),
+                "Rating": place.get('rating', 'N/A')
+            }
+            formatted_places.append(formatted_place)
+
+        return formatted_places
+
