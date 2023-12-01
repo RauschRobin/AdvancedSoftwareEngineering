@@ -6,7 +6,6 @@ from ...shared.rapla.rapla import Rapla
 from ...shared.rapla.DateParser import DateParser
 import datetime
 import time
-import random
 
 class Terminplaner:
     def __init__(self, voice_output:VoiceOutput):
@@ -41,13 +40,14 @@ class Terminplaner:
 
             time.sleep(300)  # Sleep before running and checking again
 
-    def is_time_in_range(start_time, end_time):
-        # Aktuelle Uhrzeit und Datum abrufen
-        current_time = datetime.now().time()
+    def is_time_in_range(self, start_time, end_time, current_time=None):
+        if not current_time:
+            # Aktuelle Uhrzeit und Datum abrufen
+            current_time = datetime.datetime.now().time()
 
         # Start- und Endzeit erstellen
-        start = time(*map(int, start_time.split(':')))
-        end = time(*map(int, end_time.split(':')))
+        start = datetime.datetime.strptime(start_time, "%H:%M").time()
+        end = datetime.datetime.strptime(end_time, "%H:%M").time()
 
         # Überprüfen, ob die aktuelle Uhrzeit im Bereich liegt
         return start <= current_time <= end
