@@ -268,6 +268,150 @@
         "intent": "GetNewsWithKeyword"
     },
     {
+        "recorded_voice_command": "Wie koche mein Abendessen?",
+        "intent": "how_to_cook_the_meal"
+    },
+    {
+        "recorded_voice_command": "Wie koche das Essen?",
+        "intent": "how_to_cook_the_meal"
+    },
+    {
+        "recorded_voice_command": "Wie koche ich das Gericht?",
+        "intent": "how_to_cook_the_meal"
+    },
+    {
+        "recorded_voice_command": "Gib mir eine Anleitung, wie ich das Gericht koche?",
+        "intent": "how_to_cook_the_meal"
+    },
+    {
+        "recorded_voice_command": "Wie ist die Anleitung um das Abendessen zu kochen?",
+        "intent": "how_to_cook_the_meal"
+    },
+    {
+        "recorded_voice_command": "Könnten Sie mir bitte erklären, wie ich das Abendessen zubereiten kann?",
+        "intent": "how_to_cook_the_meal"
+    },
+    {
+        "recorded_voice_command": "Ich brauche eine Schritt-für-Schritt-Anleitung für die Zubereitung des Essens.",
+        "intent": "how_to_cook_the_meal"
+    },
+    {
+        "recorded_voice_command": "Kannst du mir sagen, wie ich dieses Gericht kochen soll?",
+        "intent": "how_to_cook_the_meal"
+    },
+    {
+        "recorded_voice_command": "Ich bin unsicher, wie ich das Abendessen zubereiten soll. Kannst du helfen?",
+        "intent": "how_to_cook_the_meal"
+    },
+    {
+        "recorded_voice_command": "Gibt es eine Rezeptanleitung für das Kochen des Essens?",
+        "intent": "how_to_cook_the_meal"
+    },
+    {
+        "recorded_voice_command": "Ich möchte etwas anderes kochen.",
+        "intent": "cook_something_different"
+    },
+    {
+        "recorded_voice_command": "Heute Abend möchte ich etwas anderes kochen.",
+        "intent": "cook_something_different"
+    },
+    {
+        "recorded_voice_command": "Was anderes kann ich heute abend kochen?",
+        "intent": "cook_something_different"
+    },
+    {
+        "recorded_voice_command": "Gibt es ein anderes leckeres Gericht das ich kochen kann?",
+        "intent": "cook_something_different"
+    },
+    {
+        "recorded_voice_command": "Ich möchte eine neue Rezeptidee ausprobieren.",
+        "intent": "cook_something_different"
+    },
+    {
+        "recorded_voice_command": "Hast du Vorschläge für ein Abendessen mit neuen Aromen?",
+        "intent": "cook_something_different"
+    },
+    {
+        "recorded_voice_command": "Ich bin auf der Suche nach ungewöhnlichen Kochrezepten.",
+        "intent": "cook_something_different"
+    },
+    {
+        "recorded_voice_command": "Kannst du mir eine alternative Mahlzeit empfehlen?",
+        "intent": "cook_something_different"
+    },
+    {
+        "recorded_voice_command": "Ich möchte heute etwas kochen, was ich noch nie zuvor gemacht habe.",
+        "intent": "cook_something_different"
+    },
+    {
+        "recorded_voice_command": "Welche Zutaten habe ich für das Gericht zuhause?",
+        "intent": "ingredients_at_home_to_cook"
+    },
+    {
+        "recorded_voice_command": "Welche Zutaten sind für das Gericht in meiner Vorratskammer?",
+        "intent": "ingredients_at_home_to_cook"
+    },
+    {
+        "recorded_voice_command": "Habe ich die notwendigen Zutaten für das Rezept im Haus?",
+        "intent": "ingredients_at_home_to_cook"
+    },
+    {
+        "recorded_voice_command": "Welche Zutaten habe iche Zuhause für das Gericht?",
+        "intent": "ingredients_at_home_to_cook"
+    },
+    {
+        "recorded_voice_command": "Welche Lebensmittel habe ich für das Gericht in meinem Haus?",
+        "intent": "ingredients_at_home_to_cook"
+    },
+    {
+        "recorded_voice_command": "Was für Zutaten habe ich in meinem Kühlschrank für das Gericht?",
+        "intent": "ingredients_at_home_to_cook"
+    },
+    {
+        "recorded_voice_command": "Was für Zutaten habe ich in meinem Kühlschrank für das Essen?",
+        "intent": "ingredients_at_home_to_cook"
+    },
+    {
+        "recorded_voice_command": "Habe ich die notwendigen Zutaten für das Rezept im Kühlschrank?",
+        "intent": "ingredients_at_home_to_cook"
+    },
+    {
+        "recorded_voice_command": "Was brauche ich für dieses Essen vom Supermarkt?",
+        "intent": "generate_shopping_list_for_meal"
+    },
+    {
+        "recorded_voice_command": "Welche Zutaten muss ich für das Gericht noch einkaufen?",
+        "intent": "generate_shopping_list_for_meal"
+    },
+    {
+        "recorded_voice_command": "Was muss ich für das Gericht noch einkaufen?",
+        "intent": "generate_shopping_list_for_meal"
+    },
+    {
+        "recorded_voice_command": "Was muss ich für das Gericht noch essen?",
+        "intent": "generate_shopping_list_for_meal"
+    },
+    {
+        "recorded_voice_command": "Welche Zutaten muss ich für das Gericht noch einkaufen?",
+        "intent": "generate_shopping_list_for_meal"
+    },
+    {
+        "recorded_voice_command": "Was muss ich noch einkaufen?",
+        "intent": "generate_shopping_list_for_meal"
+    },
+    {
+        "recorded_voice_command": "Welche Zutaten muss ich noch einkaufen?",
+        "intent": "generate_shopping_list_for_meal"
+    },
+    {
+        "recorded_voice_command": "Welche Zutaten fehlen mir zum kochen dieses Gerichts die ich einkaufen muss?",
+        "intent": "generate_shopping_list_for_meal"
+    },
+    {
+        "recorded_voice_command": "Welche Zutaten fehlen mir noch die ich einkaufen muss?",
+        "intent": "generate_shopping_list_for_meal"
+    },
+    {
         "recorded_voice_command": "Was kann ich heute tun?",
         "intent": "GetActivitiesForToday"
     },
