@@ -3,19 +3,20 @@ from bs4 import BeautifulSoup
 from .DateParser import DateParser as dp
 import json
 import datetime
+from ..YamlFetcher.YamlFetcher import YamlFetcher
 
 class Rapla:
     '''
     This class is responsible for fetching rapla timetables and handling those.
     '''
-    def __init__(self, rapla_url):
+    def __init__(self):
         '''
         This is the constructor for Rapla.
 
         Parameters: rapla_url (string)
         Returns: None
         '''
-        self.rapla_url = rapla_url
+        self.rapla_url = YamlFetcher.fetch("rapla-url", "preferences.yaml")
 
     def fetchLecturesOfWeek(self, calendar_week, year):
         '''

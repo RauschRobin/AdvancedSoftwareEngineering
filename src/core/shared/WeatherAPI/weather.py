@@ -1,6 +1,8 @@
 import requests
 from datetime import datetime
 from ..YamlFetcher.YamlFetcher import YamlFetcher
+import os
+from dotenv import load_dotenv
 
 class Weather(object):
     # shared variable
@@ -12,7 +14,8 @@ class Weather(object):
         return cls.instance
     
     def __init__(self):
-        self.weather_api_key = YamlFetcher.fetch("weather", "API_Keys.yaml")
+        load_dotenv()
+        self.weather_api_key = os.getenv('WEATHER_SECRET')
 
     # returns json string of following weather events in german
     def get_weather_of_date(self):

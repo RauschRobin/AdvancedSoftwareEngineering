@@ -20,7 +20,7 @@ class TestRapla:
         timetable2 = sample_timetable
 
         # Create an instance of Rapla
-        rapla_instance = Rapla("http://example.com")
+        rapla_instance = Rapla()
 
         # Call the method to test
         result = rapla_instance.compareTimetablesAndRespondWithLecturesThatChanged(timetable1, timetable2)
@@ -30,7 +30,7 @@ class TestRapla:
 
     def test_isLectureFirstOfTheDay(self):
         # Create an instance of Rapla
-        rapla_instance = Rapla("http://example.com")
+        rapla_instance = Rapla()
 
         # Call the method to test
         lecture = {

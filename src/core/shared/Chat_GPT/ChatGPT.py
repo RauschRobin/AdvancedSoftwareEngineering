@@ -1,8 +1,9 @@
 import os
-
 from dotenv import load_dotenv
 from ...shared.YamlFetcher.YamlFetcher import YamlFetcher
 from openai import OpenAI
+import re
+import json
 
 
 class ChatGpt:
@@ -47,3 +48,23 @@ class ChatGpt:
             model="gpt-3.5-turbo",
         )
         return chat_completion.choices[0].message.content
+
+    def extract_json_code(self, response_content):
+        """
+        Extracts JSON code from the response content.
+
+        Parameters:
+            response_content (string): The content of the ChatGPT response.
+
+        Returns:
+            json_code (list): List of JSON code snippets found in the response.
+        """
+        # Use a regular expression to find the JSON substring
+        start = response_content.find('{')
+        end = response_content.rfind('}')
+
+        if start != -1 and end != -1:
+            json_string = response_content[start:end+1]
+            return json.loads(json_string)
+        else:
+            return None
