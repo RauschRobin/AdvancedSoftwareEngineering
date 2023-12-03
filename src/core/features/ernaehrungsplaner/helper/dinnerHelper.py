@@ -16,14 +16,15 @@ class DinnerHelper():
         '''
         now = datetime.datetime.now()
         preferrd_meal_for_today = preferred_meals_week[now.weekday()]
+        print(preferrd_meal_for_today)
         meal_object = self.theMealDb.search_meal_by_name(
             preferrd_meal_for_today)
 
         your_meal = meal_object["meals"][0]
         your_meal_name = your_meal["strMeal"]
-        your_meal_category = your_meal["strCategory"]
+        your_meal_instruction = your_meal["strInstructions"]
 
-        return your_meal, your_meal_name, your_meal_category
+        return your_meal, your_meal_name, your_meal_instruction
 
     def find_details_for_meal(self, meal_name):
         '''Find the instructions for the meal
