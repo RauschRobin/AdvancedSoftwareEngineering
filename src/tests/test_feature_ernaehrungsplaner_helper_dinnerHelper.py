@@ -18,7 +18,7 @@ class TestDinnerHelper(unittest.TestCase):
         self.mock_the_meal_db.search_meal_by_name.return_value = {
             "meals": [{
                 "strMeal": "Spaghetti Carbonara",
-                "strCategory": "Pasta"
+                "strInstructions": "Pasta instructions",
             }]
         }
 
@@ -29,11 +29,11 @@ class TestDinnerHelper(unittest.TestCase):
 
         # Extract individual elements from the dictionary
         expected_result = ("Spaghetti Carbonara",
-                           "Spaghetti Carbonara", "Pasta")
+                           "Spaghetti Carbonara", "Pasta instructions")
         actual_result = (
             result[0]["strMeal"],
             result[0]["strMeal"],
-            result[0]["strCategory"]
+            result[0]["strInstructions"]
         )
 
         self.assertEqual(actual_result, expected_result)
