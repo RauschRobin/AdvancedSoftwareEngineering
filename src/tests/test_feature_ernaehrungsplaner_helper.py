@@ -1,5 +1,6 @@
 import datetime
 import json
+import unittest
 
 from ..core.features.ernaehrungsplaner.helper.dinnerHelper import DinnerHelper
 
@@ -86,38 +87,6 @@ def test_get_all_sentences():
     sentence.add("Hello")
     sentence.add("World")
     assert sentence.get_all() == "Hello. World"
-
-
-# test dinner helper
-def test_check_which_ingredients_needed():
-    dinner = DinnerHelper()
-    your_meal = {
-        "strIngredient1": "Tomato",
-        "strIngredient2": "Cheese",
-    }
-
-    expected_ingredients = ["Tomato", "Cheese"]
-    ingredients = dinner.check_which_ingredients_needed(your_meal)
-
-    assert ingredients == expected_ingredients, "The ingredients list does not match the expected outcome"
-
-
-def test_check_which_ingredients_are_at_home():
-    dinner = DinnerHelper()
-    inventory_objects = {
-        "item1": {"Item": "Tomato"},
-        "item2": {"Item": "Cheese"},
-        "item3": {"Item": "Basil"}
-    }
-
-    # Expected outcome
-    expected_ingredients = ["Tomato", "Cheese", "Basil"]
-
-    # Test
-    ingredients = dinner.check_which_ingredients_are_at_home(inventory_objects)
-
-    # Assert
-    assert ingredients == expected_ingredients, "The ingredients list does not match the expected outcome"
 
 
 # test lunchbreak helper

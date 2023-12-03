@@ -20,7 +20,8 @@ news = News(voice_output)
 terminplaner = Terminplaner(voice_output)
 
 # Initialize and start the feature modules
-features = [wakeup, ernaehrungsplaner, news, terminplaner]  # Add all features here
+features = [wakeup, ernaehrungsplaner, news,
+            terminplaner]  # Add all features here
 threads = []
 
 for feature in features:
@@ -36,6 +37,8 @@ voice_input = VoiceInput(feature_composite, stop_listening_event, voice_output)
 voice_input.start()
 
 # Main class to coordinate features and user input
+
+
 class MainApp:
     def __init__(self):
         # Initialize any shared data or variables
@@ -45,6 +48,7 @@ class MainApp:
         # Main logic to coordinate features and user input
         for thread in threads:
             thread.join()
+
 
 if __name__ == "__main__":
     main_app = MainApp()

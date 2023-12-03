@@ -233,7 +233,7 @@
     },
     {
         "recorded_voice_command": "Was ist heute passiert?",
-        "intent": "GetNewsOfToday"
+        "intent": "GetNewsOfInterest"
     },
     {
         "recorded_voice_command": "Gib mir alle Nachrichten zum Thema Politik.",
@@ -362,5 +362,252 @@
     {
         "recorded_voice_command": "In welcher Stadt ist das Restaurant?",
         "intent": "getRestaurantLocation"
+
+        "recorded_voice_command": "Wie koche mein Abendessen?",
+        "intent": "how_to_cook_the_meal"
+    },
+    {
+        "recorded_voice_command": "Wie koche das Essen?",
+        "intent": "how_to_cook_the_meal"
+    },
+    {
+        "recorded_voice_command": "Wie koche ich das Gericht?",
+        "intent": "how_to_cook_the_meal"
+    },
+    {
+        "recorded_voice_command": "Gib mir eine Anleitung, wie ich das Gericht koche?",
+        "intent": "how_to_cook_the_meal"
+    },
+    {
+        "recorded_voice_command": "Wie ist die Anleitung um das Abendessen zu kochen?",
+        "intent": "how_to_cook_the_meal"
+    },
+    {
+        "recorded_voice_command": "Könnten Sie mir bitte erklären, wie ich das Abendessen zubereiten kann?",
+        "intent": "how_to_cook_the_meal"
+    },
+    {
+        "recorded_voice_command": "Ich brauche eine Schritt-für-Schritt-Anleitung für die Zubereitung des Essens.",
+        "intent": "how_to_cook_the_meal"
+    },
+    {
+        "recorded_voice_command": "Kannst du mir sagen, wie ich dieses Gericht kochen soll?",
+        "intent": "how_to_cook_the_meal"
+    },
+    {
+        "recorded_voice_command": "Ich bin unsicher, wie ich das Abendessen zubereiten soll. Kannst du helfen?",
+        "intent": "how_to_cook_the_meal"
+    },
+    {
+        "recorded_voice_command": "Gibt es eine Rezeptanleitung für das Kochen des Essens?",
+        "intent": "how_to_cook_the_meal"
+    },
+    {
+        "recorded_voice_command": "Ich möchte etwas anderes kochen.",
+        "intent": "cook_something_different"
+    },
+    {
+        "recorded_voice_command": "Heute Abend möchte ich etwas anderes kochen.",
+        "intent": "cook_something_different"
+    },
+    {
+        "recorded_voice_command": "Was anderes kann ich heute abend kochen?",
+        "intent": "cook_something_different"
+    },
+    {
+        "recorded_voice_command": "Gibt es ein anderes leckeres Gericht das ich kochen kann?",
+        "intent": "cook_something_different"
+    },
+    {
+        "recorded_voice_command": "Ich möchte eine neue Rezeptidee ausprobieren.",
+        "intent": "cook_something_different"
+    },
+    {
+        "recorded_voice_command": "Hast du Vorschläge für ein Abendessen mit neuen Aromen?",
+        "intent": "cook_something_different"
+    },
+    {
+        "recorded_voice_command": "Ich bin auf der Suche nach ungewöhnlichen Kochrezepten.",
+        "intent": "cook_something_different"
+    },
+    {
+        "recorded_voice_command": "Kannst du mir eine alternative Mahlzeit empfehlen?",
+        "intent": "cook_something_different"
+    },
+    {
+        "recorded_voice_command": "Ich möchte heute etwas kochen, was ich noch nie zuvor gemacht habe.",
+        "intent": "cook_something_different"
+    },
+    {
+        "recorded_voice_command": "Welche Zutaten habe ich für das Gericht zuhause?",
+        "intent": "ingredients_at_home_to_cook"
+    },
+    {
+        "recorded_voice_command": "Welche Zutaten sind für das Gericht in meiner Vorratskammer?",
+        "intent": "ingredients_at_home_to_cook"
+    },
+    {
+        "recorded_voice_command": "Habe ich die notwendigen Zutaten für das Rezept im Haus?",
+        "intent": "ingredients_at_home_to_cook"
+    },
+    {
+        "recorded_voice_command": "Welche Zutaten habe iche Zuhause für das Gericht?",
+        "intent": "ingredients_at_home_to_cook"
+    },
+    {
+        "recorded_voice_command": "Welche Lebensmittel habe ich für das Gericht in meinem Haus?",
+        "intent": "ingredients_at_home_to_cook"
+    },
+    {
+        "recorded_voice_command": "Was für Zutaten habe ich in meinem Kühlschrank für das Gericht?",
+        "intent": "ingredients_at_home_to_cook"
+    },
+    {
+        "recorded_voice_command": "Was für Zutaten habe ich in meinem Kühlschrank für das Essen?",
+        "intent": "ingredients_at_home_to_cook"
+    },
+    {
+        "recorded_voice_command": "Habe ich die notwendigen Zutaten für das Rezept im Kühlschrank?",
+        "intent": "ingredients_at_home_to_cook"
+    },
+    {
+        "recorded_voice_command": "Was brauche ich für dieses Essen vom Supermarkt?",
+        "intent": "generate_shopping_list_for_meal"
+    },
+    {
+        "recorded_voice_command": "Welche Zutaten muss ich für das Gericht noch einkaufen?",
+        "intent": "generate_shopping_list_for_meal"
+    },
+    {
+        "recorded_voice_command": "Was muss ich für das Gericht noch einkaufen?",
+        "intent": "generate_shopping_list_for_meal"
+    },
+    {
+        "recorded_voice_command": "Was muss ich für das Gericht noch essen?",
+        "intent": "generate_shopping_list_for_meal"
+    },
+    {
+        "recorded_voice_command": "Welche Zutaten muss ich für das Gericht noch einkaufen?",
+        "intent": "generate_shopping_list_for_meal"
+    },
+    {
+        "recorded_voice_command": "Was muss ich noch einkaufen?",
+        "intent": "generate_shopping_list_for_meal"
+    },
+    {
+        "recorded_voice_command": "Welche Zutaten muss ich noch einkaufen?",
+        "intent": "generate_shopping_list_for_meal"
+    },
+    {
+        "recorded_voice_command": "Welche Zutaten fehlen mir zum kochen dieses Gerichts die ich einkaufen muss?",
+        "intent": "generate_shopping_list_for_meal"
+    },
+    {
+        "recorded_voice_command": "Welche Zutaten fehlen mir noch die ich einkaufen muss?",
+        "intent": "generate_shopping_list_for_meal"
+    },
+    {
+        "recorded_voice_command": "Was kann ich heute tun?",
+        "intent": "GetActivitiesForToday"
+    },
+    {
+        "recorded_voice_command": "Was kann ich heute unternehmen?",
+        "intent": "GetActivitiesForToday"
+    },
+    {
+        "recorded_voice_command": "Was steht heute auf meinem Plan?",
+        "intent": "GetActivitiesForToday"
+    },
+    {
+        "recorded_voice_command": "Zeig mir meine Aktivitäten für heute.",
+        "intent": "GetActivitiesForToday"
+    },
+    {
+        "recorded_voice_command": "Welche Termine habe ich heute?",
+        "intent": "GetActivitiesForToday"
+    },
+    {
+        "recorded_voice_command": "Gibt es etwas Besonderes für mich heute?",
+        "intent": "GetActivitiesForToday"
+    },
+    {
+        "recorded_voice_command": "Erzähl mir von meinen heutigen Aufgaben.",
+        "intent": "GetActivitiesForToday"
+    },
+    {
+        "recorded_voice_command": "Was erwartet mich heute?",
+        "intent": "GetActivitiesForToday"
+    },
+    {
+        "recorded_voice_command": "Welche Aktivitäten stehen an?",
+        "intent": "GetActivitiesForToday"
+    },
+    {
+        "recorded_voice_command": "Kannst du mir meinen Tagesplan zeigen?",
+        "intent": "GetActivitiesForToday"
+    },
+    {
+        "recorded_voice_command": "Was steht auf meiner Agenda für heute?",
+        "intent": "GetActivitiesForToday"
+    },
+    {
+        "recorded_voice_command": "Sag mir, was ich heute vorhabe.",
+        "intent": "GetActivitiesForToday"
+    },
+    {
+        "recorded_voice_command": "Gib mir einen Überblick über meinen Tag.",
+        "intent": "GetActivitiesForToday"
+    },
+    {
+        "recorded_voice_command": "Welche Ereignisse sind für heute geplant?",
+        "intent": "GetActivitiesForToday"
+    },
+    {
+        "recorded_voice_command": "Erzähl mir von meinen Verpflichtungen heute.",
+        "intent": "GetActivitiesForToday"
+    },
+    {
+        "recorded_voice_command": "Was sind meine heutigen To-Do's?",
+        "intent": "GetActivitiesForToday"
+    },
+    {
+        "recorded_voice_command": "Wo kann ich das machen?",
+        "intent": "FindPlace"
+    },
+    {
+        "recorded_voice_command": "Nenne mir Orte an denen ich das machen kann.",
+        "intent": "FindPlace"
+    },
+    {
+        "recorded_voice_command": "Gibt es in meiner Nähe einen Ort dafür?",
+        "intent": "FindPlace"
+    },
+    {
+        "recorded_voice_command": "Wo finde ich Gelegenheiten dazu?",
+        "intent": "FindPlace"
+    },
+    {
+        "recorded_voice_command": "Zeige mir Plätze in meiner Umgebung, um dies zu erledigen.",
+        "intent": "FindPlace"
+    },
+    {
+        "recorded_voice_command": "Wo finde ich Dienstleister für diese Tätigkeit?",
+        "intent": "FindPlace"
+    },
+    {
+        "recorded_voice_command": "Gib mir Vorschläge für Orte, an denen ich das tun kann.",
+        "intent": "FindPlace"
+    },
+    {
+        "recorded_voice_command": "Welche Orte bieten die besten Möglichkeiten dafür?",
+        "intent": "FindPlace"
+    },
+    {
+        "recorded_voice_command": "Suche nach Standorten für diese Aktivität in meiner Stadt.",
+        "intent": "FindPlace"
+    },
+    {
+        "recorded_voice_command": "Kannst du mir nahegelegene Plätze empfehlen, an denen das möglich ist?",
+        "intent": "FindPlace"
     }
 ]

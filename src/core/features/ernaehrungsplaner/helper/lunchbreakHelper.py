@@ -10,7 +10,7 @@ class LunchbreakHelper():
     def __init__(self):
         self.load_preferences()
 
-        self.rapla = Rapla(self.rapla_url)
+        self.rapla = Rapla()
         # store current week timetable & calendar week to reduce number of requests
         self.current_calendar_week = dp.get_current_calendar_week()
         self.current_week_time_table = json.loads(self.rapla.fetchLecturesOfWeek(
