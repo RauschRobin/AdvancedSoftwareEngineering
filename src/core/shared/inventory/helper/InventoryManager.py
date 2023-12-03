@@ -4,7 +4,7 @@ from flask_classful import FlaskView
 
 
 class ItemsAccessor:
-    """Class to access and convert the items.csv-file"""
+    """Class to access and convert the items"""
 
     def get_item_dictionary(self):
         """Gets items and returns them as a dictionary
@@ -61,13 +61,21 @@ class ItemsAccessor:
 
 
 class AppContext(object):
+    """Class to implement Flask as Singleton"""
+    
     _app = None
 
     def __init__(self):
+        """Prevents call of standard-constructor"""
         raise RuntimeError('call app()')
 
     @classmethod
     def app(cls):
+        """Constructor to instantiate as Singleton-object
+
+        Parameter: class
+        Returns: object
+        """
         if cls._app is None:
             cls._app = Flask(__name__)
         return cls._app
@@ -89,14 +97,13 @@ class InventoryManager(FlaskView):
         """Calls ItemsAccessor() to access items
         and converts them into a json-object
 
-       Parameter: self
+        Parameter: self
         Returns: str
         """
         accessor = ItemsAccessor()
         json_data = accessor.convert_dictionary_to_json()
 
         return json_data
-
 
 
 InventoryManager.register(app, route_base='/')

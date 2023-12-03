@@ -66,7 +66,7 @@ class Inventory:
         Wait for the server to start within the specified timeout.
 
         Parameter: url (str)
-        Returns: True/False
+        Returns: bool
         """
         start_time = time.time()
         while time.time() - start_time < timeout:
@@ -78,7 +78,8 @@ class Inventory:
             except requests.ConnectionError:
                 # Server not yet up
                 pass
-            time.sleep(2)  # Wait for 2 seconds before trying again
+            # Wait for 2 seconds before trying again
+            time.sleep(2)  
         return False
 
     def get_inventory(self):
@@ -86,7 +87,7 @@ class Inventory:
         and response object
 
         Parameter: self
-        Returns: response text
+        Returns: str
         """
         self.start_thread()
         if self.wait_for_server("http://127.0.0.1:8000/"):
