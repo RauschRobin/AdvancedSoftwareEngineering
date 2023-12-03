@@ -362,7 +362,8 @@
     {
         "recorded_voice_command": "In welcher Stadt ist das Restaurant?",
         "intent": "getRestaurantLocation"
-
+    },
+    {
         "recorded_voice_command": "Wie koche mein Abendessen?",
         "intent": "how_to_cook_the_meal"
     },
