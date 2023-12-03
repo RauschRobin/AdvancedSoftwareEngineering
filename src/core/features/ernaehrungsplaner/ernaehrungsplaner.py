@@ -25,7 +25,7 @@ from ...shared.inventory.Inventory import Inventory
 class Ernaehrungsplaner:
     def __init__(self, voice_output: VoiceOutput):
         '''
-        Initializes the class. 
+        Initializes the class.
 
         Parameters: voice_output (VoiceOutput)
         Returns: None
@@ -42,7 +42,12 @@ class Ernaehrungsplaner:
         self.dinner = DinnerHelper()
         self.lunchbreak = LunchbreakHelper()
 
+
+        self.restaurants = {}
+        self.selected_restaurant = {}
+
         self.meal_to_cook = ""
+
 
     def load_preferences(self):
         '''
@@ -75,7 +80,7 @@ class Ernaehrungsplaner:
         Parameters: None
         Returns: None
         '''
-        if self.voice_output == None:
+        if self.voice_output is None:
             raise SystemError("WakeUp has no instance of VoiceOutput")
 
         while True:
@@ -85,6 +90,20 @@ class Ernaehrungsplaner:
             self.tell_dinner_meal_and_missing_ingredients()
 
             time.sleep(60)
+
+    def set_response_businesses(self) -> None:
+        """ Find a restaurant near the user with
+        given preferences and save it inside restaurants
+
+        Parameters: self
+        Returns: None
+        """
+        location = self.currentLocation.get_location_adress()
+        limit = 1
+        radius = 1000
+        categories = self.prefred_user_restaurant_categories
+        self.restaurants = self.yelp.get_restaurants_by_location_limit_radius_categories(
+                location, limit, radius, categories)
 
     def suggest_restaurant_for_lunchbreak(self):
         '''
@@ -100,14 +119,10 @@ class Ernaehrungsplaner:
         # - Calculate the lunchbreak time via rapla // if no then tell the user 30 minutes
 
         if self.lunchbreak.is_time_for_lunchbreak():
-            # Find a restaurant near the user with given preferences
-            location = self.currentLocation.get_location_adress()
-            limit = 1
-            radius = 1000
-            categories = self.prefred_user_restaurant_categories
 
-            response_businesses = self.yelp.get_restaurants_by_location_limit_radius_categories(
-                location, limit, radius, categories)
+            self.set_response_businesses()
+
+            response_businesses = self.restaurants
 
             if self.lunchbreak.is_businesses_not_none(response_businesses):
                 your_restaurant = response_businesses["businesses"][0]
@@ -173,6 +188,75 @@ class Ernaehrungsplaner:
             message = dinner_message_builder.sentence.get_all()
 
             self.voice_output.add_message(message)
+
+
+    def chooseRestaurantWithKeyword(self, keyword):
+        """User chooses a restaurant, which will be the referential-point for other functions
+
+        Parameters: keyword (string)
+        Returns: none
+        """
+        message = "Restaurant nicht gefunden"
+        restaurant_name = "nicht"
+        self.set_response_businesses()
+        restaurants_lst = self.restaurants["businesses"]
+
+        match keyword:
+            case "eins":
+                self.selected_restaurant = restaurants_lst[0]
+                restaurant_name = {self.selected_restaurant["name"]}
+            case "zwei":
+                self.selected_restaurant = restaurants_lst[1]
+                restaurant_name = {self.selected_restaurant["name"]}
+            case "drei":
+                self.selected_restaurant = restaurants_lst[2]
+                restaurant_name = {self.selected_restaurant["name"]}
+
+        message = f'Restaurant {restaurant_name} ausgewählt'
+        print(restaurant_name)
+        self.voice_output.add_message(message)
+
+    def getRestaurantContact(self):
+        '''
+        Gets the Contact-Information of a a specific restaurant and adds the message to the voice output message_queue.
+
+        Parameters: keyword (string)
+        Returns: bool
+        '''
+        message = "Es wurde kein Restaurant ausgewählt"
+
+        if (self.selected_restaurant == {}):
+            print(message)
+            self.voice_output.add_message(message)
+            return False
+        else:
+            message = f"Die Telefonnummer von {self.selected_restaurant['name']} "
+            message = message + f"lautet: {self.selected_restaurant['phone']}"
+            print(message)
+            self.voice_output.add_message(message)
+            return True
+
+    def getRestaurantLocation(self):
+        '''
+        Gets the Location-Information of a a specific restaurant and adds the message to the voice output message_queue.
+
+        Parameters: keyword (string)
+        Returns: bool
+        '''
+        message = "Es wurde kein Restaurant ausgewählt"
+
+        if (self.selected_restaurant == {}):
+            print(message)
+            self.voice_output.add_message(message)
+            return False
+        else:
+            message = f"Das Restaurant {self.selected_restaurant['name']} "
+            message = message + f"befindet sich in {self.selected_restaurant['location']['zip_code']} "
+            message = message + f"{self.selected_restaurant['location']['city']} in "
+            message = message + f"{self.selected_restaurant['location']['address1']}"
+            print(message)
+            self.voice_output.add_message(message)
+            return True
 
     def how_to_cook_the_meal(self):
         '''
@@ -261,3 +345,4 @@ class Ernaehrungsplaner:
         message = self.chatgpt.get_response(
             f"Umformulieren als Text und übersetzen auf deutsch: Du hast musst diese Zutaten für das Gericht {your_meal_name} noch einkaufen: {str(missing_ingredients)}")
         self.voice_output.add_message(message)
+

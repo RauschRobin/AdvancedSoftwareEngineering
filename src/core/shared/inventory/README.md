@@ -8,21 +8,19 @@
 Inventory()
 ```
 
-2. Call the method call_url()
+2. Call the method get_inventory()
 
 ```Python
 Inventory.call_url()
 ```
 
-3. call_url() will initialize a new thread
+3. get_inventory() will initialize a new thread with start_thread()
 
-```Python
-Inventory.start_thread()
-```
+4. start_thread() will call init_flask(), which will start the Web-API through os-interaction
 
-4. start_thread() will call init_flask(), which will start the Web-API
+5. During those calls get_inventory() will wait until server is up (function wait_for_server() will ensure this)
 
-5. call_url() will return a response-object
+6. get_inventory() will call the specified url and will return a response-object from the flask server
 
 
 ## Methods
@@ -33,7 +31,8 @@ The following methods are available:
 - def get_path_to_flask()
 - init_flask()
 - start_thread()
-- call_url()
+- wait_for_server()
+- get_inventory()
 
 
 ### def get_rel_path_to_flask
@@ -64,8 +63,14 @@ Parameter: self
 Returns: thread
 
 
-### call_url
+### wait_for_server
+Wait for the server to start within the specified timeout.
+
+Parameter: url (str)
+Returns: bool
+
+### get_inventory
 Call the URL of the Web-API to get Inventory and response object
 
 Parameter: self
-Returns: response object
+Returns: str

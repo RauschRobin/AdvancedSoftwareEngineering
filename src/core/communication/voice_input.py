@@ -8,7 +8,9 @@ import os
 import time
 
 keyword_recognized_sound_filepath = os.path.join(os.path.dirname(__file__), 'keyword.mp3')
-LIST_OF_KEYWORDS = ["politik", "umwelt", "klima", "wetter", "deutschland", "krieg", "ukraine", "außenpolitik", "fussball", "sport", "innenpolitik", "ki", "künstliche intelligenz", "innenpolitisches", "außenpolitisches", "künstlicher intelligenz", "Spazieren gehen", "Musik hören", "Bücher lesen", "Kochen", "Fahrradfahren", "Fotografieren", "Yoga", "Gärtnern", "Malen", "Film schauen", "Reisen", "Klettern", "Treffen mit Freunden", "Sport treiben", "Meditieren", "Stricken", "Sprachen lernen", "Singen", "Theater besuchen", "Picknicken", "Gaming", "Badminton spielen", "Kunsthandwerk betreiben", "Tauchen", "Ski", "Tanzen", "Schach", "Segeln", "Vogelbeobachtung", "Flohmarkt", "Segway-Tour", "Konzerte", "Museum", "Angeln", "Surfen", "Freiwilligenarbeit", "Stadtbummel", "Schwimmen", "Höhlenforschung", "Stand-up-Paddeln", "Kajakfahren"]
+
+LIST_OF_KEYWORDS = ["politik", "umwelt", "klima", "wetter", "deutschland", "krieg", "ukraine", "außenpolitik", "fussball", "sport", "innenpolitik", "ki", "künstliche intelligenz", "innenpolitisches", "außenpolitisches", "künstlicher intelligenz", "Spazieren gehen", "Musik hören", "Bücher lesen", "Kochen", "Fahrradfahren", "Fotografieren", "Yoga", "Gärtnern", "Malen", "Film schauen", "Reisen", "Klettern", "Treffen mit Freunden", "Sport treiben", "Meditieren", "Stricken", "Sprachen lernen", "Singen", "Theater besuchen", "Picknicken", "Gaming", "Badminton spielen", "Kunsthandwerk betreiben", "Tauchen", "Ski", "Tanzen", "Schach", "Segeln", "Vogelbeobachtung", "Flohmarkt", "Segway-Tour", "Konzerte", "Museum", "Angeln", "Surfen", "Freiwilligenarbeit", "Stadtbummel", "Schwimmen", "Höhlenforschung", "Stand-up-Paddeln", "Kajakfahren", "eins", "zwei", "drei"]
+
 
 class SingletonMeta(type):
     _instances = {}
@@ -166,6 +168,18 @@ class VoiceInput(metaclass=SingletonMeta):
                 print("COMMAND: GetNewsWithKeyword")
                 self.featureComposite.call_feature_method(
                     "getNewsWithKeyword", keyword=detected_keyword)
+                return
+            case "ChooseRestaurantWithKeyword":
+                print("COMMAND: ChooseRestaurantWithKeyword")
+                self.featureComposite.call_feature_method("chooseRestaurantWithKeyword", keyword=detected_keyword)
+                return
+            case "GetRestaurantContact":
+                print("COMMAND: GetRestaurantContact")
+                self.featureComposite.call_feature_method("getRestaurantContact")
+                return
+            case "GetRestaurantLocation":
+                print("COMMAND: GetRestaurantLocation")
+                self.featureComposite.call_feature_method("getRestaurantLocation")
                 return
             case "how_to_cook_the_meal":
                 print("COMMAND: how_to_cook_the_meal")
