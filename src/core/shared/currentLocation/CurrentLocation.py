@@ -2,14 +2,14 @@ import datetime
 
 
 class CurrentLocation:
-    """Gets the current location
+    """ Gets the current location
     """
 
     def __init__(self) -> None:
         pass
 
     def get_location_adress(self) -> str:
-        """Returns the location adress based on the current time
+        """ Returns the location adress based on the current time
 
         Returns: String
         """

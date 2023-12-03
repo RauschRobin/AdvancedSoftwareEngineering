@@ -268,6 +268,102 @@
         "intent": "GetNewsWithKeyword"
     },
     {
+        "recorded_voice_command": "Ich wähle Restaurant eins",
+        "intent": "ChooseRestaurantWithKeyword"
+    },
+    {
+        "recorded_voice_command": "Ich wähle Restaurant zwei",
+        "intent": "ChooseRestaurantWithKeyword"
+    },
+    {
+        "recorded_voice_command": "Ich wähle Restaurant drei",
+        "intent": "ChooseRestaurantWithKeyword"
+    },
+    {
+        "recorded_voice_command": "Ich wähle Restaurant 1",
+        "intent": "ChooseRestaurantWithKeyword"
+    },
+    {
+        "recorded_voice_command": "Ich wähle Restaurant 2",
+        "intent": "ChooseRestaurantWithKeyword"
+    },
+    {
+        "recorded_voice_command": "Ich wähle Restaurant 3",
+        "intent": "ChooseRestaurantWithKeyword"
+    },
+    {
+        "recorded_voice_command": "Ich habe mich für ein Restaurant entschieden: Ich nehme Nummer eins",
+        "intent": "ChooseRestaurantWithKeyword"
+    },
+    {
+        "recorded_voice_command": "Ich habe mich für ein Restaurant entschieden: Ich nehme Nummer zwei",
+        "intent": "ChooseRestaurantWithKeyword"
+    },
+    {
+        "recorded_voice_command": "Ich habe mich für ein Restaurant entschieden: Ich nehme Nummer drei",
+        "intent": "ChooseRestaurantWithKeyword"
+    },
+    {
+        "recorded_voice_command": "Ich habe mich für ein Restaurant entschieden: Ich nehme 1",
+        "intent": "ChooseRestaurantWithKeyword"
+    },
+    {
+        "recorded_voice_command": "Ich habe mich für ein Restaurant entschieden: Ich nehme 2",
+        "intent": "ChooseRestaurantWithKeyword"
+    },
+    {
+        "recorded_voice_command": "Ich habe mich für ein Restaurant entschieden: Ich nehme 3",
+        "intent": "ChooseRestaurantWithKeyword"
+    },
+    {
+        "recorded_voice_command": "Könntest du mir die Telefonnummer vom Restaurant geben?",
+        "intent": "getRestaurantContact"
+    },
+    {
+        "recorded_voice_command": "Ich will die Telefonnummer vom  Restaurant.",
+        "intent": "getRestaurantContact"
+    },
+    {
+        "recorded_voice_command": "Gib mir die Kontakdaten zum Restaurant",
+        "intent": "getRestaurantContact"
+    },
+    {
+        "recorded_voice_command": "Wie lautet die Telefonnummer vom Restaurant?",
+        "intent": "getRestaurantContact"
+    },
+    {
+        "recorded_voice_command": "Hat das Restaurant eine Telefonnummer?",
+        "intent": "getRestaurantContact"
+    },
+    {
+        "recorded_voice_command": "Hast du mir Kontakdaten zum Restaurant?",
+        "intent": "getRestaurantContact"
+    },
+    {
+        "recorded_voice_command": "Wo genau finde ich das Restaurant?",
+        "intent": "getRestaurantLocation"
+    },
+    {
+        "recorded_voice_command": "Wo befindet sich das Restaurant?",
+        "intent": "getRestaurantLocation"
+    },
+    {
+        "recorded_voice_command": "In welcher Straße ist das Restaurant?",
+        "intent": "getRestaurantLocation"
+    },
+    {
+        "recorded_voice_command": "Kannst du mir sagen, wo ich das Restaurant finde?",
+        "intent": "getRestaurantLocation"
+    },
+    {
+        "recorded_voice_command": "Ist das Restaurant in der Nähe?",
+        "intent": "getRestaurantLocation"
+    },
+    {
+        "recorded_voice_command": "In welcher Stadt ist das Restaurant?",
+        "intent": "getRestaurantLocation"
+    },
+    {
         "recorded_voice_command": "Wie koche mein Abendessen?",
         "intent": "how_to_cook_the_meal"
     },
