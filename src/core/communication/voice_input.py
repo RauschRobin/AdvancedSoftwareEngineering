@@ -8,7 +8,8 @@ import os
 import time
 
 keyword_recognized_sound_filepath = os.path.join(os.path.dirname(__file__), 'keyword.mp3')
-LIST_OF_KEYWORDS = ["politik", "umwelt", "klima", "wetter", "deutschland", "krieg", "ukraine", "außenpolitik", "fussball", "sport", "innenpolitik", "ki", "künstliche intelligenz", "innenpolitisches", "außenpolitisches", "künstlicher intelligenz" ]
+LIST_OF_KEYWORDS = ["politik", "umwelt", "klima", "wetter", "deutschland", "krieg", "ukraine", "außenpolitik", "fussball", "sport", "innenpolitik", "ki", "künstliche intelligenz", "innenpolitisches", "außenpolitisches", "künstlicher intelligenz",
+                    "eins", "zwei", "drei" ]
 
 class SingletonMeta(type):
     _instances = {}
@@ -151,17 +152,17 @@ class VoiceInput(metaclass=SingletonMeta):
                 print("COMMAND: GetNewsWithKeyword")
                 self.featureComposite.call_feature_method("getNewsWithKeyword", keyword=detected_keyword)
                 return
-            case "GetRestaurantMenue":
-                print("COMMAND: GetRestaurantMenue")
-                self.featureComposite.call_feature_method("getRestaurantMenue", keyword=detected_keyword)
+            case "ChooseRestaurantWithKeyword":
+                print("COMMAND: ChooseRestaurantWithKeyword")
+                self.featureComposite.call_feature_method("chooseRestaurantWithKeyword", keyword=detected_keyword)
                 return
             case "GetRestaurantContact":
                 print("COMMAND: GetRestaurantContact")
-                self.featureComposite.call_feature_method("getRestaurantContact", keyword=detected_keyword)
+                self.featureComposite.call_feature_method("getRestaurantContact")
                 return
             case "GetRestaurantLocation":
                 print("COMMAND: GetRestaurantLocation")
-                self.featureComposite.call_feature_method("getRestaurantLocation", keyword=detected_keyword)
+                self.featureComposite.call_feature_method("getRestaurantLocation")
                 return
             case "fallback":
                 # TODO: You could also redirect the question/recorded text to chatgpt
