@@ -411,6 +411,7 @@
         "recorded_voice_command": "Welche Zutaten fehlen mir noch die ich einkaufen muss?",
         "intent": "generate_shopping_list_for_meal"
     },
+    {
         "recorded_voice_command": "Was kann ich heute tun?",
         "intent": "GetActivitiesForToday"
     },
