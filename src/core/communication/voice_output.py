@@ -29,9 +29,6 @@ class VoiceOutput(metaclass=SingletonMeta):
         self.speech_thread = None
         self.lock = threading.Lock()
         self.message_queue = []
-        load_dotenv()
-        api_key=os.getenv('ELEVENLABS_KEY')
-        set_api_key(api_key)
 
     def start(self):
         '''
@@ -64,6 +61,9 @@ class VoiceOutput(metaclass=SingletonMeta):
         Parameters: None
         Returns: None
         '''
+        load_dotenv()
+        api_key=os.getenv('ELEVENLABS_KEY')
+        set_api_key(api_key)
         while self.is_running:
             if self.message_queue:
                 self.stop_listening_event.set()
