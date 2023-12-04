@@ -5,6 +5,9 @@ import os
 import threading
 import re
 import time
+from elevenlabs import *
+
+set_api_key("980ef602d580d3757ccaaa5c1c10c110")
 
 output_file = os.path.join(os.path.dirname(__file__), "output.mp3")
 
@@ -138,19 +141,6 @@ class VoiceOutput(metaclass=SingletonMeta):
 
         text = self.remove_unpronounceable_characters(text)
 
-        # Normalize the output file path
-        filename = os.path.normpath(filename)
-
-        # Create a text to speech element
-        tts = gTTS(text=text, lang=self.language, slow=False)
-
-        # Save the audio file
-        tts.save(filename)
-
-        # play the audio file
-        playsound.playsound(filename)
-
-        # Delete temporary file
-        os.remove(output_file)
-
-        time.sleep(2)
+        audio_stream = generate(text, voice="George", stream=True, model="eleven_multilingual_v2")
+        stream(audio_stream)
+        return

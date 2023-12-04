@@ -1,6 +1,5 @@
 import yaml
 
-
 class YamlFetcher:
     '''
     This class allows the fetching of preferences or api keys from yaml files.

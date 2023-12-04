@@ -3,7 +3,6 @@ from threading import Thread
 import time
 import requests
 
-
 class Inventory:
     """Returns the inventory
     """

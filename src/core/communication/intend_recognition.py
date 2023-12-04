@@ -24,7 +24,7 @@ class IntendRecognizer:
         Parameters: None 
         Returns: None
         '''
-        self.threshhold = 0.2
+        self.threshhold = 0.2 # The threshhold for the confidence of the model
 
         # Get the directory of the script
         script_dir = os.path.dirname(os.path.realpath(__file__))
