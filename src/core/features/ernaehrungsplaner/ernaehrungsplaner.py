@@ -199,18 +199,19 @@ class Ernaehrungsplaner:
         message = "Restaurant nicht gefunden"
         restaurant_name = "nicht"
         self.set_response_businesses()
-        restaurants_lst = self.restaurants["businesses"]
+        if(self.restaurants != {}):
+            restaurants_lst = self.restaurants["businesses"]
 
-        match keyword:
-            case "eins":
-                self.selected_restaurant = restaurants_lst[0]
-                restaurant_name = self.selected_restaurant["name"]
-            case "zwei":
-                self.selected_restaurant = restaurants_lst[1]
-                restaurant_name = self.selected_restaurant["name"]
-            case "drei":
-                self.selected_restaurant = restaurants_lst[2]
-                restaurant_name = self.selected_restaurant["name"]
+            match keyword:
+                case "eins":
+                    self.selected_restaurant = restaurants_lst[0]
+                    restaurant_name = self.selected_restaurant["name"]
+                case "zwei":
+                    self.selected_restaurant = restaurants_lst[1]
+                    restaurant_name = self.selected_restaurant["name"]
+                case "drei":
+                    self.selected_restaurant = restaurants_lst[2]
+                    restaurant_name = self.selected_restaurant["name"]
 
         message = f'Restaurant {restaurant_name} ausgewählt'
         print(restaurant_name)
