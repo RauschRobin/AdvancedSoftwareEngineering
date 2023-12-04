@@ -5,10 +5,6 @@ import re
 from dotenv import load_dotenv
 from elevenlabs import *
 
-load_dotenv()
-api_key=os.getenv('ELEVENLABS_KEY')
-set_api_key(api_key)
-
 output_file = os.path.join(os.path.dirname(__file__), "output.mp3")
 
 class SingletonMeta(type):
@@ -33,6 +29,9 @@ class VoiceOutput(metaclass=SingletonMeta):
         self.speech_thread = None
         self.lock = threading.Lock()
         self.message_queue = []
+        load_dotenv()
+        api_key=os.getenv('ELEVENLABS_KEY')
+        set_api_key(api_key)
 
     def start(self):
         '''
