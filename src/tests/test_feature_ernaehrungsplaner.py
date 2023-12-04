@@ -87,7 +87,7 @@ def test_generate_shopping_list_for_meal():
 
 def test_chooseRestaurantWithKeyword(ernaehrungsplaner_instance):
     ernaehrungsplaner_instance.chooseRestaurantWithKeyword("eins")
-    restaurant_name = ""
+    restaurant_name = "nicht"
     if(ernaehrungsplaner_instance.selected_restaurant is None):
         restaurant_name = "nicht"
     else:
