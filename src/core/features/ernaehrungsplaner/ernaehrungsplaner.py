@@ -199,7 +199,7 @@ class Ernaehrungsplaner:
         message = "Restaurant nicht gefunden"
         restaurant_name = "nicht"
         self.set_response_businesses()
-        if(self.restaurants is not None):
+        if(self.restaurants is not None and self.restaurants != {}):
             restaurants_lst = self.restaurants["businesses"]
 
             match keyword:
@@ -226,7 +226,7 @@ class Ernaehrungsplaner:
         '''
         message = "Es wurde kein Restaurant ausgewählt"
 
-        if (self.selected_restaurant is None):
+        if (self.selected_restaurant is None and self.restaurants != {}):
             print(message)
             self.voice_output.add_message(message)
             return False
@@ -246,7 +246,7 @@ class Ernaehrungsplaner:
         '''
         message = "Es wurde kein Restaurant ausgewählt"
 
-        if (self.selected_restaurant is None):
+        if (self.selected_restaurant is None and self.restaurants != {}):
             print(message)
             self.voice_output.add_message(message)
             return False
