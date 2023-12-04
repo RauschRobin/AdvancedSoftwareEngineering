@@ -191,12 +191,10 @@ class VoiceInput(metaclass=SingletonMeta):
                     "generate_shopping_list_for_meal")
             case "fallback":
                 # TODO: You could also redirect the question/recorded text to chatgpt
-                self.voice_output.add_message(
-                    "Ich bin mir nicht sicher was du von mir willst. Kannst du das anders formulieren?")
-                print(
-                    "I could not match your voice command onto a function. I do not know what to do...")
+                if len(recognized_text) >= 22:
+                    self.voice_output.add_message("Ich bin mir nicht sicher was du von mir willst. Kannst du das anders formulieren?")
+                    print( "I could not match your voice command onto a function. I do not know what to do...")
                 return
-            # ...
             case _:
                 raise SyntaxError(
                     "Something went wrong while trying to match your voice command onto a function.")
