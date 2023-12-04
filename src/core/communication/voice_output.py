@@ -1,13 +1,13 @@
-from gtts import gTTS
 from ..shared.YamlFetcher.YamlFetcher import YamlFetcher
-import playsound
 import os
 import threading
 import re
-import time
+from dotenv import load_dotenv
 from elevenlabs import *
 
-set_api_key("980ef602d580d3757ccaaa5c1c10c110")
+load_dotenv()
+api_key=os.getenv('ELEVENLABS_KEY')
+set_api_key(api_key)
 
 output_file = os.path.join(os.path.dirname(__file__), "output.mp3")
 

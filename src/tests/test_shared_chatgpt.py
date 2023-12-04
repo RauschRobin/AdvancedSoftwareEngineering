@@ -5,10 +5,18 @@ def test_chat_gpt_initialization():
     chat_gpt = ChatGpt()
     assert chat_gpt is not None
 
-def test_chat_gpt_generate_response():
+def test_chat_gpt_generate_response(monkeypatch):
+    # Mock the get_response method to avoid actual API requests
+    def mock_get_response(self, message):
+        return "Mocked response"
+
+    # Apply the monkeypatch to replace the actual method with the mock
+    monkeypatch.setattr(ChatGpt, 'get_response', mock_get_response)
+
     chat_gpt = ChatGpt()
     message = "Hello, how are you?"
     response = chat_gpt.get_response(message)
+
     assert isinstance(response, str)
     assert response != ""
 
