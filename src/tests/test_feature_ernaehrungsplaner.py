@@ -83,3 +83,34 @@ def test_ingredients_at_home_to_cook():
 
 def test_generate_shopping_list_for_meal():
     pass
+
+
+def test_chooseRestaurantWithKeyword(ernaehrungsplaner_instance):
+    ernaehrungsplaner_instance.chooseRestaurantWithKeyword("eins")
+    restaurant_name = ""
+    if(ernaehrungsplaner_instance.selected_restaurant == {}):
+        restaurant_name = "nicht"
+    else:
+        restaurant_name = ernaehrungsplaner_instance.selected_restaurant['name']    
+    message = f'Restaurant {restaurant_name} ausgewählt'
+    ernaehrungsplaner_instance.voice_output.add_message.assert_called_once_with(message)
+
+
+def test_getRestaurantContact(ernaehrungsplaner_instance):
+    ernaehrungsplaner_instance.selected_restaurant['name'] = "Spatzennest"
+    ernaehrungsplaner_instance.selected_restaurant['phone'] = "0000"
+    message = f"Die Telefonnummer von {ernaehrungsplaner_instance.selected_restaurant['name']} "
+    message = message + f"lautet: {ernaehrungsplaner_instance.selected_restaurant['phone']}"
+    ernaehrungsplaner_instance.getRestaurantContact()
+    ernaehrungsplaner_instance.voice_output.add_message.assert_called_once_with(message)
+
+def test_getRestaurantLocation(ernaehrungsplaner_instance):
+    ernaehrungsplaner_instance.selected_restaurant['name'] = "Abrakadabra"
+    loc_dict = {'zip_code' : '70151', 'city' : 'Stuttgart', 'address1' : "Leonhardstr 8"}
+    ernaehrungsplaner_instance.selected_restaurant['location'] = loc_dict 
+    message = f"Das Restaurant {ernaehrungsplaner_instance.selected_restaurant['name']} "
+    message = message + f"befindet sich in {ernaehrungsplaner_instance.selected_restaurant['location']['zip_code']} "
+    message = message + f"{ernaehrungsplaner_instance.selected_restaurant['location']['city']} in "
+    message = message + f"{ernaehrungsplaner_instance.selected_restaurant['location']['address1']}"
+    ernaehrungsplaner_instance.getRestaurantLocation()
+    ernaehrungsplaner_instance.voice_output.add_message.assert_called_once_with(message)

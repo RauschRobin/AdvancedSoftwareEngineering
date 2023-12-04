@@ -204,13 +204,13 @@ class Ernaehrungsplaner:
         match keyword:
             case "eins":
                 self.selected_restaurant = restaurants_lst[0]
-                restaurant_name = {self.selected_restaurant["name"]}
+                restaurant_name = self.selected_restaurant["name"]
             case "zwei":
                 self.selected_restaurant = restaurants_lst[1]
-                restaurant_name = {self.selected_restaurant["name"]}
+                restaurant_name = self.selected_restaurant["name"]
             case "drei":
                 self.selected_restaurant = restaurants_lst[2]
-                restaurant_name = {self.selected_restaurant["name"]}
+                restaurant_name = self.selected_restaurant["name"]
 
         message = f'Restaurant {restaurant_name} ausgewählt'
         print(restaurant_name)
@@ -345,4 +345,3 @@ class Ernaehrungsplaner:
         message = self.chatgpt.get_response(
             f"Umformulieren als Text und übersetzen auf deutsch: Du hast musst diese Zutaten für das Gericht {your_meal_name} noch einkaufen: {str(missing_ingredients)}")
         self.voice_output.add_message(message)
-
