@@ -1,10 +1,8 @@
 import unittest
-
 from unittest.mock import patch
 from unittest.mock import Mock
 from datetime import datetime
 from ..core.features.ernaehrungsplaner.helper.dinnerHelper import DinnerHelper
-
 
 class TestDinnerHelper(unittest.TestCase):
     def setUp(self):

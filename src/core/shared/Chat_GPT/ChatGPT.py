@@ -65,3 +65,4 @@ class ChatGpt:
             return json.loads(json_string)
         else:
             return None
+        

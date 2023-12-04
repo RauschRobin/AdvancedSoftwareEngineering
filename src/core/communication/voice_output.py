@@ -140,7 +140,6 @@ class VoiceOutput(metaclass=SingletonMeta):
             raise ValueError("Cannot say ''!")
 
         text = self.remove_unpronounceable_characters(text)
-
-        audio_stream = generate(text, voice="George", stream=True, model="eleven_multilingual_v2")
+        audio_stream = generate(text, voice="George", stream=True, model="eleven_multilingual_v2", latency=4)
         stream(audio_stream)
         return

@@ -12,7 +12,6 @@ from ...shared.yelp.yelp import Yelp
 from ...shared.currentLocation.CurrentLocation import CurrentLocation
 from ...shared.inventory.Inventory import Inventory
 
-
 class Ernaehrungsplaner:
     def __init__(self, voice_output: VoiceOutput):
         '''

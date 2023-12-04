@@ -71,7 +71,7 @@ class VoiceInput(metaclass=SingletonMeta):
             while self.is_running:
                 while not self.stop_listening_event.is_set():
                     print("Listening...")
-                    audio = self.recognizer.listen(source)
+                    audio = self.recognizer.listen(source, timeout=10)
                     try:
                         if self.stop_listening_event.is_set():
                             print("Stopped listening: Carschten said something during the listening phase.")
