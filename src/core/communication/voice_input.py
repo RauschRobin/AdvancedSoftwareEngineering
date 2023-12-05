@@ -8,9 +8,7 @@ import os
 import time
 
 keyword_recognized_sound_filepath = os.path.join(os.path.dirname(__file__), 'keyword.mp3')
-
 LIST_OF_KEYWORDS = ["politik", "umwelt", "klima", "wetter", "deutschland", "krieg", "ukraine", "außenpolitik", "fussball", "sport", "innenpolitik", "ki", "künstliche intelligenz", "innenpolitisches", "außenpolitisches", "künstlicher intelligenz", "Spazieren gehen", "Musik hören", "Bücher lesen", "Kochen", "Fahrradfahren", "Fotografieren", "Yoga", "Gärtnern", "Malen", "Film schauen", "Reisen", "Klettern", "Treffen mit Freunden", "Sport treiben", "Meditieren", "Stricken", "Sprachen lernen", "Singen", "Theater besuchen", "Picknicken", "Gaming", "Badminton spielen", "Kunsthandwerk betreiben", "Tauchen", "Ski", "Tanzen", "Schach", "Segeln", "Vogelbeobachtung", "Flohmarkt", "Segway-Tour", "Konzerte", "Museum", "Angeln", "Surfen", "Freiwilligenarbeit", "Stadtbummel", "Schwimmen", "Höhlenforschung", "Stand-up-Paddeln", "Kajakfahren", "eins", "zwei", "drei"]
-
 
 class SingletonMeta(type):
     _instances = {}
@@ -20,7 +18,6 @@ class SingletonMeta(type):
             cls._instances[cls] = super(
                 SingletonMeta, cls).__call__(*args, **kwargs)
         return cls._instances[cls]
-
 
 class VoiceInput(metaclass=SingletonMeta):
     def __init__(self, featureComposite: FeatureComposite, stop_listening_event: threading.Event, voice_ouput: VoiceOutput, language="de-DE"):
@@ -67,7 +64,6 @@ class VoiceInput(metaclass=SingletonMeta):
         Parameters: None
         Returns: None
         '''
-        time.sleep(2)
         just_said_something = False
         with sr.Microphone() as source:
             self.recognizer.adjust_for_ambient_noise(source)
@@ -75,14 +71,12 @@ class VoiceInput(metaclass=SingletonMeta):
             while self.is_running:
                 while not self.stop_listening_event.is_set():
                     print("Listening...")
-                    audio = self.recognizer.listen(source)
+                    audio = self.recognizer.listen(source, timeout=10)
                     try:
                         if self.stop_listening_event.is_set():
-                            print(
-                                "Stopped listening: Carschten said something during the listening phase.")
+                            print("Stopped listening: Carschten said something during the listening phase.")
                             break
-                        recognized_text = self.recognizer.recognize_google(
-                            audio, language=self.language)
+                        recognized_text = self.recognizer.recognize_google(audio, language=self.language)
                         print(recognized_text)
 
                         if "stop" in recognized_text.lower() or "stopp" in recognized_text.lower() or "danke" in recognized_text.lower() or "dankeschön" in recognized_text.lower():
@@ -91,18 +85,17 @@ class VoiceInput(metaclass=SingletonMeta):
 
                         if "hey karsten" in recognized_text.lower() or "hey carsten" in recognized_text.lower():
                             print("Keyword recognized")
-                            playsound.playsound(os.path.normpath(
-                                keyword_recognized_sound_filepath))
+                            playsound.playsound(os.path.normpath(keyword_recognized_sound_filepath))
                             if (recognized_text.lower().startswith("hey karsten") or recognized_text.lower().startswith("hey carsten")) and len(recognized_text[11:]) > 12:
                                 recognized_text = recognized_text[11:]
                                 self.execute_voice_command(recognized_text)
-
-                        if "hey karsten" in lastRecordedText or "hey carsten" in lastRecordedText or just_said_something:
+                                time.sleep(0.2) # Speed at wich humans still thinks its instant and natural
+                        elif "hey karsten" in lastRecordedText or "hey carsten" in lastRecordedText or just_said_something:
                             just_said_something = False
                             self.execute_voice_command(recognized_text)
+                            time.sleep(0.2) # Speed at wich humans still thinks its instant and natural
 
                         lastRecordedText = recognized_text.lower()
-                        time.sleep(0.2)
                     except sr.UnknownValueError:
                         lastRecordedText = ""
                         print("Spracherkennung konnte nichts verstehen.")
@@ -132,7 +125,6 @@ class VoiceInput(metaclass=SingletonMeta):
                     "readNextDhbwLecture")
                 return
             case "GetLastReceivedEmail":
-                # call function
                 print("COMMAND: GetLastReceivedEmail")
                 self.featureComposite.call_feature_method(
                     "getLastReceivedEmail")
@@ -199,12 +191,10 @@ class VoiceInput(metaclass=SingletonMeta):
                     "generate_shopping_list_for_meal")
             case "fallback":
                 # TODO: You could also redirect the question/recorded text to chatgpt
-                self.voice_output.add_message(
-                    "Ich bin mir nicht sicher was du von mir willst. Kannst du das anders formulieren?")
-                print(
-                    "I could not match your voice command onto a function. I do not know what to do...")
+                if len(recognized_text) >= 22:
+                    self.voice_output.add_message("Ich bin mir nicht sicher was du von mir willst. Kannst du das anders formulieren?")
+                    print( "I could not match your voice command onto a function. I do not know what to do...")
                 return
-            # ...
             case _:
                 raise SyntaxError(
                     "Something went wrong while trying to match your voice command onto a function.")

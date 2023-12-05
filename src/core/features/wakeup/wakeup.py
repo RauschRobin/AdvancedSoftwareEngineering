@@ -94,14 +94,14 @@ class WakeUpAssistant:
                 lectureChanges = Rapla.compareTimetablesAndRespondWithLecturesThatChanged(self.currentWeekTimeTable, updatedWeekTimeTable)
                 if lectureChanges != []:
                     for lecture in lectureChanges:
-                        self.voice_output.add_message(self.chatgpt.get_response("Formuliere mir diese API Reponse einer Vorlesung als Klartext und erwähne dass sich diese Vorlesung gerade geändert hat und das der neue Stand sei: " + json.dumps(lecture)))
+                        self.voice_output.add_message(self.chatgpt.get_response("Formuliere mir diese API Reponse einer Vorlesung als Klartext kurz und knapp und erwähne dass sich diese Vorlesung gerade geändert hat und das der neue Stand sei: " + json.dumps(lecture) + " Verwende nur ganze Sätze sodass meine Sprachausgabe keine Probleme hat."))
                     self.currentWeekTimeTable = updatedWeekTimeTable
 
             # update nextLecture every 5 minutes
             if now.minute % 5 == 0:
                 self.nextLecture = self.getNextLecture()
 
-            time.sleep(60)  # Sleep for 1 minute before running and checking again
+            time.sleep(120)  # Sleep for 2 minutes before running and checking again
 
     @staticmethod
     def isWakeUpTime(now, wakeUpTime):
@@ -155,7 +155,7 @@ class WakeUpAssistant:
         if self.rapla.isLectureFirstOfTheDay(self.nextLecture):
             bestConnection = self.getTrainConnectionForNextLecture()
             if bestConnection is None:
-                self.voice_output.add_message(self.chatgpt.get_response("Sag mir dass ich ausschlafen soll."))
+                self.voice_output.add_message(self.chatgpt.get_response("Sag mir kurz und knapp in Klartext dass ich ausschlafen soll."))
                 return None
 
             wakeupTime = self.trainDepartureTime - datetime.timedelta(minutes=self.wakeUpTimeNeeded)
@@ -171,7 +171,7 @@ class WakeUpAssistant:
             return wakeupTime
         else:
             # The lecture is not the first of the day
-            self.voice_output.add_message(self.chatgpt.get_response("Sag mir, dass ich dich später nochmal fragen soll, weil du es gerade noch nicht weist."))
+            self.voice_output.add_message(self.chatgpt.get_response("Sag mir kurz und knapp und in ganzen Sätzen, dass ich dich später nochmal fragen soll, weil du es gerade noch nicht weist."))
             return None
     
     def getTrainConnectionForLecture(self, lecture):
@@ -190,7 +190,7 @@ class WakeUpAssistant:
 
         if api_response == []:
             print("The deutsche bahn api returned an empty list.")
-            self.voice_output.add_message(self.chatgpt.get_response("Sag mir: Frag mich später nochmal. Der gesuchte Zug liegt noch zu weit in der Zukunft und die doofe Deutsche Bahn API gibt mir keine Informationen."))
+            self.voice_output.add_message(self.chatgpt.get_response("Sag mir kurz und knapp, dass ich dich später nochmal fragen soll. Denn der gesuchte Zug liegt noch zu weit in der Zukunft und die Deutsche Bahn gibt dir noch keine Infos."))
             return None
         bestConnection = self.getBestConnectionFromDbTimetable(api_response, formatted_date)
         return bestConnection
@@ -211,7 +211,7 @@ class WakeUpAssistant:
 
         if api_response == []:
             print("The deutsche bahn api returned an empty list.")
-            self.voice_output.add_message(self.chatgpt.get_response("Sag mir, dass ich später nochmal fragen soll und der nächste Zug noch zu weit in der Zukunft liegt und die doofe Deutsche Bahn API mir keine Informationen gibt."))
+            self.voice_output.add_message(self.chatgpt.get_response("Sag mir kurz und knapp, dass ich später nochmal fragen soll und der nächste Zug noch zu weit in der Zukunft liegt und die Deutsche Bahn mir keine Informationen gibt."))
             return None
         bestConnection = self.getBestConnectionFromDbTimetable(api_response, formatted_date)
 
@@ -228,23 +228,19 @@ class WakeUpAssistant:
         best_connection = None
         best_departure_time = None
 
-        # Iterate through the connections in the 'timetable'
-        for connection in api_response['timetable']:
-            pt = connection['ar']['pt']  # Departure time
-            departure_time = int(pt[-4:])  # Extract last 4 digits as an integer
+        departure_time = int(self.trainDepartureTime.strftime('%H%M'))
+        connections = [connection for connection in api_response['timetable'] if int(connection['ar']['pt'][-4:]) <= departure_time]
 
-            # Check if the departure time is within the allowed range
-            if departure_time <= int(self.trainDepartureTime.strftime('%H%M')):
-                # Update the best connection if this one is better
-                if best_connection is None or departure_time > best_departure_time:
-                    best_connection = connection
-                    best_departure_time = departure_time
-
+        for connection in connections:
+            pt = connection['ar']['pt']
+            departure_time = int(pt[-4:])
+            if best_connection is None or departure_time > best_departure_time:
+                best_connection = connection
+                best_departure_time = departure_time
         if best_connection is None:
             print("recursive call: best connection may be in timetable with range of 1 hour earlier")
             api_response = json.loads(self.deutsche_bahn.getTimetableByDestinationStationidDateHour("Stuttgart", self.localTrainStationDetails['eva'], formatted_date, self.trainDepartureTime.strftime("%H") - 1))
-            self.getBestConnectionFromDbTimetable(api_response, formatted_date)
-
+            return self.getBestConnectionFromDbTimetable(api_response, formatted_date)
         return best_connection
     
     def getLecturesOfEntireWeek(self):
@@ -254,7 +250,7 @@ class WakeUpAssistant:
         Parameters: None
         Returns: None
         '''
-        self.voice_output.add_message(self.chatgpt.get_response("Formuliere mir diese API Response einer Vorlesungswoche als Klartext: " + json.dumps(self.currentWeekTimeTable)))
+        self.voice_output.add_message(self.chatgpt.get_response("Formuliere mir diese API Response einer Vorlesungswoche als Klartext kurz und knapp: " + json.dumps(self.currentWeekTimeTable)))
 
     def readNextDhbwLecture(self):
         '''
@@ -263,7 +259,7 @@ class WakeUpAssistant:
         Parameters: None
         Returns: None
         '''
-        self.voice_output.add_message(self.chatgpt.get_response("Formuliere mir diese API Response einer Vorlesung als Klartext: " + json.dumps(self.nextLecture)))
+        self.voice_output.add_message(self.chatgpt.get_response("Formuliere mir diese API Response einer Vorlesung kurz und knapp als Klartext sodass mein Sprachmodell die Antwort möglichst fehlerfrei vorlesen kann: " + json.dumps(self.nextLecture)))
 
     def readTrainConnectionForNextLecture(self):
         '''
@@ -272,7 +268,7 @@ class WakeUpAssistant:
         Parameters: None
         Returns: None
         '''
-        self.voice_output.add_message(self.chatgpt.get_response("Formuliere mir diese API Response einer Zugverbindung der deutschen Bahn als Klartext in 2 Sätzen: " + json.dumps(self.getTrainConnectionForNextLecture())))
+        self.voice_output.add_message(self.chatgpt.get_response("Formuliere mir diese API Response einer Zugverbindung der deutschen Bahn als Klartext in 1 bis 2 Sätzen: " + json.dumps(self.getTrainConnectionForNextLecture()) + "tl: Zeitpunkt ('p') mit Objekt ('SBSMEX'), Code ('MEX') und Nummer ('19611'). ar: Bereich mit Punkt ('2311031000'), Anzahl der Personen ('4'), Länge ('17c') und Pfad ('Bruchsal|...|Bietigheim-Bissingen'). dp: Abfahrtsort mit Punkt ('2311031000'), Anzahl der Personen ('4'), Länge ('17c') und Pfad ('Stuttgart Hbf')."))
 
 '''
 EXAMPLE RAPLA WEEK TIMETABLE RESPONSE

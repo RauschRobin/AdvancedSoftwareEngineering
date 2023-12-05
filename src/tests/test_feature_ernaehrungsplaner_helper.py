@@ -1,17 +1,9 @@
-import datetime
-import json
-import unittest
-
-from ..core.features.ernaehrungsplaner.helper.dinnerHelper import DinnerHelper
-
 from ..core.features.ernaehrungsplaner.helper.lunchbreakHelper import LunchbreakHelper
 from ..core.features.ernaehrungsplaner.helper.message.sentence import Sentence
 from ..core.features.ernaehrungsplaner.helper.message.lunchbreakMessageBuilder import LunchbreakMessageBuilder
 from ..core.features.ernaehrungsplaner.helper.message.dinnerMessageBuilder import DinnerMessageBuilder
-
 from ..core.shared.rapla.rapla import Rapla
 from ..core.shared.rapla.DateParser import DateParser as dp
-
 
 # Test the dinner message builder
 def test_dinner_message_builder():

@@ -1,10 +1,7 @@
 import os
 from dotenv import load_dotenv
-from ...shared.YamlFetcher.YamlFetcher import YamlFetcher
 from openai import OpenAI
-import re
 import json
-
 
 class ChatGpt:
     """
@@ -68,3 +65,4 @@ class ChatGpt:
             return json.loads(json_string)
         else:
             return None
+        

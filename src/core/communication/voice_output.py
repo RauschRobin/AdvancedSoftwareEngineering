@@ -1,10 +1,9 @@
-from gtts import gTTS
 from ..shared.YamlFetcher.YamlFetcher import YamlFetcher
-import playsound
 import os
 import threading
 import re
-import time
+from dotenv import load_dotenv
+from elevenlabs import *
 
 output_file = os.path.join(os.path.dirname(__file__), "output.mp3")
 
@@ -62,6 +61,9 @@ class VoiceOutput(metaclass=SingletonMeta):
         Parameters: None
         Returns: None
         '''
+        load_dotenv()
+        api_key=os.getenv('ELEVENLABS_KEY')
+        set_api_key(api_key)
         while self.is_running:
             if self.message_queue:
                 self.stop_listening_event.set()
@@ -137,20 +139,6 @@ class VoiceOutput(metaclass=SingletonMeta):
             raise ValueError("Cannot say ''!")
 
         text = self.remove_unpronounceable_characters(text)
-
-        # Normalize the output file path
-        filename = os.path.normpath(filename)
-
-        # Create a text to speech element
-        tts = gTTS(text=text, lang=self.language, slow=False)
-
-        # Save the audio file
-        tts.save(filename)
-
-        # play the audio file
-        playsound.playsound(filename)
-
-        # Delete temporary file
-        os.remove(output_file)
-
-        time.sleep(2)
+        audio_stream = generate(text, voice="George", stream=True, model="eleven_multilingual_v2", latency=4)
+        stream(audio_stream)
+        return

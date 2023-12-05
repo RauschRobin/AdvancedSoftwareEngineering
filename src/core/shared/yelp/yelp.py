@@ -3,7 +3,6 @@ from .helper.yelpSearchRequestBuilder import YelpSearchRequestBuilder
 from .helper.director import Director
 from .helper.apiAuthenticationSingleton import ApiAuthenticationSingleton
 
-
 class Yelp:
     def __init__(self) -> None:
         self.api = ApiAuthenticationSingleton()

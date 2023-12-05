@@ -1,7 +1,5 @@
 import requests
-
 from .helper.urlCreator import SearchByMealURLCreator, ListAllMealsByFirstLetterURLCreator, LookupMealDetailsByIdURLCreator
-
 
 class TheMealDb:
     def search_meal_by_name(self, name: str):
