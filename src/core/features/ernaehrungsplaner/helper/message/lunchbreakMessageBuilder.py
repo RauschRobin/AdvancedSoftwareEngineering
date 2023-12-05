@@ -25,7 +25,7 @@ class LunchbreakBuilder(ABC):
         '''Add break duration in minutes to the sentence
 
         Pramaters: duration (int)
-        Returns: None    
+        Returns: None
         '''
         pass
 
@@ -34,7 +34,7 @@ class LunchbreakBuilder(ABC):
         '''Add the name of the restaurant to the sentence
 
         Pramaters: name (string)
-        Returns: None    
+        Returns: None
         '''
         pass
 
@@ -43,7 +43,7 @@ class LunchbreakBuilder(ABC):
         '''Add the address and city to the sentence
 
         Pramaters: street (string), city (string)
-        Returns: None    
+        Returns: None
         '''
         pass
 
@@ -51,8 +51,8 @@ class LunchbreakBuilder(ABC):
 class LunchbreakMessageBuilder(LunchbreakBuilder):
     def __init__(self) -> None:
         """
-        A fresh builder instance should contain a blank product object, which is
-        used in further assembly.
+        A fresh builder instance should contain a blank product object,
+        which is used in further assembly.
         """
         self.reset()
 

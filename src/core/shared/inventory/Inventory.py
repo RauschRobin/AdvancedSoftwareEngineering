@@ -7,7 +7,7 @@ class Inventory:
     """Returns the inventory
     """
 
-    def get_rel_path_to_flask(self):
+    def get_rel_path_to_flask(self) -> str:
         """Formats the relative path to directory
         of Web-API depending on operating-system
 
@@ -21,7 +21,7 @@ class Inventory:
             ret_str = "/core/shared/inventory/helper/"
         return ret_str
 
-    def get_path_to_flask(self):
+    def get_path_to_flask(self) -> str:
         """Returns absolute file path to flask-API
 
         Parameter: self
@@ -30,10 +30,10 @@ class Inventory:
         file_path = os.getcwd()
         file_path = file_path + self.get_rel_path_to_flask()
         print(file_path)
-        print("----------------------------------------------------------------")
+        print("--------------------------------------------------------------")
         return file_path
 
-    def init_flask(self):
+    def init_flask(self) -> None:
         """Initialize the Web-API
 
         Parameter: self
@@ -49,7 +49,7 @@ class Inventory:
         except Exception as e:
             print(e)
 
-    def start_thread(self):
+    def start_thread(self) -> Thread:
         """Run the Web-API as own thread
 
         Parameter: self
@@ -60,7 +60,7 @@ class Inventory:
         thread.start()
         return thread
 
-    def wait_for_server(self, url, timeout=60):
+    def wait_for_server(self, url, timeout=60) -> bool:
         """
         Wait for the server to start within the specified timeout.
 
@@ -78,7 +78,7 @@ class Inventory:
                 # Server not yet up
                 pass
             # Wait for 2 seconds before trying again
-            time.sleep(2)  
+            time.sleep(2)
         return False
 
     def get_inventory(self):

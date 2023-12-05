@@ -6,7 +6,7 @@ from flask_classful import FlaskView
 class ItemsAccessor:
     """Class to access and convert the items"""
 
-    def get_item_dictionary(self):
+    def get_item_dictionary(self) -> dict:
         """Gets items and returns them as a dictionary
 
         Parameter: self
@@ -49,7 +49,7 @@ class ItemsAccessor:
 
         return data_dict
 
-    def convert_dictionary_to_json(self):
+    def convert_dictionary_to_json(self) -> str:
         """Converty dictionary of get_item_dictionary() into JSON
 
         Parameter: self
@@ -62,7 +62,7 @@ class ItemsAccessor:
 
 class AppContext(object):
     """Class to implement Flask as Singleton"""
-    
+
     _app = None
 
     def __init__(self):
@@ -88,12 +88,12 @@ class InventoryManager(FlaskView):
     """Class to manage access to inventory
     """
 
-    def index(self):
+    def index(self) -> str:
         """Returns index-route
         """
         return self.get_json()
 
-    def get_json(self):
+    def get_json(self) -> str:
         """Calls ItemsAccessor() to access items
         and converts them into a json-object
 

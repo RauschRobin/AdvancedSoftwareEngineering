@@ -20,7 +20,7 @@ The following methods are available:
 
 - get_location_adress
 
-### get_location
+### get_location_adress
 
 Returns the location adress based on the current time
 
