@@ -2,21 +2,17 @@ import datetime
 import unittest.mock
 import unittest
 import pytest
-
-from ..core.communication.voice_output import VoiceOutput
-
 from ..core.features.ernaehrungsplaner.ernaehrungsplaner import Ernaehrungsplaner
-
 
 @pytest.fixture
 def voice_output_mock():
     return unittest.mock.Mock()
 
-
 @pytest.fixture
 def ernaehrungsplaner_instance(voice_output_mock):
-    return Ernaehrungsplaner(voice_output_mock)
-
+    ern = Ernaehrungsplaner(voice_output_mock)
+    ern.load_preferences()
+    return ern
 
 def test_suggest_restaurant_for_lunchbreak_lunchtime_found(ernaehrungsplaner_instance):
     # Mocken Sie lunchbreak.is_time_for_lunchbreak, damit es True zurückgibt
