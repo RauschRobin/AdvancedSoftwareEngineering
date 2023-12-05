@@ -1,6 +1,5 @@
 import datetime
 
-
 class CurrentLocation:
     """ Gets the current location
     """

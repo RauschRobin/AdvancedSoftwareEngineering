@@ -1,5 +1,3 @@
-import requests
-from ...shared.YamlFetcher.YamlFetcher import YamlFetcher
 import os
 import googlemaps
 from dotenv import load_dotenv

@@ -1,26 +1,16 @@
 import datetime
 import time
 import json
-
-from dotenv import load_dotenv
-
-from ...shared.newsapiorg.news import NewsAPI
-
 from ...shared.Chat_GPT.ChatGPT import ChatGpt
-
 from .helper.message.dinnerMessageBuilder import DinnerMessageBuilder
-
 from .helper.message.lunchbreakMessageBuilder import LunchbreakMessageBuilder
 from .helper.lunchbreakHelper import LunchbreakHelper
 from .helper.dinnerHelper import DinnerHelper
-
 from ...communication.voice_output import VoiceOutput
 from ...shared.YamlFetcher.YamlFetcher import YamlFetcher
 from ...shared.yelp.yelp import Yelp
-from ...shared.theMealDb.theMealDb import TheMealDb
 from ...shared.currentLocation.CurrentLocation import CurrentLocation
 from ...shared.inventory.Inventory import Inventory
-
 
 class Ernaehrungsplaner:
     def __init__(self, voice_output: VoiceOutput):
@@ -31,23 +21,15 @@ class Ernaehrungsplaner:
         Returns: None
         '''
         self.voice_output = voice_output
-        self.load_preferences()
-
         self.yelp = Yelp()
         self.chatgpt = ChatGpt()
-
         self.currentLocation = CurrentLocation()
         self.inventory = Inventory()
-
         self.dinner = DinnerHelper()
         self.lunchbreak = LunchbreakHelper()
-
-
         self.restaurants = {}
         self.selected_restaurant = {}
-
         self.meal_to_cook = ""
-
 
     def load_preferences(self):
         '''
@@ -56,7 +38,6 @@ class Ernaehrungsplaner:
         Parameters: None
         Returns: None
         '''
-        self.rapla_url = YamlFetcher.fetch("rapla-url", "preferences.yaml")
         self.prefred_user_restaurant_categories = YamlFetcher.fetch(
             "restraurants-categories-interests", "preferences.yaml")
         self.prefred_user_restaurant_price = YamlFetcher.fetch(
@@ -71,6 +52,7 @@ class Ernaehrungsplaner:
         Parameters: None
         Returns: None
         '''
+        self.load_preferences()
         self.start_ernaehrungsplaner_loop()
 
     def start_ernaehrungsplaner_loop(self):
