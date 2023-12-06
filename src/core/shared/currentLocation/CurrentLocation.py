@@ -3,7 +3,6 @@ import datetime
 class CurrentLocation:
     """ Gets the current location
     """
-
     def __init__(self) -> None:
         pass
 
@@ -13,7 +12,7 @@ class CurrentLocation:
         Returns: String
         """
 
-        # This simulates the user location and can be changed later wit google maps api
+        # Simulates the user location - changed later with google maps api
         now = datetime.datetime.now()
         if (now.hour > 7 and now.hour < 16):
             return "Stuttgart"
