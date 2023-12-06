@@ -117,7 +117,7 @@ class Terminplaner:
             places = self.maps.get_nearby_places("Stuttgart", keyword=activity)
             self.places = places
 
-            request = f"Lese mir den JSON String kurz in grammatikalisch korrekten sätzen vor: {self.places}"
+            request = f"Lese mir den JSON String kurz in grammatikalisch korrekten Sätzen vor (ohne Einleitungssatz): {self.places}"
             answer = self.chatgpt.get_response(request)
 
             self.voice_output.add_message(answer)
@@ -128,7 +128,7 @@ class Terminplaner:
                     places = self.maps.get_nearby_places("Stuttgart", keyword=activity['location-keyword'])
                     self.places = places
 
-                    request = f"Lese mir den JSON String kurz in grammatikalisch korrekten sätzen vor: {self.places}"
+                    request = f"Lese mir den JSON String kurz in grammatikalisch korrekten Sätzen vor (ohne Einleitungssatz): {self.places}"
                     answer = self.chatgpt.get_response(request)
 
                     # The output in for-loop only returns the first answer
