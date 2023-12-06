@@ -12,6 +12,7 @@ from ...shared.yelp.yelp import Yelp
 from ...shared.currentLocation.CurrentLocation import CurrentLocation
 from ...shared.inventory.Inventory import Inventory
 
+
 class Ernaehrungsplaner:
     def __init__(self, voice_output: VoiceOutput):
         '''
@@ -171,19 +172,21 @@ class Ernaehrungsplaner:
 
             self.voice_output.add_message(message)
 
-
-    def chooseRestaurantWithKeyword(self, keyword):
-        """User chooses a restaurant, which will be the referential-point for other functions
+    def chooseRestaurantWithKeyword(self, keyword) -> None:
+        """User chooses a restaurant, which will be
+        the referential-point for other functions
 
         Parameters: keyword (string)
         Returns: none
         """
+        # define and set variables
         message = "Restaurant nicht gefunden"
         restaurant_name = "nicht"
         self.set_response_businesses()
-        if(self.restaurants is not None and self.restaurants != {}):
-            restaurants_lst = self.restaurants["businesses"]
 
+        # check if self.restaurants is set
+        if (self.restaurants is not None and self.restaurants != {}):
+            restaurants_lst = self.restaurants["businesses"]
             match keyword:
                 case "eins":
                     self.selected_restaurant = restaurants_lst[0]
@@ -195,39 +198,47 @@ class Ernaehrungsplaner:
                     self.selected_restaurant = restaurants_lst[2]
                     restaurant_name = self.selected_restaurant["name"]
 
+        # return message
         message = f'Restaurant {restaurant_name} ausgewählt'
         print(restaurant_name)
         self.voice_output.add_message(message)
 
-    def getRestaurantContact(self):
+    def getRestaurantContact(self) -> bool:
         '''
-        Gets the Contact-Information of a a specific restaurant and adds the message to the voice output message_queue.
+        Gets the Contact-Information of a a specific restaurant
+        and adds the message to the voice output message_queue.
 
         Parameters: keyword (string)
         Returns: bool
         '''
+        # define and set variable
         message = "Es wurde kein Restaurant ausgewählt"
 
+        # check if self.restaurants is set, construct and add output-message
         if (self.selected_restaurant is None and self.restaurants != {}):
             print(message)
             self.voice_output.add_message(message)
             return False
         else:
-            message = f"Die Telefonnummer von {self.selected_restaurant['name']} "
+            message = f"Die Telefonnummer "
+            message = message + f"von {self.selected_restaurant['name']} "
             message = message + f"lautet: {self.selected_restaurant['phone']}"
             print(message)
             self.voice_output.add_message(message)
             return True
 
-    def getRestaurantLocation(self):
+    def getRestaurantLocation(self) -> bool:
         '''
-        Gets the Location-Information of a a specific restaurant and adds the message to the voice output message_queue.
+        Gets the Location-Information of a a specific restaurant
+        and adds the message to the voice output message_queue.
 
         Parameters: keyword (string)
         Returns: bool
         '''
+        # define and set variable
         message = "Es wurde kein Restaurant ausgewählt"
 
+        # check if self.restaurants is set, construct and add output-message
         if (self.selected_restaurant is None and self.restaurants != {}):
             print(message)
             self.voice_output.add_message(message)

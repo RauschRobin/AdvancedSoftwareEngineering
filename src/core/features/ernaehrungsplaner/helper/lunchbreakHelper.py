@@ -31,7 +31,8 @@ class LunchbreakHelper():
         '''Calculate the lunchbreak time for the user via rapla
 
         Parameters: None
-        Returns: lunchbreak_hour (int) lunchbreak_minute (int) lunchbreak_duration_in_minutes (int)
+        Returns: lunchbreak_hour (int), lunchbreak_minute (int),
+        lunchbreak_duration_in_minutes (int)
         '''
         now = datetime.datetime.now()
         weekday_as_string = now.strftime("%A").lower()
@@ -67,13 +68,14 @@ class LunchbreakHelper():
         now = datetime.datetime.now()
         is_lunchbreak_hour, is_lunchbreak_minute = self.calculate_lunchbreak_time()
 
-        if now.hour == is_lunchbreak_hour and now.minute == is_lunchbreak_minute:
+        if (now.hour == is_lunchbreak_hour and now.minute == is_lunchbreak_minute):
             return True
         else:
             return False
 
     def is_businesses_not_none(self, businesses) -> bool:
-        '''Find out if the businesses response are not null and return true/false
+        '''Find out if the businesses response are not null
+        and return true/false
 
         Parameters: businesses (Dic, None)
         Returns: True/False

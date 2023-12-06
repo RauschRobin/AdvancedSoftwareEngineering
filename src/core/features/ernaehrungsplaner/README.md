@@ -76,6 +76,18 @@ Proactively suggests restaurant options for lunchbreak.
 
 Proactively provides information about the dinner meal and missing ingredients.
 
+### `chooseRestaurantWithKeyword()`
+
+User chooses a restaurant, which will be the referential-point for other functions
+
+### `getRestaurantContact()`
+
+Gets the Contact-Information of a a specific restaurant and adds the message to the voice output message_queue.
+
+### `getRestaurantLocation()`
+
+Gets the Location-Information of a a specific restaurant and adds the message to the voice output message_queue.
+
 ### `how_to_cook_the_meal()`
 
 Enables the user to get detailed meal information and cooking instructions.
